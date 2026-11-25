@@ -38,7 +38,8 @@ export const projects: Project[] = [
     slug: "paz-no-lar",
     title: "Paz no Lar",
     categories: ["Full Stack", "UX/UI"],
-    summary: "Sistema web para instituto de psicologia gratuita. Prints só com autorização.",
+    summary:
+      "Sistema web para instituto de psicologia gratuita, onde atuo como voluntária no desenvolvimento e no design.",
     stack: ["TODO"],
     publicImages: false,
     tone: "blue",

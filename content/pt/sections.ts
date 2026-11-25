@@ -74,8 +74,8 @@ export const heroFolders: {
     items: [
       "Técnico com Python e Java",
       "Engenharia de Software · UNIASSELVI",
-      "Licenciatura · Uninassau",
-      "TODO: Brena completar",
+      "Licenciatura em Matemática · Uninassau",
+      "Hoje: voluntária no Paz no Lar e freelancer",
     ],
   },
 ];

@@ -1,6 +1,10 @@
 import { Intro } from "@/components/sections/Intro";
 import { Hero } from "@/components/sections/Hero";
+import { About } from "@/components/sections/About";
+import { Services } from "@/components/sections/Services";
+import { Projects } from "@/components/sections/Projects";
 import { Placeholder } from "@/components/sections/Placeholder";
+import { ScrollFx } from "@/components/motion/ScrollFx";
 
 export default function Home() {
   return (
@@ -8,8 +12,9 @@ export default function Home() {
       <Intro />
       <main id="conteudo">
         <Hero />
-        <Placeholder id="sobre" title="Oi, eu sou a Brena!" phase="Fase 4 · Sobre" tone="band" />
-        <Placeholder id="projetos" title="Projetos selecionados" phase="Fase 4 · Projetos" />
+        <About />
+        <Services />
+        <Projects />
         <Placeholder id="processo" title="Trajetória" phase="Fase 6 · Timeline" tone="block" />
         <Placeholder
           id="contato"
@@ -18,6 +23,7 @@ export default function Home() {
           tone="band"
         />
       </main>
+      <ScrollFx />
     </>
   );
 }

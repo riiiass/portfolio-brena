@@ -21,9 +21,9 @@ const socials: { label: string; href: string; icon: IconName; hover: string }[] 
     hover: "hover:bg-folder-lime focus-visible:bg-folder-lime",
   },
   {
-    label: "Behance",
-    href: site.social.behance,
-    icon: "behance",
+    label: "Instagram",
+    href: site.social.instagram,
+    icon: "instagram",
     hover: "hover:bg-folder-orange focus-visible:bg-folder-orange",
   },
   {

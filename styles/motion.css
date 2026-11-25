@@ -1,0 +1,190 @@
+/* ===== Reveal (IO) — estados iniciais só com JS + movimento liberado ===== */
+html.js[data-motion="full"] [data-reveal]:not([data-shown]) {
+  pointer-events: none;
+}
+/* o recorte vai no filho: o Chromium considera clip-path no IntersectionObserver */
+html.js[data-motion="full"] [data-reveal="clip-up"]:not([data-shown]) > * {
+  clip-path: inset(100% 0 0 0 round 28px);
+}
+html.js[data-motion="full"] [data-reveal="clip-left"]:not([data-shown]) > * {
+  clip-path: inset(0 100% 0 0 round 28px);
+}
+html.js[data-motion="full"] [data-reveal^="clip"] > * {
+  clip-path: inset(0 0 0 0 round 28px);
+  transition: clip-path 900ms var(--ease-out);
+  transition-delay: calc(var(--d, 0) * var(--stagger));
+}
+html.js[data-motion="full"] [data-reveal="rise"]:not([data-shown]) {
+  opacity: 0;
+  transform: translateY(48px) rotate(1.5deg);
+}
+html.js[data-motion="full"] [data-reveal="pop"]:not([data-shown]) {
+  opacity: 0;
+  transform: scale(0.85) rotate(-2deg);
+}
+html.js[data-motion="full"] [data-reveal="slide-right"]:not([data-shown]) {
+  opacity: 0;
+  transform: translateX(-80px);
+}
+html.js[data-motion="full"] [data-reveal] {
+  transition:
+    clip-path var(--dur-reveal) var(--ease-out),
+    opacity var(--dur-reveal) var(--ease-out),
+    transform var(--dur-reveal) var(--ease-out);
+  transition-delay: calc(var(--d, 0) * var(--stagger));
+}
+
+/* linhas de título sobem por máscara */
+.line-mask {
+  display: block;
+  clip-path: inset(-0.3em -0.2em 0 -0.2em);
+}
+.line-mask > span {
+  display: inline-block;
+}
+html.js[data-motion="full"] [data-reveal="lines"]:not([data-shown]) .line-mask > span {
+  transform: translateY(105%);
+}
+html.js[data-motion="full"] [data-reveal="lines"] .line-mask > span {
+  transition: transform 900ms var(--ease-out);
+  transition-delay: calc(var(--l, 0) * 90ms);
+}
+
+/* ===== Fundo que morfa entre seções (ativado pelo ScrollFx) ===== */
+html.bg-morph [data-bg] {
+  background-color: transparent !important;
+}
+
+/* ===== Marquee ===== */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+/* ===== Mini-animações dos serviços (entrada + hover) ===== */
+.svc [data-anim] {
+  transition:
+    transform 600ms var(--ease-out),
+    opacity 600ms var(--ease-out),
+    stroke-dashoffset 900ms var(--ease-out);
+  transition-delay: calc(var(--k, 0) * 90ms);
+}
+/* Front-end: o mini layout se monta */
+html.js[data-motion="full"] .svc:not([data-shown]) [data-anim="block"] {
+  transform: scaleX(0);
+}
+[data-anim="block"] {
+  transform-origin: left;
+}
+.svc:hover [data-anim="block"] {
+  animation: block-wiggle 700ms var(--ease-out);
+  animation-delay: calc(var(--k, 0) * 70ms);
+}
+@keyframes block-wiggle {
+  40% {
+    transform: scaleX(0.7);
+  }
+}
+/* Back-end: as linhas da requisição "digitam" */
+html.js[data-motion="full"] .svc:not([data-shown]) [data-anim="type"] {
+  clip-path: inset(0 100% 0 0);
+}
+[data-anim="type"] {
+  transition: clip-path 700ms steps(18) !important;
+  transition-delay: calc(var(--k, 0) * 500ms) !important;
+}
+.svc:hover [data-anim="status"] {
+  animation: blink 900ms steps(2) 2;
+}
+@keyframes blink {
+  50% {
+    opacity: 0.2;
+  }
+}
+/* Banco: a relação entre as tabelas é desenhada */
+html.js[data-motion="full"] .svc:not([data-shown]) [data-anim="draw"] {
+  stroke-dashoffset: 60;
+}
+[data-anim="draw"] {
+  stroke-dasharray: 60;
+}
+.svc:hover [data-anim="draw"] {
+  animation: draw 900ms var(--ease-out);
+}
+@keyframes draw {
+  from {
+    stroke-dashoffset: 60;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+/* UX Research: o balão aparece, a lupa procura */
+html.js[data-motion="full"] .svc:not([data-shown]) [data-anim="pop"] {
+  opacity: 0;
+  transform: scale(0.6) translateY(10px);
+}
+.svc:hover [data-anim="lens"] {
+  animation: lens 1.4s var(--ease-in-out);
+}
+@keyframes lens {
+  30% {
+    transform: translate(-30px, -6px) rotate(-10deg);
+  }
+  65% {
+    transform: translate(8px, 6px) rotate(6deg);
+  }
+}
+/* UI: as amostras de cor entram em sequência */
+html.js[data-motion="full"] .svc:not([data-shown]) [data-anim="swatch"] {
+  opacity: 0;
+  transform: translateY(16px) scale(0.5);
+}
+.svc:hover [data-anim="swatch"] {
+  animation: hop 600ms var(--ease-out);
+  animation-delay: calc(var(--k, 0) * 70ms);
+}
+@keyframes hop {
+  40% {
+    transform: translateY(-10px);
+  }
+}
+/* Acessibilidade: o anel de foco percorre as pílulas */
+[data-anim="ring"] {
+  transform: translateX(var(--ring-x, 0));
+  transition: transform 500ms var(--ease-out);
+}
+html[data-motion="full"] .svc[data-shown] [data-anim="ring"] {
+  animation: ring 3.6s var(--ease-in-out) infinite;
+}
+@keyframes ring {
+  0%,
+  25% {
+    transform: translateX(0);
+  }
+  33%,
+  58% {
+    transform: translateX(var(--step));
+  }
+  66%,
+  91% {
+    transform: translateX(calc(var(--step) * 2));
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+html.bg-morph body {
+  transition: color 500ms var(--ease-in-out);
+}
+
+/* capas dos projetos: esmaecem em direção ao texto */
+.cover-side {
+  mask-image: linear-gradient(to left, #000 35%, transparent 100%);
+}
+@media (min-width: 40rem) {
+  .sm\:cover-top {
+    mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+  }
+}

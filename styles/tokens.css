@@ -32,10 +32,10 @@
   --stagger: 60ms;
 
   /* ---- forma ---- */
-  --radius-sm: 16px;
-  --radius-md: 24px;
-  --radius-lg: 32px;
-  --radius-xl: 40px;
+  --round-sm: 16px;
+  --round-md: 24px;
+  --round-lg: 32px;
+  --round-xl: 40px;
 
   /* ---- escala fluida (360px → 1440px) ---- */
   --step--1: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
@@ -130,8 +130,8 @@
   --text-step-4: var(--step-4);
   --text-step-5: var(--step-5);
 
-  --radius-card: var(--radius-lg);
-  --radius-window: var(--radius-md);
+  --radius-card: var(--round-lg);
+  --radius-window: var(--round-md);
 
   --ease-out: var(--ease-out);
   --ease-in-out: var(--ease-in-out);
