@@ -19,7 +19,7 @@ export const faq: typeof Pt = [
   },
   {
     q: "Are you open to freelance or full-time roles?",
-    a: "Both. I take freelance projects and I'm open to full-time positions, working remotely.",
+    a: "Both. I take freelance projects and I'm open to full-time positions, remote, hybrid or on-site in the Fortaleza metro area.",
   },
   {
     q: "How does pricing work?",

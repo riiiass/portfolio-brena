@@ -17,7 +17,7 @@ export const faq: { q: string; a: string }[] = [
   },
   {
     q: "Você aceita freelance ou CLT?",
-    a: "Os dois. Atendo projetos freelance e estou aberta a vagas CLT, com trabalho remoto.",
+    a: "Os dois. Atendo projetos freelance e estou aberta a vagas CLT, em formato remoto, híbrido ou presencial em Fortaleza e região metropolitana.",
   },
   {
     q: "Como funciona o orçamento?",

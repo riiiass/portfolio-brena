@@ -33,7 +33,7 @@ Marque `[x]` conforme for resolvendo. Arquivo do código entre parênteses.
 - [ ] **Decisões de UX** — escrevi a partir do que você contou; confirme se é o seu raciocínio (`content/cases/*.mdx`)
 - [ ] **Banco de Talentos**: quantas acolhidas participam e como chegam até elas (`content/cases/banco-de-talentos.mdx`)
 - [ ] **Paz no Lar**: algum número ou depoimento do instituto que possa ser público (`content/cases/paz-no-lar.mdx`)
-- [ ] Manter **"Claude (assistente de código)"** nas ferramentas da KADOSH? (você listou; é uma linha em `content/cases/kadosh.mdx`)
+- [x] Manter **"Claude (assistente de código)"** nas ferramentas da KADOSH? (você listou; é uma linha em `content/cases/kadosh.mdx`)
 
 ## 4. Lighthouse (dados de dev)
 
@@ -48,8 +48,8 @@ Marque `[x]` conforme for resolvendo. Arquivo do código entre parênteses.
 - [ ] **Sobre** — 2 parágrafos em 1ª pessoa (`content/pt/about.ts`)
 - [ ] **FAQ / prazos** — você pediu para eu sugerir: landing page 1–2 semanas, site institucional 2–4, sistema web/e-commerce 6–10 (`content/pt/faq.ts`)
 - [ ] **"Eu respondo no seu e-mail em até 2 dias úteis"** — aparece depois do envio do formulário (`components/sections/Contact.tsx`)
-- [ ] **Modalidade**: escrevi "trabalho remoto". Aceita também presencial/híbrido no Ceará? (`content/pt/faq.ts`, `components/sections/Contact.tsx`)
-- [ ] **Figma** e **Prototipação/Design System** no toolkit — confirme que usa (`content/pt/toolkit.ts`)
+- [x] **Modalidade**: escrevi "trabalho remoto". Aceita também presencial/híbrido no Ceará? (`content/pt/faq.ts`, `components/sections/Contact.tsx`)
+- [x] **Figma** e **Prototipação/Design System** no toolkit — confirme que usa (`content/pt/toolkit.ts`)
 
 ## 6. Trajetória
 
