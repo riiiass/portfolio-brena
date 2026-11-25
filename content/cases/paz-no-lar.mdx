@@ -1,11 +1,9 @@
 <CaseSection phase="descobrir" title="Desafio">
 
-O Instituto Paz no Lar oferece **atendimento psicológico gratuito**. O site precisava passar confiança logo de cara (gratuidade, sigilo, equipe) e levar a pessoa a conhecer os benefícios ou entrar em contato, além de dar aos colaboradores um acesso restrito.
+O Instituto Paz no Lar é dedicado a **ajudar mulheres** que passaram por situações difíceis, como abuso e outras formas de violência. O instituto precisava de duas coisas num lugar só:
 
-<div className="todo">
-  TODO: Brena — o que o instituto usava antes? Quem são os usuários do sistema interno e o que eles
-  fazem nele?
-</div>
+- **Um site público** que apresentasse o trabalho: início, a história do instituto, fotos, contato e Instagram, de um jeito que fizesse as pessoas se aproximarem e se interessarem.
+- **Uma área restrita aos colaboradores**, para cadastrar e manter as informações de todas as pessoas que fazem parte do projeto — acolhidas, funcionárias e funcionários, diretoria e voluntários — e usar isso como um repositório organizado, com **impressão e geração de PDF**.
 
 </CaseSection>
 
@@ -13,25 +11,29 @@ O Instituto Paz no Lar oferece **atendimento psicológico gratuito**. O site pre
 
 Sou voluntária no projeto, cuidando do **desenvolvimento e do design**.
 
-- **Next.js (React)** para o site e o sistema.
+- **Next.js (React)** para o site público e a área administrativa no mesmo projeto.
 - **Prisma** com **PostgreSQL no Neon**, na **região de São Paulo**, perto de quem usa.
 - Código no **GitHub** e deploy na **Netlify**.
+- Como a área interna guarda informações pessoais e sensíveis, o acesso é **só para colaboradores autenticados** e nenhuma tela interna aparece neste portfólio.
 
 </CaseSection>
 
 <CaseSection phase="desenvolver" title="Processo">
 
-A página inicial foi pensada para quem chega fragilizado e com pressa de entender se pode ser atendido:
+### Site público
+
+Pensado para quem chega buscando ajuda ou querendo apoiar o instituto:
 
 - Título grande e direto, **“Paz no Lar”**, com o nome do instituto logo acima.
 - Duas ações claras: **“Conheça os benefícios”** (principal) e **“Fale conosco”** (secundária).
 - Selos de confiança logo abaixo: **atendimento gratuito, sigilo e respeito, equipe dedicada**.
-- O **login** fica separado no canto, marcado como “apenas colaboradores”, para não confundir quem procura atendimento.
+- Seções de **história**, fotos, contato e Instagram.
 
-<div className="todo">
-  TODO: Brena — descrever as telas do sistema interno (agenda, cadastro, prontuário?) sem expor
-  dados sensíveis.
-</div>
+### Área dos colaboradores
+
+- **Login** separado no canto, identificado como “apenas colaboradores”.
+- **Cadastro e edição** de acolhidas, funcionários, diretoria e voluntários.
+- As informações viram um **repositório** do instituto, prontas para **imprimir ou exportar em PDF**.
 
 </CaseSection>
 
@@ -42,22 +44,22 @@ A página inicial foi pensada para quem chega fragilizado e com pressa de entend
     {
       title: "Uma ação principal e uma secundária",
       principle: "Hierarquia visual · Lei de Hick",
-      text: "Poucas escolhas, com peso visual diferente: a pessoa sabe o que fazer primeiro.",
+      text: "Poucas escolhas, com peso visual diferente: quem chega sabe o que fazer primeiro.",
     },
     {
-      title: "Selos de gratuidade e sigilo no hero",
+      title: "Sigilo e respeito já no primeiro bloco",
       principle: "Nielsen · correspondência com o mundo real",
-      text: "As dúvidas mais comuns de quem procura terapia gratuita são respondidas antes do primeiro scroll.",
+      text: "Para quem passou por uma situação de violência, saber que existe sigilo é o que permite dar o próximo passo.",
     },
     {
       title: "Login identificado como “apenas colaboradores”",
       principle: "Nielsen · prevenção de erros",
-      text: "Evita que pacientes tentem entrar numa área que não é para eles.",
+      text: "Quem procura ajuda não tenta entrar numa área que não é para ela, e os dados sensíveis ficam protegidos.",
     },
     {
-      title: "Banco de dados em São Paulo",
-      principle: "Performance",
-      text: "Servidor de dados perto dos usuários reduz a latência das telas do sistema.",
+      title: "Imprimir e gerar PDF",
+      principle: "Nielsen · correspondência com o mundo real",
+      text: "A equipe continua trabalhando com papel e documentos; o sistema entrega as informações no formato que ela já usa.",
     },
   ]}
 />
@@ -70,8 +72,8 @@ A página inicial foi pensada para quem chega fragilizado e com pressa de entend
 
 <Architecture
   flow={[
-    { title: "Interface", detail: "Next.js (React)" },
-    { title: "Servidor", detail: "Next.js + Prisma" },
+    { title: "Site + área restrita", detail: "Next.js (React)" },
+    { title: "Servidor", detail: "Next.js + Prisma, acesso autenticado" },
     { title: "Banco", detail: "PostgreSQL no Neon (São Paulo)" },
   ]}
   integrations={["GitHub", "Netlify (deploy)"]}
@@ -81,8 +83,10 @@ A página inicial foi pensada para quem chega fragilizado e com pressa de entend
 
 <CaseSection phase="entregar" title="Resultado">
 
+O site está no ar em [instituto-paz-no-lar.netlify.app](https://instituto-paz-no-lar.netlify.app/) e a equipe usa a área restrita como repositório das pessoas atendidas e envolvidas no projeto.
+
 <Metrics
-  items={[{ label: "Pessoas atendidas pelo site" }, { label: "Contatos recebidos por mês" }]}
+  items={[{ label: "Pessoas cadastradas no sistema" }, { label: "Contatos recebidos pelo site" }]}
 />
 
 <div className="todo">

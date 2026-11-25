@@ -60,6 +60,15 @@ function ProjectCard({ p, priority }: { p: Project; priority: boolean }) {
                 {c}
               </span>
             ))}
+            {p.status === "dev" ? (
+              <span className="bg-ink text-paper flex items-center gap-1.5 rounded-full px-2.5 py-1.5 font-mono text-[10px] tracking-[.12em] uppercase">
+                <span
+                  className="idle bg-folder-lime size-1.5 animate-pulse rounded-full"
+                  aria-hidden="true"
+                />
+                em desenvolvimento
+              </span>
+            ) : null}
             {!p.publicImages ? (
               <span className="rounded-full border border-current px-2.5 py-1.5 font-mono text-[10px] tracking-[.1em] uppercase">
                 prints sob autorização
@@ -80,7 +89,7 @@ function ProjectCard({ p, priority }: { p: Project; priority: boolean }) {
             <p className="mt-2 max-w-[460px] text-sm leading-relaxed">{p.summary}</p>
             {/* hierarquia: a stack aparece no hover/foco (sempre visível em telas de toque) */}
             <p className="mt-2.5 font-mono text-[11px] tracking-[.1em] uppercase opacity-90 transition-[opacity,transform] duration-300 [@media(hover:hover)]:translate-y-2 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:translate-y-0 [@media(hover:hover)]:group-hover:opacity-90 [@media(hover:hover)]:group-focus-visible:translate-y-0 [@media(hover:hover)]:group-focus-visible:opacity-90">
-              {p.stack.join(" · ")}
+              {p.stack.length ? p.stack.join(" · ") : "stack em breve"}
             </p>
           </div>
         </div>

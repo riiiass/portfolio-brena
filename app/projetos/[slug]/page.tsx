@@ -95,7 +95,13 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
             </div>
             <div className="col-span-2 md:col-span-1">
               <dt className="label-mono text-muted mb-1 text-[10px]">Stack</dt>
-              <dd>{project.stack.join(" · ")}</dd>
+              <dd>
+                {project.stack.length ? (
+                  project.stack.join(" · ")
+                ) : (
+                  <span className="text-muted">Em breve</span>
+                )}
+              </dd>
             </div>
             {meta.url ? (
               <div>

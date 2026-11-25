@@ -3,13 +3,25 @@
 import { chromium } from "playwright";
 import { mkdirSync } from "node:fs";
 
-const [route = "/", prefix = "home", theme = "light", widths = "360,768,1280,1920"] = process.argv.slice(2);
+const [route = "/", prefix = "home", theme = "light", widths = "360,768,1280,1920"] =
+  process.argv.slice(2);
 const out = process.env.SHOTS_DIR ?? "shots";
 mkdirSync(out, { recursive: true });
-const browser = await chromium.launch({ executablePath: process.env.PW_CHROMIUM ?? "/opt/pw-browsers/chromium" });
+const browser = await chromium.launch({
+  executablePath: process.env.PW_CHROMIUM ?? "/opt/pw-browsers/chromium",
+});
 for (const w of widths.split(",").map(Number)) {
-  const ctx = await browser.newContext({ viewport: { width: w, height: 900 }, deviceScaleFactor: 1, colorScheme: theme, reducedMotion: process.env.REDUCED ? "reduce" : "no-preference" });
-  await ctx.addInitScript(() => { try { sessionStorage.setItem("intro-seen", "1"); } catch {} });
+  const ctx = await browser.newContext({
+    viewport: { width: w, height: 900 },
+    deviceScaleFactor: 1,
+    colorScheme: theme,
+    reducedMotion: process.env.REDUCED ? "reduce" : "no-preference",
+  });
+  await ctx.addInitScript(() => {
+    try {
+      sessionStorage.setItem("intro-seen", "1");
+    } catch {}
+  });
   const page = await ctx.newPage();
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));

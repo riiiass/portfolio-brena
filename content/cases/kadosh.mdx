@@ -1,11 +1,12 @@
 <CaseSection phase="descobrir" title="Desafio">
 
-A KADOSH é uma marca de moda cristã, masculina e feminina, que precisava de uma **loja própria**: um lugar para mostrar as coleções com a identidade da marca e vender com pagamento, frete e estoque funcionando de ponta a ponta.
+A KADOSH é uma marca de moda cristã, masculina e feminina. O pedido foi um **site completo**, em que o cliente faz tudo sozinho, sem precisar falar com a empresa:
 
-<div className="todo">
-  TODO: Brena — como a marca vendia antes do site (Instagram, WhatsApp, loja física)? Qual era a
-  maior dor?
-</div>
+- Uma vitrine **dinâmica**, que mostrasse as camisas de um jeito diferente do comum.
+- Venda para **varejo e atacado** no mesmo site.
+- **Frete calculado** dentro da compra.
+- **Pagamento pelo próprio site**.
+- Uma **área administrativa** para a marca cuidar dos produtos, do estoque e dos pedidos.
 
 </CaseSection>
 
@@ -48,6 +49,21 @@ Testes automatizados com **Vitest** (regras de atacado, CPF, assinaturas de webh
 
 <Decisions
   items={[
+    {
+      title: "Compra de ponta a ponta sem falar com a loja",
+      principle: "Nielsen · controle e liberdade",
+      text: "Escolher, calcular o frete, pagar e acompanhar: tudo no site, no ritmo do cliente, sem depender de atendimento.",
+    },
+    {
+      title: "Varejo e atacado no mesmo site",
+      principle: "Nielsen · flexibilidade e eficiência",
+      text: "As regras de atacado são aplicadas no carrinho, então quem compra em quantidade usa a mesma loja, sem um canal à parte.",
+    },
+    {
+      title: "Vitrine que gira e rolagem horizontal",
+      principle: "Gestalt · figura e fundo",
+      text: "Fundo preto e dourado com as camisas em movimento: a peça é a protagonista e a marca se diferencia de uma grade comum.",
+    },
     {
       title: "Carrinho lateral em vez de página de carrinho",
       principle: "Nielsen · visibilidade do status",

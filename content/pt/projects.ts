@@ -10,6 +10,8 @@ export type Project = {
   publicImages: boolean;
   tone: "ink" | "pink" | "blue" | "lime";
   layout: "big" | "tall" | "wide" | "default";
+  /** Projeto ainda em desenvolvimento */
+  status?: "dev";
   /** Print real da interface (em /public/projects) */
   cover?: { src: string; width: number; height: number; alt: string };
 };
@@ -21,7 +23,7 @@ export const projects: Project[] = [
     title: "KADOSH",
     categories: ["Full Stack"],
     summary:
-      "E-commerce de moda cristã com painel admin, pagamento por Pix e cartão, frete e estoque integrados.",
+      "E-commerce de moda cristã para varejo e atacado: vitrine dinâmica, frete, Pix e cartão e painel admin. O cliente compra sem falar com a loja.",
     stack: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "PagBank", "SuperFrete"],
     publicImages: true,
     tone: "ink",
@@ -38,7 +40,8 @@ export const projects: Project[] = [
     title: "MODO",
     categories: ["Front-end"],
     summary: "Site do studio de nails com tabela de valores e agendamento via WhatsApp.",
-    stack: ["TODO"], // TODO: Brena informar a stack do MODO
+    stack: [], // em desenvolvimento: stack e print em breve
+    status: "dev",
     publicImages: true,
     tone: "pink",
     layout: "wide",
@@ -48,7 +51,7 @@ export const projects: Project[] = [
     title: "Paz no Lar",
     categories: ["Full Stack", "UX/UI"],
     summary:
-      "Sistema web para instituto de psicologia gratuita, onde atuo como voluntária no desenvolvimento e no design.",
+      "Site e sistema do instituto que ajuda mulheres a recomeçar, com área restrita para cadastro, impressão e PDF. Sou voluntária no dev e no design.",
     stack: ["Next.js", "React", "Prisma", "PostgreSQL", "Netlify"],
     publicImages: true,
     tone: "blue",
