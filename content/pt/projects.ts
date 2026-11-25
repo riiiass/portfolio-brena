@@ -9,7 +9,9 @@ export type Project = {
   /** Autorização do cliente para mostrar prints */
   publicImages: boolean;
   tone: "ink" | "pink" | "blue" | "lime";
-  layout: "big" | "tall" | "default";
+  layout: "big" | "tall" | "wide" | "default";
+  /** Print real da interface (em /public/projects) */
+  cover?: { src: string; width: number; height: number; alt: string };
 };
 
 // TODO: Brena confirmar stacks e autorizações de cada cliente
@@ -23,6 +25,12 @@ export const projects: Project[] = [
     publicImages: true,
     tone: "ink",
     layout: "big",
+    cover: {
+      src: "/projects/kadosh.webp",
+      width: 1904,
+      height: 932,
+      alt: "Página inicial da KADOSH: fundo preto, logo dourado e o título “Vista sua fé. Expresse sua essência.” com botões Masculino e Feminino.",
+    },
   },
   {
     slug: "modo",
@@ -32,7 +40,7 @@ export const projects: Project[] = [
     stack: ["Next.js", "Tailwind"], // TODO confirmar
     publicImages: true,
     tone: "pink",
-    layout: "default",
+    layout: "wide",
   },
   {
     slug: "paz-no-lar",
@@ -41,9 +49,15 @@ export const projects: Project[] = [
     summary:
       "Sistema web para instituto de psicologia gratuita, onde atuo como voluntária no desenvolvimento e no design.",
     stack: ["TODO"],
-    publicImages: false,
+    publicImages: true,
     tone: "blue",
     layout: "tall",
+    cover: {
+      src: "/projects/paz-no-lar.webp",
+      width: 1903,
+      height: 935,
+      alt: "Página inicial do Instituto Paz no Lar: título grande “Paz no Lar” em degradê roxo, botões “Conheça os benefícios” e “Fale conosco” e selos de atendimento gratuito, sigilo e equipe dedicada.",
+    },
   },
   {
     slug: "banco-de-talentos",
@@ -51,9 +65,15 @@ export const projects: Project[] = [
     categories: ["UX/UI", "Front-end"],
     summary: "Vitrine das acolhidas do instituto.",
     stack: ["TODO"],
-    publicImages: false,
+    publicImages: true,
     tone: "lime",
-    layout: "default",
+    layout: "tall",
+    cover: {
+      src: "/projects/banco-de-talentos.webp",
+      width: 1903,
+      height: 932,
+      alt: "Página inicial do Banco de Talentos: fundo escuro, título “Encontre quem é Confeiteira”, busca por ofício e fotos de trabalhos das acolhidas, como unhas, bolos e bolsas.",
+    },
   },
 ];
 

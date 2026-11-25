@@ -22,6 +22,7 @@ const toneCls: Record<Project["tone"], string> = {
 const layoutCls: Record<Project["layout"], string> = {
   big: "sm:col-span-2 sm:row-span-2",
   tall: "sm:row-span-2",
+  wide: "sm:col-span-2 lg:col-span-4",
   default: "",
 };
 
@@ -29,58 +30,62 @@ const layoutCls: Record<Project["layout"], string> = {
 const notchMask =
   "radial-gradient(circle 34px at calc(100% - 26px) calc(100% - 26px), transparent 33px, #000 33.5px)";
 
-function ProjectCard({ p }: { p: Project }) {
+function ProjectCard({ p, priority }: { p: Project; priority: boolean }) {
+  const wide = p.layout === "wide";
   return (
     <Link
       href={`/projetos/${p.slug}`}
       data-cursor="ver case"
-      className="group relative block h-full min-h-[260px] rounded-[32px] focus-visible:outline-offset-[6px]"
+      className="group relative block h-full rounded-[32px] focus-visible:outline-offset-[6px]"
       aria-label={`${p.title}: ver case`}
     >
       <article
         className={cn(
-          "relative flex h-full flex-col justify-between overflow-hidden rounded-[32px] p-5 md:p-6",
+          "flex h-full gap-4 overflow-hidden rounded-[32px] p-5 md:p-6",
+          wide
+            ? "flex-col sm:grid sm:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] sm:gap-8"
+            : "flex-col",
           toneCls[p.tone],
         )}
         style={{ WebkitMask: notchMask, mask: notchMask }}
       >
-        {/* feedback: a capa dá zoom dentro da máscara no hover */}
-        <div
-          className={cn(
-            "absolute transition-transform duration-700 ease-[var(--ease-out)] group-hover:scale-[1.06] group-focus-visible:scale-[1.06]",
-            // celular e cards pequenos: capa na lateral direita; grandes/altos: capa no topo
-            "cover-side inset-y-0 right-0 w-[48%] opacity-70",
-            p.layout !== "default" &&
-              "sm:cover-top sm:inset-x-0 sm:top-0 sm:bottom-auto sm:h-[62%] sm:w-auto sm:opacity-100",
-          )}
-        >
-          <ProjectCover slug={p.slug} />
-        </div>
-        <div className="relative flex flex-wrap gap-1.5">
-          {p.categories.map((c) => (
-            <span
-              key={c}
-              className="bg-paper text-ink rounded-full px-2.5 py-1.5 font-mono text-[11px] tracking-[.15em] uppercase"
-            >
-              {c}
-            </span>
-          ))}
-          {!p.publicImages ? (
-            <span className="rounded-full border border-current px-2.5 py-1.5 font-mono text-[10px] tracking-[.1em] uppercase">
-              prints sob autorização
-            </span>
+        <div className={cn("flex flex-col gap-4", wide ? "sm:justify-between" : "flex-1")}>
+          <div className="flex flex-wrap gap-1.5">
+            {p.categories.map((c) => (
+              <span
+                key={c}
+                className="bg-paper text-ink rounded-full px-2.5 py-1.5 font-mono text-[11px] tracking-[.15em] uppercase"
+              >
+                {c}
+              </span>
+            ))}
+            {!p.publicImages ? (
+              <span className="rounded-full border border-current px-2.5 py-1.5 font-mono text-[10px] tracking-[.1em] uppercase">
+                prints sob autorização
+              </span>
+            ) : null}
+          </div>
+          {!wide ? (
+            <div className="min-h-[150px] flex-1">
+              <ProjectCover project={p} priority={priority} />
+            </div>
           ) : null}
+          <div className="pr-12">
+            <h3 className="font-display text-[clamp(2rem,3.4vw,2.75rem)] leading-none uppercase">
+              {p.title}
+            </h3>
+            <p className="mt-2 max-w-[460px] text-sm leading-relaxed">{p.summary}</p>
+            {/* hierarquia: a stack aparece no hover/foco (sempre visível em telas de toque) */}
+            <p className="mt-2.5 font-mono text-[11px] tracking-[.1em] uppercase opacity-90 transition-[opacity,transform] duration-300 [@media(hover:hover)]:translate-y-2 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:translate-y-0 [@media(hover:hover)]:group-hover:opacity-90 [@media(hover:hover)]:group-focus-visible:translate-y-0 [@media(hover:hover)]:group-focus-visible:opacity-90">
+              {p.stack.join(" · ")}
+            </p>
+          </div>
         </div>
-        <div className="relative pr-12">
-          <h3 className="font-display text-[clamp(2rem,3.4vw,2.75rem)] leading-none uppercase">
-            {p.title}
-          </h3>
-          <p className="mt-2 max-w-[420px] text-sm leading-relaxed">{p.summary}</p>
-          {/* hierarquia: a stack aparece no hover/foco (e está sempre visível sem hover, no toque) */}
-          <p className="mt-2.5 font-mono text-[11px] tracking-[.1em] uppercase opacity-90 transition-[opacity,transform] duration-300 [@media(hover:hover)]:translate-y-2 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:translate-y-0 [@media(hover:hover)]:group-hover:opacity-90 [@media(hover:hover)]:group-focus-visible:translate-y-0 [@media(hover:hover)]:group-focus-visible:opacity-90">
-            {p.stack.join(" · ")}
-          </p>
-        </div>
+        {wide ? (
+          <div className="min-h-[150px] sm:mr-10 sm:min-h-0">
+            <ProjectCover project={p} priority={priority} />
+          </div>
+        ) : null}
       </article>
       <span
         aria-hidden="true"
@@ -166,7 +171,7 @@ export function Projects() {
 
       <motion.ul
         layout
-        className="grid grid-flow-dense auto-rows-[260px] grid-cols-[minmax(0,1fr)] gap-3.5 sm:grid-cols-2 lg:grid-cols-4"
+        className="grid grid-flow-dense auto-rows-[minmax(420px,auto)] grid-cols-[minmax(0,1fr)] gap-3.5 sm:auto-rows-[260px] sm:grid-cols-2 lg:grid-cols-4"
       >
         <AnimatePresence mode="popLayout" initial={false}>
           {list.map((p) => (
@@ -179,7 +184,7 @@ export function Projects() {
               exit={{ opacity: 0, scale: 0.9 }}
               transition={spring}
             >
-              <ProjectCard p={p} />
+              <ProjectCard p={p} priority={false} />
             </motion.li>
           ))}
         </AnimatePresence>

@@ -1,70 +1,58 @@
+import Image from "next/image";
+import type { Project } from "@/content/pt/projects";
+
 /**
- * Capas ilustradas provisórias (sem prints reais ainda).
- * TODO: Brena — trocar por screenshots reais via next/image quando houver autorização.
+ * Capa do projeto: print real numa moldura de navegador ou, sem print,
+ * uma ilustração provisória. Preenche o bloco onde é colocada.
  */
-export function ProjectCover({ slug }: { slug: string }) {
-  switch (slug) {
-    case "kadosh":
-      return (
-        <div
-          className="absolute inset-0 grid grid-cols-3 gap-3 p-6 pt-16 opacity-90"
-          aria-hidden="true"
-        >
-          {[0, 1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="flex flex-col gap-2 rounded-2xl bg-white/8 p-2.5">
-              <div
-                className={`aspect-[3/4] rounded-xl ${["bg-folder-pink", "bg-folder-orange", "bg-folder-blue"][i % 3]}`}
-              />
-              <div className="h-2 w-3/4 rounded-full bg-white/25" />
-              <div className="bg-folder-lime h-2 w-1/3 rounded-full" />
-            </div>
-          ))}
+export function ProjectCover({
+  project,
+  priority = false,
+}: {
+  project: Project;
+  priority?: boolean;
+}) {
+  if (project.cover) {
+    return (
+      <div className="bg-paper flex h-full flex-col overflow-hidden rounded-[18px] shadow-[0_18px_40px_-18px_rgb(0_0_0/.45)] ring-1 ring-black/10">
+        <div className="flex shrink-0 items-center gap-1.5 px-3 py-2" aria-hidden="true">
+          <span className="size-2 rounded-full bg-[#ff5f57]" />
+          <span className="size-2 rounded-full bg-[#febc2e]" />
+          <span className="size-2 rounded-full bg-[#28c840]" />
         </div>
-      );
-    case "modo":
-      return (
-        <div
-          className="absolute inset-0 flex flex-col justify-center gap-2 px-6 pt-12 opacity-60"
-          aria-hidden="true"
-        >
-          {[70, 55, 80].map((w, i) => (
-            <div key={i} className="flex items-center gap-3">
-              <span className="bg-ink/80 size-4 rounded-full" />
-              <span className="bg-ink/25 h-2 rounded-full" style={{ width: `${w}%` }} />
-            </div>
-          ))}
+        <div className="relative min-h-0 flex-1 overflow-hidden">
+          {/* feedback: o print dá zoom dentro da moldura no hover */}
+          <Image
+            src={project.cover.src}
+            alt={project.cover.alt}
+            fill
+            priority={priority}
+            sizes="(min-width: 1024px) 560px, (min-width: 640px) 50vw, 100vw"
+            className="object-cover object-top transition-transform duration-700 ease-[var(--ease-out)] group-hover:scale-[1.05] group-focus-visible:scale-[1.05]"
+          />
         </div>
-      );
-    case "paz-no-lar":
-      return (
-        <div
-          className="absolute inset-0 flex flex-col gap-3 p-6 pt-24 opacity-80"
-          aria-hidden="true"
-        >
-          <div className="grid grid-cols-7 gap-1.5">
-            {Array.from({ length: 21 }).map((_, i) => (
-              <span
-                key={i}
-                className={`aspect-square rounded-md ${[3, 9, 17, 22].includes(i) ? "bg-ink/70" : "bg-white/50"}`}
-              />
-            ))}
-          </div>
-          <div className="bg-ink/25 mt-2 h-2 w-2/3 rounded-full" />
-          <div className="bg-ink/25 h-2 w-1/2 rounded-full" />
-        </div>
-      );
-    default:
-      return (
-        <div
-          className="absolute inset-0 flex items-center justify-center opacity-80"
-          aria-hidden="true"
-        >
-          <div className="flex -space-x-4 pt-10">
-            {["bg-folder-pink", "bg-folder-orange", "bg-folder-blue", "bg-paper"].map((c) => (
-              <span key={c} className={`border-folder-lime size-11 rounded-full border-4 ${c}`} />
-            ))}
-          </div>
-        </div>
-      );
+      </div>
+    );
   }
+
+  // TODO: Brena — enviar print do projeto para trocar a ilustração
+  return (
+    <div
+      className="relative flex h-full items-center justify-center overflow-hidden rounded-[18px] bg-white/35"
+      aria-hidden="true"
+    >
+      <div className="flex w-[80%] flex-col gap-2 transition-transform duration-700 group-hover:scale-105">
+        {[70, 55, 80].map((w, i) => (
+          <div key={i} className="flex items-center gap-3">
+            <span className="bg-ink/70 size-3.5 shrink-0 rounded-full" />
+            <span className="bg-ink/25 h-2 rounded-full" style={{ width: `${w}%` }} />
+            <span className="text-ink/60 ml-auto shrink-0 font-mono text-[10px] whitespace-nowrap">R$ —</span>
+          </div>
+        ))}
+      </div>
+      <span className="text-ink/70 absolute right-3 bottom-2 font-mono text-[10px] tracking-[.15em] uppercase">
+        print em breve
+      </span>
+    </div>
+  );
 }

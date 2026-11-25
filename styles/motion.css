@@ -178,13 +178,3 @@ html[data-motion="full"] .svc[data-shown] [data-anim="ring"] {
 html.bg-morph body {
   transition: color 500ms var(--ease-in-out);
 }
-
-/* capas dos projetos: esmaecem em direção ao texto */
-.cover-side {
-  mask-image: linear-gradient(to left, #000 35%, transparent 100%);
-}
-@media (min-width: 40rem) {
-  .sm\:cover-top {
-    mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
-  }
-}
