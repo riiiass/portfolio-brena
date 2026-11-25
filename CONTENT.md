@@ -10,8 +10,7 @@ Marque `[x]` conforme for resolvendo. Arquivo do código entre parênteses.
 - [x] **CV em PDF** — gerado a partir de `content/cv/cv-pt.json` com `npm run cv` → `public/cv-brena-angelo.pdf`
   - [x] Versão em **inglês**: `content/cv/cv-en.json` → `public/cv-brena-angelo-en.pdf`
   - [x] Idiomas, escola (EEEP Raimundo Celio Rodrigues) e link do portfólio
-  - [ ] **Telefone/WhatsApp** (opcional no CV)
-  - [ ] Nome do **curso técnico** do ensino médio (ex.: Informática)
+  - [x] WhatsApp no CV e curso técnico em Informática
 - [ ] **Print do MODO** — hoje mostra "print em breve" (`content/pt/projects.ts`)
 - [ ] **Mais prints para as galerias** dos cases (checkout e painel da KADOSH, versão mobile etc.) (`content/pt/cases.ts`)
 
