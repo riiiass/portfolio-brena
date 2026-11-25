@@ -46,7 +46,9 @@ export function ProjectCover({
           <div key={i} className="flex items-center gap-3">
             <span className="bg-ink/70 size-3.5 shrink-0 rounded-full" />
             <span className="bg-ink/25 h-2 rounded-full" style={{ width: `${w}%` }} />
-            <span className="text-ink/60 ml-auto shrink-0 font-mono text-[10px] whitespace-nowrap">R$ —</span>
+            <span className="text-ink/60 ml-auto shrink-0 font-mono text-[10px] whitespace-nowrap">
+              R$ —
+            </span>
           </div>
         ))}
       </div>

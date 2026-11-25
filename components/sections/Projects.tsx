@@ -9,6 +9,7 @@ import { Reveal, RevealLines } from "@/components/motion/Reveal";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
 import { ProjectCover } from "./ProjectCover";
+import { SharedCover } from "@/components/case/SharedCover";
 
 type Filter = "Todos" | ProjectCategory;
 const filters: Filter[] = ["Todos", "Full Stack", "UX/UI", "Front-end"];
@@ -66,9 +67,11 @@ function ProjectCard({ p, priority }: { p: Project; priority: boolean }) {
             ) : null}
           </div>
           {!wide ? (
-            <div className="min-h-[150px] flex-1">
-              <ProjectCover project={p} priority={priority} />
-            </div>
+            <SharedCover slug={p.slug}>
+              <div className="min-h-[150px] flex-1">
+                <ProjectCover project={p} priority={priority} />
+              </div>
+            </SharedCover>
           ) : null}
           <div className="pr-12">
             <h3 className="font-display text-[clamp(2rem,3.4vw,2.75rem)] leading-none uppercase">
@@ -82,9 +85,11 @@ function ProjectCard({ p, priority }: { p: Project; priority: boolean }) {
           </div>
         </div>
         {wide ? (
-          <div className="min-h-[150px] sm:mr-10 sm:min-h-0">
-            <ProjectCover project={p} priority={priority} />
-          </div>
+          <SharedCover slug={p.slug}>
+            <div className="min-h-[150px] sm:mr-10 sm:min-h-0">
+              <ProjectCover project={p} priority={priority} />
+            </div>
+          </SharedCover>
         ) : null}
       </article>
       <span

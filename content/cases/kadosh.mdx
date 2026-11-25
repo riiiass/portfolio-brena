@@ -1,0 +1,136 @@
+<CaseSection phase="descobrir" title="Desafio">
+
+A KADOSH é uma marca de moda cristã, masculina e feminina, que precisava de uma **loja própria**: um lugar para mostrar as coleções com a identidade da marca e vender com pagamento, frete e estoque funcionando de ponta a ponta.
+
+<div className="todo">
+  TODO: Brena — como a marca vendia antes do site (Instagram, WhatsApp, loja física)? Qual era a
+  maior dor?
+</div>
+
+</CaseSection>
+
+<CaseSection phase="definir" title="Abordagem">
+
+Escolhi uma base que desse conta da vitrine e das regras de negócio no mesmo projeto:
+
+- **Next.js 15 (App Router) com React 19 e TypeScript** para a interface e para as APIs, com tipagem de ponta a ponta.
+- **PostgreSQL no Neon com Prisma** para modelar produtos, variações, estoque, pedidos e pagamentos.
+- **Zod** validando todos os dados que chegam ao servidor.
+- Identidade editorial: **Cormorant Garamond** nos títulos e **Jost** nos textos, preto com dourado.
+
+</CaseSection>
+
+<CaseSection phase="desenvolver" title="Processo">
+
+### Vitrine e navegação
+
+Animações com **Framer Motion**: vitrine que gira, rolagem horizontal de produtos, menu lateral e carrinho lateral. Ícones com Lucide.
+
+### Checkout, frete e estoque
+
+- **PagBank (Checkout)**: Pix e cartão, com confirmação do pagamento por **webhook**.
+- **SuperFrete**: cálculo de frete com Correios, Jadlog e Loggi.
+- **ViaCEP**: o endereço se preenche a partir do CEP.
+- **Reserva de estoque** durante a compra, com uma função agendada no Netlify que libera reservas vencidas.
+- **Resend** para e-mails transacionais, quando configurado.
+
+### Painel administrativo
+
+Login feito no próprio projeto, sem biblioteca externa: **senha com hash scrypt** e **sessão assinada (HMAC)** em cookie seguro. As ações do painel usam Server Actions.
+
+### Qualidade
+
+Testes automatizados com **Vitest** (regras de atacado, CPF, assinaturas de webhook, frete e sessão) rodando no **GitHub Actions** a cada envio de código.
+
+</CaseSection>
+
+<CaseSection phase="desenvolver" title="Decisões de UX">
+
+<Decisions
+  items={[
+    {
+      title: "Carrinho lateral em vez de página de carrinho",
+      principle: "Nielsen · visibilidade do status",
+      text: "A pessoa adiciona um produto e vê o carrinho sem sair da vitrine: continua comprando sem perder o contexto.",
+    },
+    {
+      title: "Endereço preenchido pelo CEP",
+      principle: "Nielsen · prevenção de erros",
+      text: "Menos campos digitados à mão, menos erros de endereço e um checkout mais curto.",
+    },
+    {
+      title: "Pix e cartão no mesmo checkout",
+      principle: "Nielsen · flexibilidade",
+      text: "Cada pessoa paga do jeito que prefere, sem precisar de outro canal.",
+    },
+    {
+      title: "Estoque reservado durante a compra",
+      principle: "Nielsen · prevenção de erros",
+      text: "Evita a frustração de pagar por uma peça que acabou no meio do caminho.",
+    },
+  ]}
+/>
+
+<div className="todo">
+  TODO: Brena — revisar se essas decisões refletem o seu raciocínio e acrescentar outras.
+</div>
+
+</CaseSection>
+
+<CaseSection phase="entregar" title="Arquitetura">
+
+<Architecture
+  flow={[
+    { title: "Interface", detail: "Next.js 15 + React 19, Tailwind, Framer Motion" },
+    { title: "API", detail: "Route Handlers e Server Actions, validação com Zod" },
+    { title: "Banco", detail: "PostgreSQL no Neon via Prisma" },
+  ]}
+  integrations={[
+    "PagBank (Pix e cartão + webhook)",
+    "SuperFrete",
+    "ViaCEP",
+    "Resend",
+    "Netlify (função agendada)",
+  ]}
+/>
+
+<StackGroups
+  groups={[
+    {
+      label: "Interface",
+      items: [
+        "Next.js 15",
+        "React 19",
+        "TypeScript",
+        "Tailwind CSS",
+        "Framer Motion",
+        "Lucide React",
+      ],
+    },
+    { label: "Servidor", items: ["Route Handlers", "Server Actions", "Zod", "scrypt + HMAC"] },
+    { label: "Dados", items: ["PostgreSQL (Neon)", "Prisma"] },
+    { label: "Qualidade e deploy", items: ["Vitest", "GitHub Actions", "Netlify"] },
+    {
+      label: "Ferramentas",
+      items: ["VS Code", "Node.js 22", "Git", "PowerShell", "Claude (assistente de código)"],
+    },
+  ]}
+/>
+
+</CaseSection>
+
+<CaseSection phase="entregar" title="Resultado">
+
+<Metrics
+  items={[
+    { label: "Lighthouse (performance, mobile)" },
+    { label: "Pedidos ou vendas no primeiro mês" },
+    { label: "Tempo médio de checkout" },
+  ]}
+/>
+
+<div className="todo">
+  TODO: Brena — trocar pelos números reais (ou remover). Nada aqui foi inventado.
+</div>
+
+</CaseSection>

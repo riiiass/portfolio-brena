@@ -1,0 +1,92 @@
+<CaseSection phase="descobrir" title="Desafio">
+
+O Instituto Paz no Lar oferece **atendimento psicológico gratuito**. O site precisava passar confiança logo de cara (gratuidade, sigilo, equipe) e levar a pessoa a conhecer os benefícios ou entrar em contato, além de dar aos colaboradores um acesso restrito.
+
+<div className="todo">
+  TODO: Brena — o que o instituto usava antes? Quem são os usuários do sistema interno e o que eles
+  fazem nele?
+</div>
+
+</CaseSection>
+
+<CaseSection phase="definir" title="Abordagem">
+
+Sou voluntária no projeto, cuidando do **desenvolvimento e do design**.
+
+- **Next.js (React)** para o site e o sistema.
+- **Prisma** com **PostgreSQL no Neon**, na **região de São Paulo**, perto de quem usa.
+- Código no **GitHub** e deploy na **Netlify**.
+
+</CaseSection>
+
+<CaseSection phase="desenvolver" title="Processo">
+
+A página inicial foi pensada para quem chega fragilizado e com pressa de entender se pode ser atendido:
+
+- Título grande e direto, **“Paz no Lar”**, com o nome do instituto logo acima.
+- Duas ações claras: **“Conheça os benefícios”** (principal) e **“Fale conosco”** (secundária).
+- Selos de confiança logo abaixo: **atendimento gratuito, sigilo e respeito, equipe dedicada**.
+- O **login** fica separado no canto, marcado como “apenas colaboradores”, para não confundir quem procura atendimento.
+
+<div className="todo">
+  TODO: Brena — descrever as telas do sistema interno (agenda, cadastro, prontuário?) sem expor
+  dados sensíveis.
+</div>
+
+</CaseSection>
+
+<CaseSection phase="desenvolver" title="Decisões de UX">
+
+<Decisions
+  items={[
+    {
+      title: "Uma ação principal e uma secundária",
+      principle: "Hierarquia visual · Lei de Hick",
+      text: "Poucas escolhas, com peso visual diferente: a pessoa sabe o que fazer primeiro.",
+    },
+    {
+      title: "Selos de gratuidade e sigilo no hero",
+      principle: "Nielsen · correspondência com o mundo real",
+      text: "As dúvidas mais comuns de quem procura terapia gratuita são respondidas antes do primeiro scroll.",
+    },
+    {
+      title: "Login identificado como “apenas colaboradores”",
+      principle: "Nielsen · prevenção de erros",
+      text: "Evita que pacientes tentem entrar numa área que não é para eles.",
+    },
+    {
+      title: "Banco de dados em São Paulo",
+      principle: "Performance",
+      text: "Servidor de dados perto dos usuários reduz a latência das telas do sistema.",
+    },
+  ]}
+/>
+
+<div className="todo">TODO: Brena — revisar e completar.</div>
+
+</CaseSection>
+
+<CaseSection phase="entregar" title="Arquitetura">
+
+<Architecture
+  flow={[
+    { title: "Interface", detail: "Next.js (React)" },
+    { title: "Servidor", detail: "Next.js + Prisma" },
+    { title: "Banco", detail: "PostgreSQL no Neon (São Paulo)" },
+  ]}
+  integrations={["GitHub", "Netlify (deploy)"]}
+/>
+
+</CaseSection>
+
+<CaseSection phase="entregar" title="Resultado">
+
+<Metrics
+  items={[{ label: "Pessoas atendidas pelo site" }, { label: "Contatos recebidos por mês" }]}
+/>
+
+<div className="todo">
+  TODO: Brena — números ou depoimento do instituto, se puderem ser públicos.
+</div>
+
+</CaseSection>

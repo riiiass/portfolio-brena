@@ -178,3 +178,87 @@ html[data-motion="full"] .svc[data-shown] [data-anim="ring"] {
 html.bg-morph body {
   transition: color 500ms var(--ease-in-out);
 }
+
+/* ===== Case study ===== */
+.case-prose {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: var(--step-0);
+  line-height: 1.7;
+}
+.case-prose > p,
+.case-prose > ul,
+.case-prose > ol {
+  max-width: 64ch;
+}
+.case-prose > ul:not(.not-prose),
+.case-prose > ol:not(.not-prose) {
+  display: grid;
+  gap: 0.5rem;
+  padding-left: 1.25rem;
+}
+.case-prose > ul:not(.not-prose) {
+  list-style: "✦  ";
+}
+.case-prose > ol:not(.not-prose) {
+  list-style: decimal;
+}
+.case-prose > ul:not(.not-prose) ::marker {
+  color: var(--accent-text);
+}
+.case-prose strong {
+  font-weight: 700;
+}
+.case-prose h3 {
+  margin-top: 1rem;
+  font-family: var(--font-serif);
+  font-size: var(--step-2);
+  line-height: 1.15;
+}
+.case-prose a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.case-prose .todo {
+  border-radius: 16px;
+  border: 1.5px dashed var(--line);
+  padding: 0.75rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+/* Arquitetura: as setas se desenham na ordem do fluxo */
+.arch-line path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+html.js[data-motion="full"] .arch:not([data-shown]) .arch-line path {
+  stroke-dashoffset: 1;
+}
+html.js[data-motion="full"] .arch .arch-line path {
+  transition: stroke-dashoffset 700ms var(--ease-out);
+  transition-delay: calc(300ms + var(--k, 0) * 350ms);
+}
+
+/* Morph card → case */
+::view-transition-group(.morph) {
+  animation-duration: 550ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+::view-transition-image-pair(.morph) {
+  animation-name: via-blur;
+}
+@keyframes via-blur {
+  30% {
+    filter: blur(3px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

@@ -1,0 +1,63 @@
+<CaseSection phase="descobrir" title="Desafio">
+
+As acolhidas do instituto têm ofícios e trabalhos — confeitaria, manicure, artesanato, empreendedorismo — mas faltava um lugar para **mostrar esse trabalho** e ajudar quem visita a encontrar a pessoa certa.
+
+<div className="todo">
+  TODO: Brena — quantas acolhidas participam? Como as pessoas chegam até elas hoje?
+</div>
+
+</CaseSection>
+
+<CaseSection phase="definir" title="Abordagem">
+
+- Site em **HTML, CSS e JavaScript puros**, sem framework: leve e fácil de manter.
+- Design pensado a partir do **Cosmos**, com o trabalho de cada pessoa em primeiro plano.
+
+</CaseSection>
+
+<CaseSection phase="desenvolver" title="Processo">
+
+- Hero com a frase **“Encontre quem é Confeiteira”**, com fotos reais de trabalhos flutuando em volta.
+- **Busca por ofício, nome ou peça** no topo e no centro da página.
+- Faixa com os ofícios (empreendedora, confeiteira, artesã, manicure) passando em loop.
+- **“Minha seleção”**: quem visita guarda as pessoas de quem gostou.
+
+<div className="todo">
+  TODO: Brena — detalhar o perfil de cada acolhida e o caminho até o contato.
+</div>
+
+</CaseSection>
+
+<CaseSection phase="desenvolver" title="Decisões de UX">
+
+<Decisions
+  items={[
+    {
+      title: "Busca como ação principal",
+      principle: "Lei de Hick",
+      text: "Em vez de muitos menus, uma busca por ofício, nome ou peça leva direto ao que a pessoa procura.",
+    },
+    {
+      title: "Fotos do trabalho real",
+      principle: "Gestalt · figura e fundo",
+      text: "Fundo escuro e fotos em destaque: o trabalho de cada pessoa é o protagonista.",
+    },
+    {
+      title: "Lista “Minha seleção”",
+      principle: "Nielsen · reconhecer em vez de lembrar",
+      text: "Quem visita não precisa decorar nomes: guarda e compara depois.",
+    },
+  ]}
+/>
+
+<div className="todo">TODO: Brena — revisar e completar.</div>
+
+</CaseSection>
+
+<CaseSection phase="entregar" title="Resultado">
+
+<Metrics items={[{ label: "Acolhidas na vitrine" }, { label: "Contatos gerados" }]} />
+
+<div className="todo">TODO: Brena — números reais, se puderem ser públicos.</div>
+
+</CaseSection>
