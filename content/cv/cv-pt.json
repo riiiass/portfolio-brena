@@ -1,0 +1,117 @@
+{
+  "name": "Brena Angelo da Silva",
+  "headline": "Desenvolvedora Full Stack · UX/UI Designer",
+  "contact": [
+    {
+      "label": "Ceará, Brasil"
+    },
+    {
+      "label": "brena.angelo.silva1511@gmail.com",
+      "href": "mailto:brena.angelo.silva1511@gmail.com"
+    },
+    {
+      "label": "linkedin.com/in/brena-angelo-aa60a4228",
+      "href": "https://www.linkedin.com/in/brena-angelo-aa60a4228/"
+    },
+    {
+      "label": "github.com/riiiass",
+      "href": "https://github.com/riiiass"
+    }
+  ],
+  "summary": "Desenvolvedora full stack e designer UX/UI. Construo produtos web de ponta a ponta — da pesquisa com usuários e prototipação até API, banco de dados, testes e deploy — com Next.js, React, TypeScript, Node.js e PostgreSQL. Certificada em Google UX Design e graduanda em Engenharia de Software. Busco oportunidades em que design, código e impacto no usuário andem juntos.",
+  "experience": [
+    {
+      "role": "Desenvolvedora Full Stack",
+      "org": "Freelancer",
+      "where": "Remoto",
+      "period": "2026 – atual",
+      "bullets": [
+        "Desenvolvi de ponta a ponta o e-commerce da KADOSH (moda cristã, varejo e atacado) com Next.js 15 (App Router), React 19 e TypeScript, com checkout completo em que o cliente compra sem precisar de atendimento.",
+        "Integrei pagamentos via PagBank (Pix e cartão, com confirmação por webhook), cálculo de frete com SuperFrete (Correios, Jadlog e Loggi) e preenchimento automático de endereço por CEP (ViaCEP).",
+        "Modelei o banco em PostgreSQL (Neon) com Prisma — produtos, variações, estoque, pedidos e pagamentos — com reserva de estoque liberada automaticamente por função agendada na Netlify.",
+        "Implementei painel administrativo com autenticação própria (hash scrypt e sessão assinada com HMAC em cookie seguro) e validação de todas as entradas da API com Zod.",
+        "Escrevi testes automatizados com Vitest (regras de atacado, CPF, assinatura de webhook, frete e sessão) executados em CI no GitHub Actions a cada push; sigo na manutenção do projeto.",
+        "Projetei e desenvolvi em 3 semanas o Banco de Talentos, vitrine com busca por ofício, nome ou peça, em HTML, CSS e JavaScript puros."
+      ]
+    },
+    {
+      "role": "Desenvolvedora e UX/UI Designer (voluntária)",
+      "org": "Instituto Paz no Lar",
+      "where": "Remoto",
+      "period": "2026 – atual",
+      "bullets": [
+        "Desenho e desenvolvo o site e o sistema interno de um instituto que acolhe mulheres que passaram por situações de violência, com Next.js, React, Prisma e PostgreSQL (Neon, região São Paulo).",
+        "Construí área restrita em que a equipe cadastra e gerencia acolhidas, funcionários, diretoria e voluntários, com impressão e exportação em PDF.",
+        "Tratei a privacidade de dados sensíveis como requisito: acesso somente para colaboradores autenticados e nenhuma informação interna exposta no site público.",
+        "Mantenho o sistema em produção, com código no GitHub e deploy contínuo na Netlify."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "title": "Bacharelado em Engenharia de Software",
+      "org": "UNIASSELVI",
+      "period": "2026 – em andamento"
+    },
+    {
+      "title": "Licenciatura em Matemática",
+      "org": "Uninassau",
+      "period": "2026 – em andamento"
+    },
+    {
+      "title": "Ensino Médio com formação técnica",
+      "org": "Python, Java e primeiro projeto com cliente real",
+      "period": "Concluído em 2025"
+    }
+  ],
+  "certifications": [
+    {
+      "title": "Google UX Design Professional Certificate",
+      "org": "Google · Coursera",
+      "period": "2025",
+      "href": "https://www.credly.com/go/oYS1f7pU"
+    },
+    {
+      "title": "Google IT Support Professional Certificate",
+      "org": "Google · Coursera",
+      "period": "2025",
+      "href": "https://www.credly.com/go/ADbzF1lf"
+    },
+    {
+      "title": "Foundations of Cybersecurity",
+      "org": "Google · Coursera",
+      "period": "2026",
+      "href": "https://coursera.org/verify/QNCGMGUC4W7B"
+    },
+    {
+      "title": "Preparação Profissional (4 módulos)",
+      "org": "IBM SkillsBuild",
+      "period": "2026"
+    }
+  ],
+  "skills": [
+    {
+      "group": "Front-end",
+      "items": "React, Next.js (App Router), TypeScript, JavaScript, HTML, CSS, Tailwind CSS, Framer Motion"
+    },
+    {
+      "group": "Back-end e dados",
+      "items": "Node.js, APIs REST, Route Handlers e Server Actions, webhooks, PostgreSQL, Prisma, Zod"
+    },
+    {
+      "group": "Qualidade e DevOps",
+      "items": "Vitest, GitHub Actions (CI), Git, Netlify, funções agendadas"
+    },
+    {
+      "group": "UX/UI",
+      "items": "Pesquisa com usuários, arquitetura de informação, prototipação, design system, acessibilidade (WCAG)"
+    },
+    {
+      "group": "Linguagens",
+      "items": "TypeScript, JavaScript, Python, Java"
+    }
+  ],
+  "extra": [
+    "Extensão universitária (UNIASSELVI, 2026): 360 horas em 5 projetos sociais, incluindo direitos humanos e ações de apoio a municípios em situação de emergência."
+  ]
+}

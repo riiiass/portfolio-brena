@@ -1,15 +1,14 @@
-// TODO: Brena — anos do técnico, da Engenharia de Software e da Licenciatura
 export const timeline = [
   {
-    title: "Técnico no ensino médio",
+    title: "Ensino médio técnico",
     text: "Python, Java e o primeiro projeto com cliente real.",
-    year: "",
+    year: "2025",
   },
-  { title: "Engenharia de Software", text: "UNIASSELVI.", year: "" },
+  { title: "Engenharia de Software", text: "UNIASSELVI. Em andamento.", year: "2026" },
   {
     title: "Licenciatura em Matemática",
-    text: "Uninassau. Lógica, didática e jeito de explicar o complexo.",
-    year: "",
+    text: "Uninassau, desde o meio de 2026. Lógica, didática e jeito de explicar o complexo.",
+    year: "2026",
   },
   {
     title: "Projetos de cliente",

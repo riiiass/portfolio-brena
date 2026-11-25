@@ -7,7 +7,11 @@ Marque `[x]` conforme for resolvendo. Arquivo do código entre parênteses.
 
 - [ ] **Sua foto recortada** (PNG sem fundo) para o hero — hoje é uma silhueta azul (`components/sections/FolderPlayground.tsx`)
 - [ ] **Sua foto** para a janela do Sobre — hoje é uma silhueta laranja (`components/sections/About.tsx`)
-- [ ] **CV em PDF** — o ⌘K tem "Baixar CV", mas o arquivo `public/cv-brena-angelo.pdf` não existe (`lib/site.ts`)
+- [x] **CV em PDF** — gerado a partir de `content/cv/cv-pt.json` com `npm run cv` → `public/cv-brena-angelo.pdf`
+  - [ ] Nível de **inglês** (big techs costumam pedir; também posso gerar a versão em inglês do CV)
+  - [ ] **Telefone/WhatsApp** (opcional no CV)
+  - [ ] Nome da **escola** do ensino médio técnico e o curso técnico
+  - [ ] Link do **portfólio** no CV quando o site estiver no ar
 - [ ] **Print do MODO** — hoje mostra "print em breve" (`content/pt/projects.ts`)
 - [ ] **Mais prints para as galerias** dos cases (checkout e painel da KADOSH, versão mobile etc.) (`content/pt/cases.ts`)
 
@@ -44,8 +48,8 @@ Marque `[x]` conforme for resolvendo. Arquivo do código entre parênteses.
 
 ## 6. Trajetória
 
-- [x] Projetos de cliente e Paz no Lar: 2026, 2 a 3 meses cada (Banco de Talentos: menos de 2 meses); manutenção contínua na KADOSH e no Paz no Lar
-- [ ] **Anos** do técnico, da Engenharia de Software e da Licenciatura em Matemática (`content/pt/timeline.ts`)
+- [x] Projetos de cliente e Paz no Lar: 2026, 2 a 3 meses cada (Banco de Talentos: 3 semanas); manutenção contínua na KADOSH e no Paz no Lar
+- [x] Anos: ensino médio técnico 2025; Engenharia de Software e Licenciatura em Matemática desde 2026 (em andamento)
 - [ ] Nome da **escola técnica** (se quiser mostrar)
 
 ## 7. Depoimentos

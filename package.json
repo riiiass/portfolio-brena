@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
-    "test:e2e": "playwright test --trace off"
+    "test:e2e": "playwright test --trace off",
+    "cv": "node scripts/build-cv.mjs pt"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",

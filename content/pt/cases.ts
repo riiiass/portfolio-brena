@@ -52,7 +52,7 @@ export const cases: CaseMeta[] = [
     script: "talento",
     role: "Design e front-end",
     year: "2026",
-    duration: "menos de 2 meses",
+    duration: "3 semanas",
     lede: "Vitrine das acolhidas do instituto: quem visita encontra confeiteiras, manicures, artesãs e empreendedoras e vê, de perto, o trabalho de cada uma.",
     gallery: [],
   },
