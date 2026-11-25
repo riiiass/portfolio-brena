@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { timeline } from "@/content/pt/timeline";
+import { getContent } from "@/content";
+import { useLocale } from "@/lib/use-locale";
 import { usePrefs } from "@/components/providers/Preferences";
 import { NotchCard } from "@/components/ui/NotchCard";
 import { RevealLines } from "@/components/motion/Reveal";
@@ -13,6 +14,7 @@ import { loadGsap } from "@/lib/gsap";
  * Celular, reduced motion ou sem JS: lista completa, sem pin.
  */
 export function Timeline() {
+  const { timeline, t } = getContent(useLocale());
   const { reducedMotion } = usePrefs();
   const section = useRef<HTMLElement>(null);
   const viewport = useRef<HTMLDivElement>(null);
@@ -77,7 +79,7 @@ export function Timeline() {
     >
       <NotchCard
         className="mx-auto w-full max-w-[1240px]"
-        tab={<span className="label-mono text-[11px]">Trajetória</span>}
+        tab={<span className="label-mono text-[11px]">{t.timelineTab}</span>}
         bodyClassName="overflow-hidden"
       >
         <div className="mb-10 flex flex-wrap items-end justify-between gap-5">
@@ -85,19 +87,16 @@ export function Timeline() {
             id="processo-t"
             className="font-display text-step-4 leading-[.9] uppercase"
             lines={[
-              "Do primeiro",
+              t.timelineTitle1,
               <>
                 <span className="font-script text-blush text-[1.35em] leading-[.6] normal-case">
-                  código
+                  {t.timelineScript}
                 </span>{" "}
-                até hoje
+                {t.timelineTitle2}
               </>,
             ]}
           />
-          <p className="max-w-[300px] text-sm text-[#cfc9c0]">
-            Da escola técnica ao trabalho voluntário e freelance: cada etapa somou código, didática
-            e cuidado com pessoas.
-          </p>
+          <p className="max-w-[300px] text-sm text-[#cfc9c0]">{t.timelineText}</p>
         </div>
 
         {/* régua de progresso (slider da ref. C) */}

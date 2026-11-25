@@ -10,5 +10,6 @@ export function monthlyTotals(days: Contribution[]) {
 }
 
 const MONTHS = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
-/** "2026-08" → "ago/26" */
-export const monthLabel = (ym: string) => `${MONTHS[Number(ym.slice(5, 7)) - 1]}/${ym.slice(2, 4)}`;
+/** "2026-08" → "ago/26" (ou "aug/26" com os meses em inglês) */
+export const monthLabel = (ym: string, months: readonly string[] = MONTHS) =>
+  `${months[Number(ym.slice(5, 7)) - 1]}/${ym.slice(2, 4)}`;

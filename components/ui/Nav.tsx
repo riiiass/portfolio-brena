@@ -3,7 +3,11 @@
 import Link from "next/link";
 import { m, useMotionValueEvent, useScroll } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { navSections, type SectionId } from "@/content/pt/sections";
+import type { SectionId } from "@/content/pt/sections";
+import { getContent } from "@/content";
+import { useLocale } from "@/lib/use-locale";
+import { homePath, sectionHref, switchPath, type Locale } from "@/lib/i18n";
+import { usePathname } from "next/navigation";
 import { usePrefs } from "@/components/providers/Preferences";
 import { scrollToId } from "@/lib/scroll";
 import { emit } from "@/lib/events";
@@ -13,7 +17,7 @@ import { Icon } from "./Icon";
 import { ThemeToggle } from "./ThemeToggle";
 
 /** Observa qual seção está no centro da tela */
-function useActiveSection() {
+function useActiveSection(navSections: { id: SectionId }[]) {
   const [active, setActive] = useState<SectionId>("inicio");
   useEffect(() => {
     const els = navSections
@@ -27,23 +31,47 @@ function useActiveSection() {
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, []);
+  }, [navSections]);
   return active;
 }
 
 /** Na home rola até a seção; em outras rotas deixa o link /#id navegar */
-function go(e: React.MouseEvent, id: SectionId) {
-  if (location.pathname !== "/") return;
+function go(e: React.MouseEvent, id: SectionId, l: Locale) {
+  if (location.pathname !== homePath(l)) return;
   e.preventDefault();
   scrollToId(id);
 }
 
+/** Troca de idioma: leva para a página equivalente */
+function LangSwitch({ className }: { className?: string }) {
+  const pathname = usePathname() ?? "/";
+  const l = useLocale();
+  const t = getContent(l).t;
+  const to: Locale = l === "en" ? "pt" : "en";
+  return (
+    <a
+      href={switchPath(pathname, to)}
+      hrefLang={to === "en" ? "en" : "pt-BR"}
+      title={t.langSwitch}
+      className={cn(
+        "flex size-11 shrink-0 items-center justify-center rounded-full border-[1.5px] font-mono text-xs font-medium tracking-[.1em] transition-transform active:scale-[.97]",
+        className,
+      )}
+    >
+      {t.langLabel}
+      <span className="sr-only"> · {t.langSwitch}</span>
+    </a>
+  );
+}
+
 function UserPill({ compact = false }: { compact?: boolean }) {
+  const l = useLocale();
+  const t = getContent(l).t;
   return (
     <Link
-      href="/#inicio"
-      onClick={(e) => go(e, "inicio")}
-      data-cursor="início"
+      href={sectionHref(l, "inicio")}
+      onClick={(e) => go(e, "inicio", l)}
+      data-cursor="home"
       data-easter="avatar"
       className="bg-paper text-ink flex items-center gap-2.5 rounded-full py-1.5 pr-3.5 pl-1.5 transition-transform duration-150 active:scale-[.97]"
     >
@@ -61,11 +89,11 @@ function UserPill({ compact = false }: { compact?: boolean }) {
             <span className="bg-ok relative size-[7px] rounded-full" />
           </span>
           {compact ? (
-            "disponível"
+            t.availableShort
           ) : (
             <>
-              <span className="lg:hidden">disponível</span>
-              <span className="hidden lg:inline">disponível para projetos</span>
+              <span className="lg:hidden">{t.availableShort}</span>
+              <span className="hidden lg:inline">{t.available}</span>
             </>
           )}
         </span>
@@ -75,7 +103,9 @@ function UserPill({ compact = false }: { compact?: boolean }) {
 }
 
 export function Nav() {
-  const active = useActiveSection();
+  const l = useLocale();
+  const { navSections, t } = getContent(l);
+  const active = useActiveSection(navSections);
   const { wireframe, toggleWireframe, reducedMotion } = usePrefs();
   const [hidden, setHidden] = useState(false);
   const navRef = useRef<HTMLElement>(null);
@@ -98,7 +128,7 @@ export function Nav() {
       >
         <nav
           ref={navRef}
-          aria-label="Principal"
+          aria-label={t.navMain}
           className="border-line bg-block text-on-block flex w-full max-w-[1180px] items-center gap-2.5 rounded-full border p-1.5 shadow-[0_14px_30px_-14px_var(--shadow)]"
         >
           <UserPill />
@@ -108,8 +138,8 @@ export function Nav() {
               return (
                 <li key={s.id} className="relative">
                   <Link
-                    href={`/#${s.id}`}
-                    onClick={(e) => go(e, s.id)}
+                    href={sectionHref(l, s.id)}
+                    onClick={(e) => go(e, s.id, l)}
                     aria-current={isActive ? "true" : undefined}
                     className={cn(
                       "relative z-10 block rounded-full px-4 py-2.5 text-sm font-medium transition-colors duration-300",
@@ -137,11 +167,12 @@ export function Nav() {
           <button
             type="button"
             onClick={() => emit("palette:open")}
-            aria-label="Abrir busca (Ctrl ou Command + K)"
+            aria-label={`${t.openSearch} (Ctrl / ⌘ K)`}
             className="border-on-block/40 hover:border-on-block flex size-11 items-center justify-center rounded-full border-[1.5px] transition-colors active:scale-[.97] lg:hidden"
           >
             <Icon name="search" size={18} />
           </button>
+          <LangSwitch className="border-on-block/40 hover:border-on-block" />
           <ThemeToggle />
           <button
             type="button"
@@ -154,7 +185,7 @@ export function Nav() {
           >
             <Icon name="wireframe" size={16} />
             <span className="hidden lg:inline">WIREFRAME</span>
-            <span className="sr-only lg:hidden">Modo Wireframe</span>
+            <span className="sr-only lg:hidden">{t.wireframe}</span>
           </button>
         </nav>
       </m.header>
@@ -168,18 +199,19 @@ export function Nav() {
           <button
             type="button"
             onClick={() => emit("palette:open")}
-            aria-label="Abrir busca"
+            aria-label={t.openSearch}
             className="border-fg bg-surface flex size-11 items-center justify-center rounded-full border-[1.5px]"
           >
             <Icon name="search" size={18} />
           </button>
+          <LangSwitch className="border-fg bg-surface" />
           <ThemeToggle />
         </div>
       </header>
 
       {/* ---------- mobile: dock inferior ---------- */}
       <nav
-        aria-label="Navegação rápida"
+        aria-label={t.navQuick}
         className="bg-block text-on-block fixed inset-x-4 bottom-4 z-40 flex h-[72px] items-center justify-around rounded-full px-2.5 shadow-[0_16px_30px_-10px_rgb(0_0_0/.55)] md:hidden"
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
@@ -187,9 +219,9 @@ export function Nav() {
           s.id === "inicio" ? (
             <Link
               key={s.id}
-              href="/#inicio"
-              onClick={(e) => go(e, s.id)}
-              aria-label="Início"
+              href={sectionHref(l, "inicio")}
+              onClick={(e) => go(e, s.id, l)}
+              aria-label={s.label}
               aria-current={active === s.id ? "true" : undefined}
               className="border-bg bg-blush text-ink -mt-8 flex size-16 items-center justify-center rounded-full border-4 transition-transform active:scale-[.94]"
             >
@@ -198,8 +230,8 @@ export function Nav() {
           ) : (
             <Link
               key={s.id}
-              href={`/#${s.id}`}
-              onClick={(e) => go(e, s.id)}
+              href={sectionHref(l, s.id)}
+              onClick={(e) => go(e, s.id, l)}
               aria-label={s.label}
               aria-current={active === s.id ? "true" : undefined}
               className="relative flex size-12 items-center justify-center rounded-full transition-transform active:scale-[.94]"

@@ -5,6 +5,9 @@ import { site } from "@/lib/site";
 import { scrollToTop } from "@/lib/scroll";
 import { Marquee } from "@/components/motion/Marquee";
 import { Icon, type IconName } from "@/components/ui/Icon";
+import { useLocale } from "@/lib/use-locale";
+import { getContent } from "@/content";
+import { homePath, sectionHref } from "@/lib/i18n";
 
 const links: { label: string; href: string; icon: IconName }[] = [
   { label: "LinkedIn", href: site.social.linkedin, icon: "linkedin" },
@@ -14,20 +17,18 @@ const links: { label: string; href: string; icon: IconName }[] = [
 ];
 
 export function Footer() {
+  const l = useLocale();
+  const t = getContent(l).t;
   return (
     <footer className="px-4 pb-28 md:px-6 md:pb-10">
       <div className="border-line bg-block text-on-block mx-auto flex max-w-[1240px] items-center gap-3 rounded-full border p-2.5 md:gap-4 md:p-3.5">
-        <Marquee
-          label="Disponível para projetos"
-          speed={45}
-          className="min-w-0 flex-1 rounded-full"
-        >
-          {["DISPONÍVEL PARA PROJETOS", "FULL STACK", "UX/UI", "FREELANCE & CLT"].map((t) => (
+        <Marquee label={t.footerMarqueeLabel} speed={45} className="min-w-0 flex-1 rounded-full">
+          {t.footerMarquee.map((item) => (
             <span
-              key={t}
+              key={item}
               className="flex items-center font-mono text-xs tracking-[.4em] whitespace-nowrap md:text-sm"
             >
-              <span className="px-5">{t}</span>
+              <span className="px-5">{item}</span>
               <span aria-hidden="true" className="text-blush">
                 ✦
               </span>
@@ -36,13 +37,13 @@ export function Footer() {
         </Marquee>
         {/* orientação: o botão home central volta ao topo com scroll suave */}
         <Link
-          href="/#inicio"
+          href={sectionHref(l, "inicio")}
           onClick={(e) => {
-            if (location.pathname !== "/") return;
+            if (location.pathname !== homePath(l)) return;
             e.preventDefault();
             scrollToTop();
           }}
-          aria-label="Voltar ao topo"
+          aria-label={t.backTop}
           data-cursor="topo"
           className="bg-blush text-ink flex size-14 shrink-0 items-center justify-center rounded-full transition-transform duration-300 hover:-translate-y-1 active:scale-[.94] md:size-16"
         >
@@ -51,7 +52,7 @@ export function Footer() {
       </div>
       <div className="text-muted mx-auto mt-6 flex max-w-[1240px] flex-col items-center justify-between gap-4 px-2 text-sm sm:flex-row">
         <p>
-          Desenhado e codado por {site.name} · {new Date().getFullYear()}
+          {t.credits} {site.name} · {new Date().getFullYear()}
         </p>
         <ul className="flex items-center gap-2">
           {links.map((l) => (

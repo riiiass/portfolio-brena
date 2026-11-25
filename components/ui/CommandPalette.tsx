@@ -3,8 +3,9 @@
 import { AnimatePresence, m } from "motion/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
-import { navSections } from "@/content/pt/sections";
-import { projects, technologies } from "@/content/pt/projects";
+import { getContent } from "@/content";
+import { useLocale } from "@/lib/use-locale";
+import { casePath, homePath, sectionHref, switchPath } from "@/lib/i18n";
 import { usePrefs } from "@/components/providers/Preferences";
 import { copyEmail, emit } from "@/lib/events";
 import { scrollToId } from "@/lib/scroll";
@@ -14,7 +15,7 @@ import { Icon, type IconName } from "./Icon";
 
 type Action =
   | { kind: "section" | "route"; target: string }
-  | { kind: "email" | "cv" | "cvEn" | "theme" | "wireframe" | "inspect" | "motion" };
+  | { kind: "email" | "cv" | "cvEn" | "lang" | "theme" | "wireframe" | "inspect" | "motion" };
 type Item = {
   id: string;
   group: string;
@@ -32,6 +33,9 @@ const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCa
  * Padrão combobox + listbox (WAI-ARIA), totalmente operável por teclado.
  */
 export function CommandPalette({ initialOpen = false }: { initialOpen?: boolean }) {
+  const l = useLocale();
+  const { navSections, projects, technologies, t } = getContent(l);
+  const P = t.palette;
   const [open, setOpen] = useState(initialOpen);
   const [query, setQuery] = useState("");
   const [index, setIndex] = useState(0);
@@ -79,84 +83,102 @@ export function CommandPalette({ initialOpen = false }: { initialOpen?: boolean 
     () => [
       ...navSections.map((s) => ({
         id: `s-${s.id}`,
-        group: "Seções",
+        group: P.groups.sections,
         label: s.label,
         icon: s.icon,
         action: { kind: "section" as const, target: s.id },
       })),
       ...projects.map((p) => ({
         id: `p-${p.slug}`,
-        group: "Projetos",
+        group: P.groups.projects,
         label: p.title,
         hint: p.categories.join(" · "),
         icon: "folder" as const,
         keywords: `${p.summary} ${p.stack.join(" ")}`,
-        action: { kind: "route" as const, target: `/projetos/${p.slug}` },
+        action: { kind: "route" as const, target: casePath(l, p.slug) },
       })),
-      ...technologies.map((t) => ({
-        id: `t-${t}`,
-        group: "Tecnologias",
-        label: t,
-        hint: "ver projetos",
+      ...technologies.map((tech) => ({
+        id: `t-${tech}`,
+        group: P.groups.tech,
+        label: tech,
+        hint: P.seeProjects,
         icon: "code" as const,
         action: { kind: "section" as const, target: "projetos" },
       })),
       {
         id: "a-email",
-        group: "Ações",
-        label: "Copiar e-mail",
+        group: P.groups.actions,
+        label: P.copyEmail,
         hint: site.email,
         icon: "copy",
         action: { kind: "email" },
       },
       {
         id: "a-cv",
-        group: "Ações",
-        label: "Baixar CV (PDF)",
+        group: P.groups.actions,
+        label: P.cv,
         icon: "download",
         keywords: "curriculo resume",
         action: { kind: "cv" },
       },
       {
         id: "a-cv-en",
-        group: "Ações",
-        label: "Download CV (English)",
+        group: P.groups.actions,
+        label: P.cvOther,
         icon: "download",
         keywords: "curriculo resume ingles english",
         action: { kind: "cvEn" },
       },
       {
         id: "a-theme",
-        group: "Ações",
-        label: prefs.theme === "dark" ? "Mudar para tema claro" : "Mudar para tema escuro",
+        group: P.groups.actions,
+        label: prefs.theme === "dark" ? P.toLight : P.toDark,
         icon: prefs.theme === "dark" ? "sun" : "moon",
         keywords: "tema escuro claro dark light preto branco",
         action: { kind: "theme" },
       },
       {
         id: "a-wire",
-        group: "Ações",
-        label: prefs.wireframe ? "Sair do Modo Wireframe" : "Alternar Modo Wireframe",
+        group: P.groups.actions,
+        label: prefs.wireframe ? P.wireOff : P.wireOn,
         icon: "wireframe",
         action: { kind: "wireframe" },
       },
       {
         id: "a-inspect",
-        group: "Ações",
-        label: prefs.inspect ? "Sair do Modo Inspeção" : "Modo Inspeção (tecla I)",
+        group: P.groups.actions,
+        label: prefs.inspect ? P.inspectOff : P.inspectOn,
         icon: "inspect",
         action: { kind: "inspect" },
       },
       {
         id: "a-motion",
-        group: "Ações",
-        label: prefs.reducedMotion ? "Ativar animações" : "Reduzir movimento",
+        group: P.groups.actions,
+        label: prefs.reducedMotion ? P.motionOn : P.motionOff,
         icon: "motion",
         keywords: "acessibilidade animacao movimento",
         action: { kind: "motion" },
       },
+      {
+        id: "a-lang",
+        group: P.groups.actions,
+        label: P.language,
+        icon: "arrowUpRight",
+        keywords: "english ingles portugues idioma language",
+        action: { kind: "lang" },
+      },
     ],
-    [prefs.theme, prefs.wireframe, prefs.inspect, prefs.reducedMotion],
+    [
+      prefs.theme,
+      prefs.wireframe,
+      prefs.inspect,
+      prefs.reducedMotion,
+      l,
+      navSections,
+      projects,
+      technologies,
+      P,
+    ],
   );
 
   const run = (item: Item) => {
@@ -164,7 +186,9 @@ export function CommandPalette({ initialOpen = false }: { initialOpen?: boolean 
     const a = item.action;
     switch (a.kind) {
       case "section":
-        setTimeout(() => scrollToId(a.target), 60);
+        // na home rola até a seção; em outra página navega para ela
+        if (location.pathname === homePath(l)) setTimeout(() => scrollToId(a.target), 60);
+        else router.push(sectionHref(l, a.target));
         break;
       case "route":
         router.push(a.target);
@@ -173,36 +197,39 @@ export function CommandPalette({ initialOpen = false }: { initialOpen?: boolean 
         void copyEmail(site.email);
         break;
       case "cv":
-        window.open(site.cvUrl, "_blank");
+        window.open(l === "en" ? site.cvUrlEn : site.cvUrl, "_blank");
         break;
       case "cvEn":
-        window.open(site.cvUrlEn, "_blank");
+        window.open(l === "en" ? site.cvUrl : site.cvUrlEn, "_blank");
+        break;
+      case "lang":
+        location.href = switchPath(location.pathname, l === "en" ? "pt" : "en");
         break;
       case "theme":
         prefs.toggleTheme();
         break;
       case "wireframe":
         prefs.toggleWireframe();
-        emit("toast", prefs.wireframe ? "Modo Wireframe desligado" : "Modo Wireframe ligado");
+        emit("toast", prefs.wireframe ? P.toastWireOff : P.toastWireOn);
         break;
       case "inspect":
         prefs.toggleInspect();
-        emit("toast", prefs.inspect ? "Modo Inspeção desligado" : "Modo Inspeção ligado");
+        emit("toast", prefs.inspect ? P.toastInspectOff : P.toastInspectOn);
         break;
       case "motion":
         prefs.toggleReducedMotion();
-        emit("toast", prefs.reducedMotion ? "Animações ativadas" : "Movimento reduzido");
+        emit("toast", prefs.reducedMotion ? P.toastMotionOn : P.toastMotionOff);
         break;
     }
   };
 
   const filtered = useMemo(() => {
     const q = norm(query.trim());
-    if (!q) return items.filter((i) => i.group !== "Tecnologias");
+    if (!q) return items.filter((i) => i.group !== P.groups.tech);
     return items.filter((i) =>
       norm(`${i.label} ${i.hint ?? ""} ${i.keywords ?? ""} ${i.group}`).includes(q),
     );
-  }, [items, query]);
+  }, [items, query, P.groups.tech]);
 
   const safeIndex = Math.min(index, Math.max(filtered.length - 1, 0));
   const activeItem = filtered[safeIndex];
@@ -249,7 +276,7 @@ export function CommandPalette({ initialOpen = false }: { initialOpen?: boolean 
           <m.div
             role="dialog"
             aria-modal="true"
-            aria-label="Busca e comandos"
+            aria-label={P.dialog}
             className="border-line bg-surface text-fg w-full max-w-xl overflow-hidden rounded-[28px] border shadow-[0_30px_80px_-20px_rgb(0_0_0/.5)]"
             // orientação: o painel "cai" da barra de busca
             initial={{ y: -16, scale: 0.97, opacity: 0 }}
@@ -271,13 +298,13 @@ export function CommandPalette({ initialOpen = false }: { initialOpen?: boolean 
                 aria-controls={listId}
                 aria-activedescendant={activeItem ? `cmd-${activeItem.id}` : undefined}
                 aria-autocomplete="list"
-                aria-label="Buscar projetos, tecnologias, seções ou ações"
+                aria-label={P.input}
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);
                   setIndex(0);
                 }}
-                placeholder="Buscar projetos, stack, seções…"
+                placeholder={P.placeholder}
                 className="placeholder:text-muted h-16 flex-1 bg-transparent text-base outline-none"
               />
               <kbd className="border-line text-muted rounded-full border px-2.5 py-1 font-mono text-[11px]">
@@ -288,13 +315,11 @@ export function CommandPalette({ initialOpen = false }: { initialOpen?: boolean 
               id={listId}
               role="listbox"
               onClick={onListClick}
-              aria-label="Resultados"
+              aria-label={P.results}
               className="max-h-[min(60vh,440px)] overflow-y-auto p-2"
             >
               {filtered.length === 0 ? (
-                <li className="text-muted px-4 py-8 text-center text-sm">
-                  Nada encontrado para “{query}”.
-                </li>
+                <li className="text-muted px-4 py-8 text-center text-sm">{P.none(query)}</li>
               ) : (
                 filtered.map((item, i) => {
                   const header = item.group !== lastGroup ? item.group : null;
@@ -349,8 +374,8 @@ export function CommandPalette({ initialOpen = false }: { initialOpen?: boolean 
               )}
             </ul>
             <div className="border-line text-muted flex items-center gap-4 border-t px-5 py-3 font-mono text-[11px]">
-              <span>↑↓ navegar</span>
-              <span>↵ abrir</span>
+              <span>{P.nav}</span>
+              <span>{P.open}</span>
               <span className="ml-auto">⌘K / Ctrl+K</span>
             </div>
           </m.div>

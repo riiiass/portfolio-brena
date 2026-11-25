@@ -1,0 +1,99 @@
+<CaseSection phase="descobrir" title="Challenge">
+
+Instituto Paz no Lar is dedicated to **supporting women** who have been through hard situations such as abuse and other forms of violence. The nonprofit needed two things in one place:
+
+- **A public website** presenting its work: home, the organization's story, photos, contact details and Instagram, in a way that draws people in and gets them interested.
+- **A staff-only area** to register and maintain information about everyone in the program — women supported, employees, board members and volunteers — and use it as an organized repository, with **printing and PDF export**.
+
+</CaseSection>
+
+<CaseSection phase="definir" title="Approach">
+
+I volunteer on the project, handling **development and design**.
+
+- **Next.js (React)** for the public site and the admin area in the same project.
+- **Prisma** with **PostgreSQL on Neon**, in the **São Paulo region**, close to its users.
+- Code on **GitHub** and deployment on **Netlify**.
+- Because the internal area stores personal and sensitive information, access is **limited to authenticated staff** and no internal screen appears in this portfolio.
+
+</CaseSection>
+
+<CaseSection phase="desenvolver" title="Process">
+
+### Public website
+
+Designed for people arriving in search of help or wanting to support the nonprofit:
+
+- A large, direct title, **“Paz no Lar”** (Peace at Home), with the organization's name right above it.
+- Two clear actions: **“Learn about the benefits”** (primary) and **“Contact us”** (secondary).
+- Trust badges right below: **free support, confidentiality and respect, dedicated team**.
+- Sections for the **story**, photos, contact and Instagram.
+
+### Staff area
+
+- **Login** set apart in the corner, labeled “staff only”.
+- **Create and edit** records for women supported, employees, board members and volunteers.
+- The information becomes the nonprofit's **repository**, ready to **print or export as PDF**.
+
+</CaseSection>
+
+<CaseSection phase="desenvolver" title="UX decisions">
+
+<Decisions
+  items={[
+    {
+      title: "One primary action and one secondary",
+      principle: "Visual hierarchy · Hick's law",
+      text: "Few choices with different visual weight: visitors know what to do first.",
+    },
+    {
+      title: "Confidentiality and respect in the very first block",
+      principle: "Nielsen · match with the real world",
+      text: "For someone who has been through violence, knowing there is confidentiality is what makes the next step possible.",
+    },
+    {
+      title: "Login labeled “staff only”",
+      principle: "Nielsen · error prevention",
+      text: "People looking for help don't try to enter an area that isn't for them, and sensitive data stays protected.",
+    },
+    {
+      title: "Print and export as PDF",
+      principle: "Nielsen · match with the real world",
+      text: "The team still works with paper and documents; the system delivers information in the format they already use.",
+    },
+  ]}
+/>
+
+<div className="todo">TODO: Brena — review and complete.</div>
+
+</CaseSection>
+
+<CaseSection phase="entregar" title="Architecture">
+
+<Architecture
+  flow={[
+    { title: "Site + restricted area", detail: "Next.js (React)" },
+    { title: "Server", detail: "Next.js + Prisma, authenticated access" },
+    { title: "Database", detail: "PostgreSQL on Neon (São Paulo)" },
+  ]}
+  integrations={["GitHub", "Netlify (deploy)"]}
+/>
+
+</CaseSection>
+
+<CaseSection phase="entregar" title="Outcome">
+
+The website is live at [instituto-paz-no-lar.netlify.app](https://instituto-paz-no-lar.netlify.app/) and the team uses the restricted area as the repository of everyone supported by and involved in the program.
+
+<Metrics
+  items={[
+    { label: "People registered in the system" },
+    { label: "Contacts received through the site" },
+  ]}
+/>
+
+<div className="todo">
+  TODO: Brena — numbers or a testimonial from the nonprofit, if they can be public.
+</div>
+
+</CaseSection>

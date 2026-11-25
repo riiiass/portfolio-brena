@@ -10,19 +10,18 @@ import { Icon, type IconName } from "@/components/ui/Icon";
 import { FolderShape } from "@/components/ui/FolderShape";
 import { cn } from "@/lib/cn";
 
-const TYPES = ["Site ou landing page", "Sistema web", "E-commerce", "UX/UI", "Vaga CLT", "Outro"];
+import { getContent, type Content } from "@/content";
+import { useLocale } from "@/lib/use-locale";
 
 type Fields = { nome: string; email: string; tipo: string; mensagem: string };
 type Errors = Partial<Record<keyof Fields, string>>;
 
-function validate(f: Fields): Errors {
+function validate(f: Fields, tx: Content["t"]): Errors {
   const e: Errors = {};
-  if (f.nome.trim().length < 2) e.nome = "Me conta como posso te chamar.";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email.trim()))
-    e.email = "Esse e-mail parece incompleto. Confere?";
-  if (!f.tipo) e.tipo = "Escolhe uma opção, mesmo que seja “Outro”.";
-  if (f.mensagem.trim().length < 10)
-    e.mensagem = "Escreve um pouquinho mais sobre o projeto (mínimo 10 caracteres).";
+  if (f.nome.trim().length < 2) e.nome = tx.errName;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email.trim())) e.email = tx.errEmail;
+  if (!f.tipo) e.tipo = tx.errType;
+  if (f.mensagem.trim().length < 10) e.mensagem = tx.errMsg;
   return e;
 }
 
@@ -30,6 +29,9 @@ const inputCls =
   "min-h-[52px] w-full rounded-2xl border-[1.5px] border-ink bg-paper px-4 text-[0.9375rem] text-ink placeholder:text-[#5a5a5a] transition-shadow aria-[invalid=true]:border-[#9b1c3a] aria-[invalid=true]:shadow-[0_0_0_3px_rgb(155_28_58/.18)]";
 
 export function Contact() {
+  const l = useLocale();
+  const tx = getContent(l).t;
+  const TYPES = tx.types;
   const { reducedMotion } = usePrefs();
   const [fields, setFields] = useState<Fields>({ nome: "", email: "", tipo: "", mensagem: "" });
   const [errors, setErrors] = useState<Errors>({});
@@ -42,16 +44,16 @@ export function Contact() {
     const next = { ...fields, [k]: v };
     setFields(next);
     // feedback: depois que o campo foi tocado, o erro some assim que fica certo
-    if (touched[k]) setErrors(validate(next));
+    if (touched[k]) setErrors(validate(next, tx));
   };
   const blur = (k: keyof Fields) => {
     setTouched((t) => ({ ...t, [k]: true }));
-    setErrors(validate(fields));
+    setErrors(validate(fields, tx));
   };
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const errs = validate(fields);
+    const errs = validate(fields, tx);
     setErrors(errs);
     setTouched({ nome: true, email: true, tipo: true, mensagem: true });
     const first = Object.keys(errs)[0];
@@ -74,7 +76,7 @@ export function Contact() {
       setStatus("sent");
     } catch {
       setStatus("error");
-      emit("toast", "Não consegui enviar agora. Tenta de novo ou me chama por e-mail.");
+      emit("toast", tx.sendFailToast);
     }
   }
 
@@ -85,12 +87,13 @@ export function Contact() {
     sub: string;
     icon: IconName;
     href?: string;
+    download?: boolean;
     onClick?: () => void;
     cls: string;
   }[] = [
     {
-      label: "E-mail",
-      sub: "clique para copiar",
+      label: tx.email,
+      sub: tx.tileEmailSub,
       icon: "copy",
       onClick: () => void copyEmail(site.email),
       cls: "bg-paper text-ink",
@@ -109,7 +112,15 @@ export function Contact() {
       href: site.social.github,
       cls: "bg-folder-blue text-ink",
     },
-    { label: site.location, sub: "trabalho remoto", icon: "pin", cls: "bg-folder-lime text-ink" },
+    { label: tx.tileLocation, sub: tx.tileRemote, icon: "pin", cls: "bg-folder-lime text-ink" },
+    {
+      label: tx.tileCv,
+      sub: tx.tileCvSub,
+      icon: "download",
+      href: l === "en" ? site.cvUrlEn : site.cvUrl,
+      download: true,
+      cls: "bg-ink text-paper col-span-2 min-h-[110px]",
+    },
   ];
 
   return (
@@ -122,17 +133,17 @@ export function Contact() {
       <div className="on-light bg-folder-pink rounded-[44px] p-6 md:p-12">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
           <div>
-            <p className="label-mono mb-4 text-[11px]">Contato</p>
+            <p className="label-mono mb-4 text-[11px]">{tx.contactLabel}</p>
             <RevealLines
               id="contato-t"
               className="font-display text-step-4 mb-8 leading-[.9] uppercase"
               lines={[
-                "Vamos",
+                tx.contactTitle1,
                 <>
                   <span className="font-script text-[1.35em] leading-[.6] text-[#6e2238] normal-case">
-                    criar
+                    {tx.contactScript}
                   </span>{" "}
-                  juntos?
+                  {tx.contactTitle2}
                 </>,
               ]}
             />
@@ -166,10 +177,9 @@ export function Contact() {
                       </m.div>
                     </div>
                     <div>
-                      <p className="font-display text-3xl uppercase">Mensagem guardada!</p>
+                      <p className="font-display text-3xl uppercase">{tx.sentTitle}</p>
                       <p className="mt-2 max-w-sm">
-                        Obrigada, {fields.nome.split(" ")[0]}. Eu respondo no seu e-mail em até 2
-                        dias úteis.
+                        {tx.sentText(fields.nome.split(" ")[0] ?? "")}
                       </p>
                     </div>
                     <button
@@ -182,7 +192,7 @@ export function Contact() {
                       }}
                       className="border-ink min-h-11 rounded-full border-[1.5px] px-5 text-sm font-medium"
                     >
-                      Enviar outra mensagem
+                      {tx.sendAnother}
                     </button>
                   </m.div>
                 ) : (
@@ -201,7 +211,7 @@ export function Contact() {
                     {/* honeypot: invisível para pessoas, preenchido por robôs */}
                     <p className="sr-only" aria-hidden="true">
                       <label>
-                        Não preencha este campo
+                        {tx.honeypot}
                         <input name="empresa-site" tabIndex={-1} autoComplete="off" />
                       </label>
                     </p>
@@ -210,7 +220,7 @@ export function Contact() {
                       {(["nome", "email"] as const).map((k) => (
                         <div key={k} className="flex flex-col gap-1.5">
                           <label htmlFor={`${id}-${k}`} className="text-sm font-bold">
-                            {k === "nome" ? "Nome" : "E-mail"}
+                            {k === "nome" ? tx.name : tx.email}
                           </label>
                           <input
                             id={`${id}-${k}`}
@@ -224,9 +234,7 @@ export function Contact() {
                             onBlur={() => blur(k)}
                             aria-invalid={Boolean(err(k))}
                             aria-describedby={err(k) ? `${id}-${k}-err` : undefined}
-                            placeholder={
-                              k === "nome" ? "Como posso te chamar?" : "voce@empresa.com"
-                            }
+                            placeholder={k === "nome" ? tx.namePh : tx.emailPh}
                             className={inputCls}
                           />
                           {err(k) ? (
@@ -239,7 +247,7 @@ export function Contact() {
                     </div>
 
                     <fieldset aria-describedby={err("tipo") ? `${id}-tipo-err` : undefined}>
-                      <legend className="mb-2 text-sm font-bold">Tipo de projeto</legend>
+                      <legend className="mb-2 text-sm font-bold">{tx.projectType}</legend>
                       <div className="flex flex-wrap gap-2">
                         {TYPES.map((t) => {
                           const on = fields.tipo === t;
@@ -279,7 +287,7 @@ export function Contact() {
 
                     <div className="flex flex-col gap-1.5">
                       <label htmlFor={`${id}-mensagem`} className="text-sm font-bold">
-                        Mensagem
+                        {tx.message}
                       </label>
                       <textarea
                         id={`${id}-mensagem`}
@@ -291,7 +299,7 @@ export function Contact() {
                         onBlur={() => blur("mensagem")}
                         aria-invalid={Boolean(err("mensagem"))}
                         aria-describedby={err("mensagem") ? `${id}-mensagem-err` : undefined}
-                        placeholder="Conta um pouco do projeto, do prazo ou da vaga"
+                        placeholder={tx.messagePh}
                         className={cn(inputCls, "min-h-[140px] resize-y py-3.5")}
                       />
                       {err("mensagem") ? (
@@ -305,21 +313,21 @@ export function Contact() {
                       <button
                         type="submit"
                         disabled={status === "sending"}
-                        data-cursor="enviar"
+                        data-cursor={tx.sendCursor}
                         className="bg-ink font-display text-paper inline-flex min-h-[54px] items-center gap-2 rounded-full px-7 text-xl tracking-[.06em] transition-transform active:scale-[.97] disabled:opacity-70"
                       >
-                        {status === "sending" ? "ENVIANDO…" : "ENVIAR MENSAGEM"}
+                        {status === "sending" ? tx.sending : tx.send}
                         <Icon name="arrowUpRight" size={20} strokeWidth={2} />
                       </button>
                       {status === "error" ? (
                         <p role="alert" className="text-sm font-medium text-[#7a1530]">
-                          Não consegui enviar.{" "}
+                          {tx.sendFail}{" "}
                           <button
                             type="button"
                             onClick={() => void copyEmail(site.email)}
                             className="underline"
                           >
-                            Copiar meu e-mail
+                            {tx.copyMyEmail}
                           </button>
                         </p>
                       ) : null}
@@ -346,17 +354,18 @@ export function Contact() {
                 t.cls,
               );
               return (
-                <li key={t.label}>
+                <li key={t.label} className={t.download ? "col-span-2" : undefined}>
                   {t.href ? (
                     <a
                       href={t.href}
-                      target="_blank"
+                      target={t.download ? undefined : "_blank"}
                       rel="noreferrer"
+                      download={t.download || undefined}
                       className={cls}
-                      data-cursor="abrir"
+                      data-cursor={t.download ? "pdf" : "abrir"}
                     >
                       {inner}
-                      <span className="sr-only">(abre em nova aba)</span>
+                      {t.download ? null : <span className="sr-only">{tx.newTab}</span>}
                     </a>
                   ) : t.onClick ? (
                     <button type="button" onClick={t.onClick} className={cls} data-cursor="copiar">

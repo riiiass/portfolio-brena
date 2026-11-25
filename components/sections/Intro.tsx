@@ -2,8 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { getLenis } from "@/lib/scroll";
+import { useLocale } from "@/lib/use-locale";
+import { getContent } from "@/content";
 
-const DURATION = 1500; // contador; a saída leva +300ms → máx. 1,8s
+const DURATION = 750; // contador; a cortina sobe em +400ms → cerca de 1s no total
 const NAME = "BRENA ANGELO";
 const FOLDERS = [
   { color: "bg-folder-pink", r0: "-25deg", r1: "-6deg" },
@@ -18,6 +20,7 @@ const FOLDERS = [
  * para não piscar o hero antes.
  */
 export function Intro() {
+  const t = getContent(useLocale()).t;
   const countRef = useRef<HTMLParagraphElement>(null);
   const [leaving, setLeaving] = useState(false);
   const [gone, setGone] = useState(false);
@@ -69,7 +72,7 @@ export function Intro() {
       setGone(true);
       document.documentElement.dataset.intro = "skip";
       getLenis()?.start();
-    }, 650);
+    }, 400);
   }
 
   if (gone) return null;
@@ -79,20 +82,20 @@ export function Intro() {
       className="intro bg-ink text-paper fixed inset-0 z-[100] flex flex-col justify-between p-6 md:p-10"
       style={{
         clipPath: leaving ? "inset(0 0 100% 0)" : "inset(0 0 0 0)",
-        transition: "clip-path 650ms cubic-bezier(.65,0,.35,1)",
+        transition: "clip-path 400ms cubic-bezier(.65,0,.35,1)",
       }}
       role="presentation"
     >
       <div className="flex items-start justify-between">
         <span className="label-mono text-[11px] text-[#cfc9c0]">
-          Portfólio · {new Date().getFullYear()}
+          {t.introKicker} · {new Date().getFullYear()}
         </span>
         <button
           type="button"
           onClick={finish}
           className="border-paper/50 hover:border-paper min-h-11 rounded-full border-[1.5px] px-4 font-mono text-xs tracking-[.2em] transition-colors"
         >
-          PULAR ↵
+          {t.introSkip}
         </button>
       </div>
 

@@ -5,6 +5,8 @@ import type { Contribution } from "@/lib/github";
 import { Reveal } from "@/components/motion/Reveal";
 import { ChartTooltip } from "./Tooltip";
 import { monthLabel, monthlyTotals } from "@/lib/devdata-utils";
+import { useLocale } from "@/lib/use-locale";
+import { getContent } from "@/content";
 
 const W = 560;
 const H = 200;
@@ -12,6 +14,7 @@ const PAD = { l: 34, r: 12, t: 16, b: 26 };
 
 /** Linha de evolução mensal: o traço se desenha ao entrar; crosshair + tooltip no hover/foco */
 export function MonthlyLine({ days }: { days: Contribution[] }) {
+  const t = getContent(useLocale()).t;
   const data = monthlyTotals(days).slice(-12);
   const [i, setI] = useState<number | null>(null);
   const max = Math.max(...data.map((d) => d.total), 1);
@@ -29,7 +32,7 @@ export function MonthlyLine({ days }: { days: Contribution[] }) {
           viewBox={`0 0 ${W} ${H}`}
           className="h-auto w-full"
           role="img"
-          aria-label="Contribuições por mês nos últimos 12 meses (valores na tabela)"
+          aria-label={t.lineAria}
           onMouseMove={(e) => {
             const r = e.currentTarget.getBoundingClientRect();
             const px = ((e.clientX - r.left) / r.width) * W;
@@ -67,7 +70,7 @@ export function MonthlyLine({ days }: { days: Contribution[] }) {
                 textAnchor={k === data.length - 1 ? "end" : k === 0 ? "start" : "middle"}
                 className="fill-muted font-mono text-[10px]"
               >
-                {monthLabel(p.month)}
+                {monthLabel(p.month, t.months)}
               </text>
             ) : null,
           )}
@@ -106,7 +109,7 @@ export function MonthlyLine({ days }: { days: Contribution[] }) {
       </Reveal>
       {cur && i !== null ? (
         <ChartTooltip x={`${(x(i) / W) * 100}%`} y={`${(y(cur.total) / H) * 100}%`}>
-          <strong>{cur.total}</strong> em {monthLabel(cur.month)}
+          <strong>{cur.total}</strong> {t.inMonth} {monthLabel(cur.month, t.months)}
         </ChartTooltip>
       ) : null}
     </div>

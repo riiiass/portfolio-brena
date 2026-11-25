@@ -4,12 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import type { Contribution } from "@/lib/github";
 import { Reveal } from "@/components/motion/Reveal";
 import { ChartTooltip } from "./Tooltip";
+import { useLocale } from "@/lib/use-locale";
+import { getContent } from "@/content";
 
 const CELL = 11;
 const GAP = 3;
-const MONTHS = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
-const fmtDate = (iso: string) =>
-  new Date(`${iso}T12:00:00Z`).toLocaleDateString("pt-BR", {
+const fmtDate = (iso: string, loc = "pt-BR") =>
+  new Date(`${iso}T12:00:00Z`).toLocaleDateString(loc, {
     day: "numeric",
     month: "short",
     year: "numeric",
@@ -17,6 +18,7 @@ const fmtDate = (iso: string) =>
 
 /** Calendário de contribuições: as colunas acendem da esquerda para a direita ao entrar (orientação: tempo →) */
 export function Heatmap({ days }: { days: Contribution[] }) {
+  const t = getContent(useLocale()).t;
   const wrap = useRef<HTMLDivElement>(null);
   const [tip, setTip] = useState<{ x: number; y: number; d: Contribution } | null>(null);
 
@@ -49,7 +51,7 @@ export function Heatmap({ days }: { days: Contribution[] }) {
   cells.forEach((c) => {
     const date = new Date(`${c.d.date}T12:00:00Z`);
     if (date.getUTCDate() <= 7 && c.row === 0)
-      monthMarks.push({ col: c.col, label: MONTHS[date.getUTCMonth()]! });
+      monthMarks.push({ col: c.col, label: t.months[date.getUTCMonth()]! });
   });
 
   return (
@@ -58,7 +60,7 @@ export function Heatmap({ days }: { days: Contribution[] }) {
         ref={wrap}
         tabIndex={0}
         role="region"
-        aria-label="Calendário de contribuições (role para os lados)"
+        aria-label={t.heatRegion}
         className="[scrollbar-width:thin] overflow-x-auto pb-2"
       >
         <Reveal variant="none" className="heatmap">
@@ -68,7 +70,7 @@ export function Heatmap({ days }: { days: Contribution[] }) {
             viewBox={`0 0 ${width} ${height}`}
             className="max-w-none"
             role="img"
-            aria-label="Calendário de contribuições no GitHub dos últimos 12 meses (os dados estão na tabela abaixo)"
+            aria-label={t.heatAria}
             onMouseLeave={() => setTip(null)}
           >
             {monthMarks.map((m) => (
@@ -104,15 +106,15 @@ export function Heatmap({ days }: { days: Contribution[] }) {
       </div>
       {tip ? (
         <ChartTooltip x={tip.x} y={tip.y}>
-          <strong>{tip.d.count}</strong> {tip.d.count === 1 ? "contribuição" : "contribuições"} ·{" "}
-          {fmtDate(tip.d.date)}
+          <strong>{tip.d.count}</strong> {t.contribUnit(tip.d.count)} ·{" "}
+          {fmtDate(tip.d.date, t.dateLocale)}
         </ChartTooltip>
       ) : null}
       <div
         className="text-muted mt-2 flex items-center justify-end gap-1.5 font-mono text-[10px]"
         aria-hidden="true"
       >
-        menos
+        {t.less}
         {[0, 1, 2, 3, 4].map((l) => (
           <span
             key={l}
@@ -120,7 +122,7 @@ export function Heatmap({ days }: { days: Contribution[] }) {
             style={{ background: `var(--heat-${l})` }}
           />
         ))}
-        mais
+        {t.more}
       </div>
     </div>
   );

@@ -16,8 +16,8 @@ html[data-intro="skip"] .intro {
   }
 }
 .intro-folder {
-  animation: folder-drop 700ms var(--ease-out) both;
-  animation-delay: calc(var(--i) * 140ms);
+  animation: folder-drop 480ms var(--ease-out) both;
+  animation-delay: calc(var(--i) * 70ms);
 }
 @keyframes rise {
   from {
@@ -29,8 +29,8 @@ html[data-intro="skip"] .intro {
 }
 .intro-letter {
   display: inline-block;
-  animation: rise 700ms var(--ease-out) both;
-  animation-delay: calc(300ms + var(--i) * var(--stagger));
+  animation: rise 500ms var(--ease-out) both;
+  animation-delay: calc(120ms + var(--i) * 30ms);
 }
 
 /* ===== Hero =====

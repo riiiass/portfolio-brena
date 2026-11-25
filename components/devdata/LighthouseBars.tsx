@@ -1,8 +1,10 @@
-import { lighthouse } from "@/content/pt/devdata";
+import { getContent } from "@/content";
+import type { Locale } from "@/lib/i18n";
 import { Reveal } from "@/components/motion/Reveal";
 
 /** Barras horizontais 0–100. Sem medição → trilho tracejado e "a medir" (nunca um número estimado). */
-export function LighthouseBars() {
+export function LighthouseBars({ locale }: { locale: Locale }) {
+  const { lighthouse, t } = getContent(locale);
   return (
     <Reveal variant="none" className="lh-bars">
       <ul className="grid gap-3.5">
@@ -29,7 +31,7 @@ export function LighthouseBars() {
               {typeof row.score === "number" ? (
                 row.score
               ) : (
-                <span className="text-muted">a medir</span>
+                <span className="text-muted">{t.toMeasure}</span>
               )}
             </span>
           </li>

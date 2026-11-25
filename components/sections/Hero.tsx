@@ -4,8 +4,8 @@ import { Magnetic } from "@/components/motion/Magnetic";
 import { SearchTrigger } from "@/components/ui/SearchTrigger";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { FolderPlayground } from "./FolderPlayground";
-
-const TITLE = "Portfólio";
+import { getContent } from "@/content";
+import type { Locale } from "@/lib/i18n";
 
 const socials: { label: string; href: string; icon: IconName; hover: string }[] = [
   {
@@ -34,7 +34,10 @@ const socials: { label: string; href: string; icon: IconName; hover: string }[] 
   },
 ];
 
-export function Hero() {
+export function Hero({ locale }: { locale: Locale }) {
+  const t = getContent(locale).t;
+  const TITLE = t.heroTitle;
+  const cvUrl = locale === "en" ? site.cvUrlEn : site.cvUrl;
   return (
     <section
       id="inicio"
@@ -48,7 +51,7 @@ export function Hero() {
             className="label-mono hero-fade text-muted text-[10px] md:text-xs"
             style={{ ["--i" as string]: 0 }}
           >
-            Dev × Design · Ceará
+            {t.heroKicker}
           </p>
 
           <div className="relative pt-8 md:pt-10">
@@ -63,9 +66,7 @@ export function Hero() {
               data-cursor-blend
               className="font-display text-[clamp(4rem,19vw,9rem)] leading-[.86] uppercase lg:text-[clamp(5.4rem,9.6vw,10rem)]"
             >
-              <span className="sr-only">
-                Brena Angelo — portfólio de desenvolvedora full stack e designer UX/UI
-              </span>
+              <span className="sr-only">{t.heroH1}</span>
               <span aria-hidden="true" className="flex [clip-path:inset(-0.4em_-0.2em_0_-0.2em)]">
                 {TITLE.split("").map((ch, i) => (
                   <span
@@ -92,30 +93,42 @@ export function Hero() {
             className="hero-fade mt-4 max-w-[540px] font-serif text-[1.65rem] leading-[1.15] md:text-[2.125rem]"
             style={{ ["--i" as string]: 1 }}
           >
-            Dev que pensa como designer.
+            {t.heroLine1}
             <br />
-            Designer que entrega código.
+            {t.heroLine2}
           </p>
           <p className="hero-fade text-muted max-w-[500px]" style={{ ["--i" as string]: 2 }}>
-            Crio produtos web de ponta a ponta: da pesquisa e do protótipo ao banco de dados e ao
-            deploy.
+            {t.heroText}
           </p>
 
           <div
-            className="hero-fade flex flex-wrap items-center gap-6"
+            className="hero-fade flex flex-wrap items-center gap-x-5 gap-y-6"
             style={{ ["--i" as string]: 3 }}
           >
             <Magnetic>
               <SelectionBox label="Button / CTA">
                 <a
                   href="#contato"
-                  data-cursor="falar"
+                  data-cursor={t.ctaCursor}
                   className="bg-fg font-display text-bg block px-7 py-4 text-[1.375rem] tracking-[.06em] transition-transform duration-150 active:scale-[.97]"
                 >
-                  VAMOS CONVERSAR
+                  {t.cta}
                 </a>
               </SelectionBox>
             </Magnetic>
+            {/* conversão: o CV fica a um clique, ao lado do CTA principal */}
+            <a
+              href={cvUrl}
+              download
+              aria-label={t.cvAria}
+              data-cursor="pdf"
+              className="border-fg hover:bg-fg hover:text-bg inline-flex min-h-14 items-center gap-2 rounded-full border-[1.5px] px-6 font-medium transition-[background-color,color,transform] duration-150 active:scale-[.97]"
+            >
+              <Icon name="download" size={18} />
+              {t.cv}
+            </a>
+          </div>
+          <div className="hero-fade" style={{ ["--i" as string]: 3 }}>
             <ul className="flex gap-2.5">
               {socials.map((s) => (
                 <li key={s.label}>
@@ -139,7 +152,7 @@ export function Hero() {
           </div>
         </div>
 
-        <FolderPlayground />
+        <FolderPlayground photoAlt={t.photoAlt} />
       </div>
     </section>
   );

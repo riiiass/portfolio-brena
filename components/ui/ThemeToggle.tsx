@@ -4,17 +4,20 @@ import { m } from "motion/react";
 import { usePrefs } from "@/components/providers/Preferences";
 import { cn } from "@/lib/cn";
 import { Icon } from "./Icon";
+import { useLocale } from "@/lib/use-locale";
+import { getContent } from "@/content";
 
 export function ThemeToggle({ className }: { className?: string }) {
   const { theme, toggleTheme, reducedMotion } = usePrefs();
   const dark = theme === "dark";
+  const t = getContent(useLocale()).t;
   return (
     <button
       type="button"
       role="switch"
       aria-checked={dark}
-      aria-label="Tema escuro"
-      title={dark ? "Mudar para tema claro" : "Mudar para tema escuro"}
+      aria-label={t.darkTheme}
+      title={dark ? t.toLight : t.toDark}
       onClick={toggleTheme}
       className={cn(
         "relative flex h-11 w-[68px] shrink-0 items-center rounded-full border-[1.5px] border-current px-[5px] active:scale-[.97]",

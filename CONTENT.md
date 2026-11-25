@@ -5,14 +5,20 @@ Marque `[x]` conforme for resolvendo. Arquivo do código entre parênteses.
 
 ## 1. Fotos e arquivos (prioridade alta)
 
-- [ ] **Sua foto recortada** (PNG sem fundo) para o hero — hoje é uma silhueta azul (`components/sections/FolderPlayground.tsx`)
-- [ ] **Sua foto** para a janela do Sobre — hoje é uma silhueta laranja (`components/sections/About.tsx`)
+- [x] **Sua foto** no hero (`public/brena/brena-hero.webp`) e no Sobre (`public/brena/brena-sobre.webp`)
+- [x] **Botão "Baixar CV"** no hero e bloco de CV no Contato (PT baixa o PDF em português, EN o em inglês)
 - [x] **CV em PDF** — gerado a partir de `content/cv/cv-pt.json` com `npm run cv` → `public/cv-brena-angelo.pdf`
   - [x] Versão em **inglês**: `content/cv/cv-en.json` → `public/cv-brena-angelo-en.pdf`
   - [x] Idiomas, escola (EEEP Raimundo Celio Rodrigues) e link do portfólio
   - [x] WhatsApp no CV e curso técnico em Informática
 - [ ] **Print do MODO** — hoje mostra "print em breve" (`content/pt/projects.ts`)
 - [ ] **Mais prints para as galerias** dos cases (checkout e painel da KADOSH, versão mobile etc.) (`content/pt/cases.ts`)
+
+## 1b. Versão em inglês
+
+- [x] Site completo em `/en` (home, cases em `/en/projects/<slug>`, 404, ⌘K, toasts)
+- [ ] Revise as traduções: textos curtos em `content/ui.ts` (bloco `en`), seções em `content/en/*.ts`, cases em `content/cases/en/*.mdx`
+- [ ] LinkedIn: siga o passo a passo em **[LINKEDIN.md](./LINKEDIN.md)**
 
 ## 2. Links (prioridade alta)
 

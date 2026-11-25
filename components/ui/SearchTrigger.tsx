@@ -3,9 +3,12 @@
 import { useEffect, useState } from "react";
 import { emit } from "@/lib/events";
 import { Icon } from "./Icon";
+import { useLocale } from "@/lib/use-locale";
+import { getContent } from "@/content";
 
 /** Barra de busca do hero (ref. C) = atalho visível para o ⌘K */
 export function SearchTrigger() {
+  const t = getContent(useLocale()).t;
   const [mac, setMac] = useState(true);
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- detecção de plataforma só existe no cliente
@@ -25,7 +28,7 @@ export function SearchTrigger() {
         strokeWidth={2}
         className="text-fg transition-transform duration-300 group-hover:-rotate-12"
       />
-      <span className="flex-1">Buscar projetos, stack, seções…</span>
+      <span className="flex-1">{t.search}</span>
       <kbd className="bg-fg text-bg rounded-full px-3 py-1.5 font-mono text-xs">
         {mac ? "⌘ K" : "Ctrl K"}
       </kbd>

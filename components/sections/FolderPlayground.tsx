@@ -9,8 +9,11 @@ import {
   useTransform,
   type MotionValue,
 } from "motion/react";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { heroFolders } from "@/content/pt/sections";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import type { heroFolders } from "@/content/pt/sections";
+import { getContent } from "@/content";
+import { useLocale } from "@/lib/use-locale";
 import { usePrefs } from "@/components/providers/Preferences";
 import { FolderShape } from "@/components/ui/FolderShape";
 import { Icon } from "@/components/ui/Icon";
@@ -59,6 +62,7 @@ function DraggableFolder({
 }) {
   const pos = layout[index] ?? layout[0]!;
   const { reducedMotion } = usePrefs();
+  const t = getContent(useLocale()).t;
   const dragged = useRef(false);
   // orientação/deleite: profundidade diferente por pasta = parallax pelo mouse
   const px = useTransform(mouseX, (v) => v * pos.depth);
@@ -108,7 +112,7 @@ function DraggableFolder({
             layoutId={`folder-${folder.id}`}
             id={`folder-btn-${folder.id}`}
             data-cursor="arrastar"
-            aria-label={`Pasta ${folder.label}: abrir ${folder.title}`}
+            aria-label={t.folderOpen(folder.label, folder.title)}
             aria-describedby="folder-help"
             drag
             dragConstraints={constraints}
@@ -156,6 +160,7 @@ function FolderWindow({
   const closeRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const { reducedMotion } = usePrefs();
+  const t = getContent(useLocale()).t;
 
   useEffect(() => {
     closeRef.current?.focus();
@@ -217,7 +222,7 @@ function FolderWindow({
             ref={closeRef}
             type="button"
             onClick={onClose}
-            aria-label="Fechar janela"
+            aria-label={t.closeWindow}
             className="group flex size-6 items-center justify-center rounded-full"
           >
             <span className="flex size-3 items-center justify-center rounded-full bg-[#ff5f57] text-[#4d0000]">
@@ -261,7 +266,7 @@ function FolderWindow({
             onClick={goTo}
             className="bg-fg text-bg mt-7 inline-flex min-h-12 items-center gap-2 rounded-full px-6 font-medium transition-transform active:scale-[.97]"
           >
-            Ir para {folder.title.toLowerCase()} <Icon name="arrowUpRight" size={18} />
+            {t.goTo(folder.title)} <Icon name="arrowUpRight" size={18} />
           </button>
         </m.div>
       </m.div>
@@ -271,7 +276,8 @@ function FolderWindow({
 
 /* ---------------------------------------------------------------- */
 
-export function FolderPlayground() {
+export function FolderPlayground({ photoAlt }: { photoAlt: string }) {
+  const { heroFolders, t } = getContent(useLocale());
   const constraints = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState<{ folder: Folder; prefix: string } | null>(null);
   const [touched, setTouched] = useState(false);
@@ -279,9 +285,8 @@ export function FolderPlayground() {
   const { reducedMotion } = usePrefs();
 
   // offsets de drag vivem aqui para sobreviver ao abrir/fechar a janela
-  const offsets = useMemo(
-    () => heroFolders.map(() => ({ x: motionValue(0), y: motionValue(0) })),
-    [],
+  const [offsets] = useState(() =>
+    Array.from({ length: layout.length }, () => ({ x: motionValue(0), y: motionValue(0) })),
   );
 
   const rawX = useMotionValue(0);
@@ -318,7 +323,7 @@ export function FolderPlayground() {
   return (
     <>
       <p id="folder-help" className="sr-only">
-        Enter abre a pasta. Setas movem a pasta pela tela; Shift + setas movem mais rápido.
+        {t.folderHelp}
       </p>
 
       {/* ---------- desktop: composição livre ---------- */}
@@ -331,7 +336,7 @@ export function FolderPlayground() {
           rawY.set(0);
         }}
       >
-        <PhotoCard />
+        <PhotoCard alt={photoAlt} />
         {heroFolders.map((f, i) =>
           open?.folder.id === f.id && open.prefix === "folder-" ? null : (
             <DraggableFolder
@@ -357,7 +362,7 @@ export function FolderPlayground() {
               exit={{ opacity: 0, scale: 0.8 }}
             >
               <span className="bg-fg text-bg rounded-full px-2.5 py-1.5 font-mono text-[11px] tracking-[.2em]">
-                ME ARRASTE
+                {t.dragMe}
               </span>
               <span className="drag-hint text-ink">
                 <Icon name="hand" size={40} strokeWidth={1.4} fill="#fff" />
@@ -370,10 +375,10 @@ export function FolderPlayground() {
       {/* ---------- mobile: foto + carrossel de pastas ---------- */}
       <div className="lg:hidden">
         <div className="relative h-[360px] sm:h-[480px]">
-          <PhotoCard compact />
+          <PhotoCard compact alt={photoAlt} />
         </div>
         <div className="mt-6 -mr-4">
-          <p className="label-mono text-muted mb-3 text-[10px]">Arraste para o lado →</p>
+          <p className="label-mono text-muted mb-3 text-[10px]">{t.swipe}</p>
           <ul className="flex snap-x snap-mandatory [scrollbar-width:none] gap-3 overflow-x-auto pr-4 pb-4">
             {heroFolders.map((f) =>
               open?.folder.id === f.id && open.prefix === "folder-m-" ? (
@@ -384,7 +389,7 @@ export function FolderPlayground() {
                     type="button"
                     layoutId={`folder-m-${f.id}`}
                     id={`folder-m-btn-${f.id}`}
-                    aria-label={`Pasta ${f.label}: abrir ${f.title}`}
+                    aria-label={t.folderOpen(f.label, f.title)}
                     whileTap={{ scale: 0.96 }}
                     onClick={() => setOpen({ folder: f, prefix: "folder-m-" })}
                     className="block rounded-[16px] text-left"
@@ -412,7 +417,7 @@ export function FolderPlayground() {
   );
 }
 
-function PhotoCard({ compact = false }: { compact?: boolean }) {
+function PhotoCard({ compact = false, alt }: { compact?: boolean; alt: string }) {
   return (
     <div
       className={cn(
@@ -421,18 +426,14 @@ function PhotoCard({ compact = false }: { compact?: boolean }) {
       )}
       style={{ ["--i" as string]: 0 }}
     >
-      {/* TODO: Brena — trocar pela foto recortada (next/image, AVIF/WebP, priority) */}
-      <svg
-        viewBox="0 0 300 400"
-        className="absolute bottom-0 left-1/2 h-[78%] -translate-x-1/2"
-        aria-hidden="true"
-      >
-        <circle cx="150" cy="130" r="78" fill="#6e9bd8" />
-        <path d="M20 400c0-90 58-150 130-150s130 60 130 150z" fill="#6e9bd8" />
-      </svg>
-      <span className="on-light bg-paper absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full px-2.5 py-1.5 font-mono text-[11px] tracking-[.2em]">
-        TODO: FOTO
-      </span>
+      <Image
+        src="/brena/brena-hero.webp"
+        alt={alt}
+        fill
+        priority
+        sizes="(min-width: 1024px) 400px, 100vw"
+        className="object-cover object-[50%_20%]"
+      />
     </div>
   );
 }

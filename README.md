@@ -62,7 +62,20 @@ Na primeira vez em outra máquina: `npx playwright install chromium`.
 | Notas de Lighthouse                     | `content/pt/devdata.ts`                                                |
 | Currículo                               | `content/cv/cv-pt.json` · `content/cv/cv-en.json` → `npm run cv`       |
 
-O que ainda falta preencher está em **[CONTENT.md](./CONTENT.md)**.
+### Versão em inglês
+
+O site tem PT (`/`, `/projetos/<slug>`) e EN (`/en`, `/en/projects/<slug>`), com `hreflang` e sitemap dos dois.
+O idioma sai do caminho da URL (`lib/i18n.ts`); componentes de servidor recebem `locale`, os de cliente usam `useLocale()`.
+
+| O quê                      | PT                     | EN                       |
+| -------------------------- | ---------------------- | ------------------------ |
+| Textos curtos da interface | `content/ui.ts` (`pt`) | `content/ui.ts` (`en`)   |
+| Seções                     | `content/pt/*.ts`      | `content/en/*.ts`        |
+| Cases                      | `content/cases/*.mdx`  | `content/cases/en/*.mdx` |
+
+Ao adicionar um projeto, crie as duas versões e registre o MDX em `content/cases/index.ts`.
+
+O que ainda falta preencher está em **[CONTENT.md](./CONTENT.md)**. Textos para o LinkedIn: **[LINKEDIN.md](./LINKEDIN.md)**.
 
 ## Arquitetura
 

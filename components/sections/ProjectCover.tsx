@@ -8,9 +8,11 @@ import type { Project } from "@/content/pt/projects";
 export function ProjectCover({
   project,
   priority = false,
+  locale = "pt",
 }: {
   project: Project;
   priority?: boolean;
+  locale?: "pt" | "en";
 }) {
   if (project.cover) {
     return (
@@ -53,7 +55,7 @@ export function ProjectCover({
         ))}
       </div>
       <span className="text-ink/85 absolute right-3 bottom-2 font-mono text-[10px] tracking-[.15em] uppercase">
-        print em breve
+        {locale === "en" ? "screenshot soon" : "print em breve"}
       </span>
     </div>
   );

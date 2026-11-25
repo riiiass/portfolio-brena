@@ -3,7 +3,10 @@
 import { AnimatePresence, LayoutGroup, m } from "motion/react";
 import Link from "next/link";
 import { useState } from "react";
-import { projects, type Project, type ProjectCategory } from "@/content/pt/projects";
+import type { Project, ProjectCategory } from "@/content/pt/projects";
+import { getContent, type Content } from "@/content";
+import { useLocale } from "@/lib/use-locale";
+import { casePath, type Locale } from "@/lib/i18n";
 import { usePrefs } from "@/components/providers/Preferences";
 import { Reveal, RevealLines } from "@/components/motion/Reveal";
 import { Icon } from "@/components/ui/Icon";
@@ -11,8 +14,8 @@ import { cn } from "@/lib/cn";
 import { ProjectCover } from "./ProjectCover";
 import { SharedCover } from "@/components/case/SharedCover";
 
-type Filter = "Todos" | ProjectCategory;
-const filters: Filter[] = ["Todos", "Full Stack", "UX/UI", "Front-end"];
+type Filter = "all" | ProjectCategory;
+const filters: Filter[] = ["all", "Full Stack", "UX/UI", "Front-end"];
 
 const toneCls: Record<Project["tone"], string> = {
   ink: "bg-block text-paper ring-1 ring-line",
@@ -31,12 +34,22 @@ const layoutCls: Record<Project["layout"], string> = {
 const notchMask =
   "radial-gradient(circle 34px at calc(100% - 26px) calc(100% - 26px), transparent 33px, #000 33.5px)";
 
-function ProjectCard({ p, priority }: { p: Project; priority: boolean }) {
+function ProjectCard({
+  p,
+  priority,
+  l,
+  t,
+}: {
+  p: Project;
+  priority: boolean;
+  l: Locale;
+  t: Content["t"];
+}) {
   const wide = p.layout === "wide";
   return (
     <Link
-      href={`/projetos/${p.slug}`}
-      data-cursor="ver case"
+      href={casePath(l, p.slug)}
+      data-cursor={t.seeCaseCursor}
       className="group relative block h-full rounded-[32px] focus-visible:outline-offset-[6px]"
     >
       <div
@@ -62,7 +75,7 @@ function ProjectCard({ p, priority }: { p: Project; priority: boolean }) {
             {p.status === "maintenance" ? (
               <span className="flex items-center gap-1.5 rounded-full border border-current px-2.5 py-1.5 font-mono text-[10px] tracking-[.12em] uppercase">
                 <span className="bg-ok size-1.5 rounded-full" aria-hidden="true" />
-                em manutenção
+                {t.maintenance}
               </span>
             ) : null}
             {p.status === "dev" ? (
@@ -71,19 +84,19 @@ function ProjectCard({ p, priority }: { p: Project; priority: boolean }) {
                   className="idle bg-folder-lime size-1.5 animate-pulse rounded-full"
                   aria-hidden="true"
                 />
-                em desenvolvimento
+                {t.inDev}
               </span>
             ) : null}
             {!p.publicImages ? (
               <span className="rounded-full border border-current px-2.5 py-1.5 font-mono text-[10px] tracking-[.1em] uppercase">
-                prints sob autorização
+                {t.printsAuth}
               </span>
             ) : null}
           </div>
           {!wide ? (
             <SharedCover slug={p.slug}>
               <div className="min-h-[150px] flex-1">
-                <ProjectCover project={p} priority={priority} />
+                <ProjectCover project={p} priority={priority} locale={l} />
               </div>
             </SharedCover>
           ) : null}
@@ -94,14 +107,15 @@ function ProjectCard({ p, priority }: { p: Project; priority: boolean }) {
             <p className="mt-2 max-w-[460px] text-sm leading-relaxed">{p.summary}</p>
             {/* hierarquia: a stack aparece no hover/foco (sempre visível em telas de toque) */}
             <p className="mt-2.5 font-mono text-[11px] tracking-[.1em] uppercase opacity-90 transition-[opacity,transform] duration-300 [@media(hover:hover)]:translate-y-2 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:translate-y-0 [@media(hover:hover)]:group-hover:opacity-90 [@media(hover:hover)]:group-focus-visible:translate-y-0 [@media(hover:hover)]:group-focus-visible:opacity-90">
-              {p.stack.length ? p.stack.join(" · ") : "stack em breve"}
+              {p.stack.length ? p.stack.join(" · ") : t.stackSoon}
             </p>
+            <span className="sr-only">{t.seeCase}</span>
           </div>
         </div>
         {wide ? (
           <SharedCover slug={p.slug}>
             <div className="min-h-[150px] sm:mr-10 sm:min-h-0">
-              <ProjectCover project={p} priority={priority} />
+              <ProjectCover project={p} priority={priority} locale={l} />
             </div>
           </SharedCover>
         ) : null}
@@ -117,9 +131,11 @@ function ProjectCard({ p, priority }: { p: Project; priority: boolean }) {
 }
 
 export function Projects() {
-  const [filter, setFilter] = useState<Filter>("Todos");
+  const l = useLocale();
+  const { projects, t } = getContent(l);
+  const [filter, setFilter] = useState<Filter>("all");
   const { reducedMotion } = usePrefs();
-  const list = projects.filter((p) => filter === "Todos" || p.categories.includes(filter));
+  const list = projects.filter((p) => filter === "all" || p.categories.includes(filter));
   const spring = reducedMotion
     ? { duration: 0 }
     : { type: "spring" as const, stiffness: 260, damping: 28 };
@@ -134,27 +150,23 @@ export function Projects() {
       <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
         <div>
           <Reveal as="p" className="label-mono mb-3 text-[11px]">
-            Trabalhos
+            {t.worksLabel}
           </Reveal>
           <RevealLines
             id="projetos-t"
             className="text-step-4 font-serif leading-none"
             lines={[
               <>
-                Projetos{" "}
+                {t.projectsTitle}{" "}
                 <span className="font-script text-accent text-[1.3em] leading-[.6]">
-                  selecionados
+                  {t.projectsScript}
                 </span>
               </>,
             ]}
           />
         </div>
         <LayoutGroup id="filters">
-          <div
-            role="group"
-            aria-label="Filtrar projetos por categoria"
-            className="flex flex-wrap gap-2"
-          >
+          <div role="group" aria-label={t.filterGroup} className="flex flex-wrap gap-2">
             {filters.map((f) => {
               const on = f === filter;
               return (
@@ -176,7 +188,7 @@ export function Projects() {
                       transition={spring}
                     />
                   ) : null}
-                  <span className="relative">{f}</span>
+                  <span className="relative">{f === "all" ? t.filterAll : f}</span>
                 </button>
               );
             })}
@@ -185,7 +197,7 @@ export function Projects() {
       </div>
 
       <p className="sr-only" aria-live="polite">
-        {list.length} {list.length === 1 ? "projeto" : "projetos"} em {filter}
+        {t.projectsCount(list.length, filter === "all" ? t.filterAll : filter)}
       </p>
 
       <m.ul
@@ -203,7 +215,7 @@ export function Projects() {
               exit={{ opacity: 0, scale: 0.9 }}
               transition={spring}
             >
-              <ProjectCard p={p} priority={false} />
+              <ProjectCard p={p} priority={false} l={l} t={t} />
             </m.li>
           ))}
         </AnimatePresence>

@@ -26,7 +26,9 @@ export function DataTable({
   caption,
   head,
   rows,
+  toggle = "Ver como tabela",
 }: {
+  toggle?: string;
   caption: string;
   head: string[];
   rows: (string | number)[][];
@@ -34,7 +36,7 @@ export function DataTable({
   return (
     <details className="mt-3 text-sm">
       <summary className="border-line inline-flex min-h-9 cursor-pointer items-center rounded-full border px-3 font-mono text-[11px] tracking-[.1em] uppercase">
-        Ver como tabela
+        {toggle}
       </summary>
       <div className="border-line mt-3 max-h-64 overflow-auto rounded-2xl border">
         <table className="w-full text-left">

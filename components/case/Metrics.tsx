@@ -9,7 +9,13 @@ export type Metric = {
 };
 
 /** Resultados em pílulas com borda. Sem valor real → placeholder explícito (nunca inventar números). */
-export function Metrics({ items }: { items: Metric[] }) {
+export function Metrics({
+  items,
+  todo = "TODO: Brena preencher",
+}: {
+  items: Metric[];
+  todo?: string;
+}) {
   return (
     <ul className="not-prose mt-2 flex flex-wrap gap-3">
       {items.map((m) => (
@@ -27,7 +33,7 @@ export function Metrics({ items }: { items: Metric[] }) {
           <span className="text-muted text-sm">{m.label}</span>
           {typeof m.value !== "number" ? (
             <span className="text-muted font-mono text-[10px] tracking-[.1em] uppercase">
-              TODO: Brena preencher
+              {todo}
             </span>
           ) : null}
         </li>

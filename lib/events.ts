@@ -5,7 +5,8 @@ export const emit = (name: "palette:open" | "toast", detail?: string) =>
 export async function copyEmail(email: string) {
   try {
     await navigator.clipboard.writeText(email);
-    emit("toast", "E-mail copiado!");
+    const en = location.pathname === "/en" || location.pathname.startsWith("/en/");
+    emit("toast", en ? "Email copied!" : "E-mail copiado!");
   } catch {
     emit("toast", `E-mail: ${email}`);
   }

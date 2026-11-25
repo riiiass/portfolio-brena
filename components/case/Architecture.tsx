@@ -30,14 +30,17 @@ function Connector({ i }: { i: number }) {
 }
 
 /** Diagrama front → API → banco, com integrações. As setas se desenham ao entrar (stroke-dashoffset). */
-export function Architecture({ flow, integrations }: { flow: Node[]; integrations?: string[] }) {
+export function Architecture({
+  flow,
+  integrations,
+  labels = { aria: "Diagrama de arquitetura", integrations: "Integrações" },
+}: {
+  flow: Node[];
+  integrations?: string[];
+  labels?: { aria: string; integrations: string };
+}) {
   return (
-    <Reveal
-      variant="none"
-      className="arch not-prose mt-2"
-      role="figure"
-      aria-label="Diagrama de arquitetura"
-    >
+    <Reveal variant="none" className="arch not-prose mt-2" role="figure" aria-label={labels.aria}>
       <ol className="flex flex-col items-stretch md:flex-row md:items-center">
         {flow.map((n, i) => (
           <li key={n.title} className="contents">
@@ -56,7 +59,7 @@ export function Architecture({ flow, integrations }: { flow: Node[]; integration
       </ol>
       {integrations?.length ? (
         <div className="border-line mt-5 rounded-[22px] border-[1.5px] border-dashed p-4">
-          <p className="label-mono text-muted mb-3 text-[10px]">Integrações</p>
+          <p className="label-mono text-muted mb-3 text-[10px]">{labels.integrations}</p>
           <ul className="flex flex-wrap gap-2">
             {integrations.map((it) => (
               <li key={it} className="border-fg rounded-full border-[1.5px] px-3 py-1.5 text-sm">

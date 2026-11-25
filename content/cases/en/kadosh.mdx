@@ -1,0 +1,152 @@
+<CaseSection phase="descobrir" title="Challenge">
+
+KADOSH is a faith-inspired fashion brand for men and women. The brief was a **complete website** where customers do everything on their own, without having to talk to the company:
+
+- A **dynamic** showcase that presents the shirts in a way that stands out.
+- Sales for **retail and wholesale** on the same site.
+- **Shipping calculated** during checkout.
+- **Payment on the site itself**.
+- An **admin area** for the brand to manage products, stock and orders.
+
+</CaseSection>
+
+<CaseSection phase="definir" title="Approach">
+
+I chose a foundation that could handle the storefront and the business rules in the same project:
+
+- **Next.js 15 (App Router) with React 19 and TypeScript** for both the interface and the APIs, typed end to end.
+- **PostgreSQL on Neon with Prisma** to model products, variants, inventory, orders and payments.
+- **Zod** validating every piece of data that reaches the server.
+- Editorial identity: **Cormorant Garamond** for headings and **Jost** for body text, black and gold.
+
+</CaseSection>
+
+<CaseSection phase="desenvolver" title="Process">
+
+### Storefront and navigation
+
+Animations with **Framer Motion**: a rotating showcase, horizontal product scrolling, a side menu and a side cart. Icons by Lucide.
+
+### Checkout, shipping and inventory
+
+- **PagBank (Checkout)**: Pix and credit card, with payment confirmation through **webhooks**.
+- **SuperFrete**: shipping quotes with Correios, Jadlog and Loggi.
+- **ViaCEP**: the address fills itself in from the postal code.
+- **Stock reservation** during checkout, with a Netlify scheduled function that releases expired reservations.
+- **Resend** for transactional emails, when configured.
+
+### Admin panel
+
+Login built into the project, with no external library: **scrypt password hashing** and an **HMAC-signed session** in a secure cookie. Panel actions use Server Actions.
+
+### Quality
+
+Automated tests with **Vitest** (wholesale rules, CPF validation, webhook signatures, shipping and session) running on **GitHub Actions** on every push.
+
+</CaseSection>
+
+<CaseSection phase="desenvolver" title="UX decisions">
+
+<Decisions
+  items={[
+    {
+      title: "End-to-end purchase without talking to the store",
+      principle: "Nielsen · user control and freedom",
+      text: "Choose, calculate shipping, pay and track: all on the site, at the customer's pace, without depending on support.",
+    },
+    {
+      title: "Retail and wholesale on the same site",
+      principle: "Nielsen · flexibility and efficiency",
+      text: "Wholesale rules are applied in the cart, so bulk buyers use the same store instead of a separate channel.",
+    },
+    {
+      title: "Rotating showcase and horizontal scrolling",
+      principle: "Gestalt · figure and ground",
+      text: "Black and gold background with the shirts in motion: the product is the star and the brand stands apart from a plain grid.",
+    },
+    {
+      title: "Side cart instead of a cart page",
+      principle: "Nielsen · visibility of system status",
+      text: "People add a product and see the cart without leaving the showcase, so they keep shopping without losing context.",
+    },
+    {
+      title: "Address filled in from the postal code",
+      principle: "Nielsen · error prevention",
+      text: "Fewer fields typed by hand, fewer address mistakes and a shorter checkout.",
+    },
+    {
+      title: "Pix and card in the same checkout",
+      principle: "Nielsen · flexibility",
+      text: "Everyone pays the way they prefer, without needing another channel.",
+    },
+    {
+      title: "Stock reserved during checkout",
+      principle: "Nielsen · error prevention",
+      text: "Avoids the frustration of paying for an item that sold out halfway through.",
+    },
+  ]}
+/>
+
+<div className="todo">
+  TODO: Brena — check that these decisions reflect your reasoning and add others.
+</div>
+
+</CaseSection>
+
+<CaseSection phase="entregar" title="Architecture">
+
+<Architecture
+  flow={[
+    { title: "Interface", detail: "Next.js 15 + React 19, Tailwind, Framer Motion" },
+    { title: "API", detail: "Route Handlers and Server Actions, validated with Zod" },
+    { title: "Database", detail: "PostgreSQL on Neon via Prisma" },
+  ]}
+  integrations={[
+    "PagBank (Pix and card + webhook)",
+    "SuperFrete",
+    "ViaCEP",
+    "Resend",
+    "Netlify (scheduled function)",
+  ]}
+/>
+
+<StackGroups
+  groups={[
+    {
+      label: "Interface",
+      items: [
+        "Next.js 15",
+        "React 19",
+        "TypeScript",
+        "Tailwind CSS",
+        "Framer Motion",
+        "Lucide React",
+      ],
+    },
+    { label: "Server", items: ["Route Handlers", "Server Actions", "Zod", "scrypt + HMAC"] },
+    { label: "Data", items: ["PostgreSQL (Neon)", "Prisma"] },
+    { label: "Quality and deploy", items: ["Vitest", "GitHub Actions", "Netlify"] },
+    {
+      label: "Tools",
+      items: ["VS Code", "Node.js 22", "Git", "PowerShell", "Claude (coding assistant)"],
+    },
+  ]}
+/>
+
+</CaseSection>
+
+<CaseSection phase="entregar" title="Outcome">
+
+<Metrics
+  items={[
+    { label: "Lighthouse (performance, mobile)" },
+    { label: "Orders or sales in the first month" },
+    { label: "Average checkout time" },
+  ]}
+/>
+
+<div className="todo">
+  TODO: Brena — replace with real numbers (or remove). Nothing here was made up.
+</div>
+
+</CaseSection>

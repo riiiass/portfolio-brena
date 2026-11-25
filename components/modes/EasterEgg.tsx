@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { usePrefs } from "@/components/providers/Preferences";
 import { emit } from "@/lib/events";
+import { getContent } from "@/content";
+import { useLocale } from "@/lib/use-locale";
 
 const KONAMI = [
   "ArrowUp",
@@ -44,6 +46,7 @@ type Body = {
  * (gravidade, quique nas bordas, atrito e empilhamento aproximado). Some sozinho.
  */
 export function EasterEgg() {
+  const t = getContent(useLocale()).t;
   const { reducedMotion } = usePrefs();
   const [run, setRun] = useState(0);
   const [count, setCount] = useState(0);
@@ -56,10 +59,10 @@ export function EasterEgg() {
     let clicks: number[] = [];
     const fire = () => {
       if (reducedMotion) {
-        emit("toast", "Você achou o easter egg! (as pastas ficam quietas com movimento reduzido)");
+        emit("toast", t.eggReduced);
         return;
       }
-      emit("toast", "Você achou o easter egg!");
+      emit("toast", t.egg);
       setCount(Math.min(16, Math.max(8, Math.floor(window.innerWidth / 90))));
       setRun((n) => n + 1);
     };
@@ -85,7 +88,7 @@ export function EasterEgg() {
       window.removeEventListener("keydown", onKey);
       window.removeEventListener("click", onClick);
     };
-  }, [reducedMotion]);
+  }, [reducedMotion, t]);
 
   // simulação
   useEffect(() => {

@@ -4,11 +4,14 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 import type { CaseMeta } from "@/content/pt/cases";
+import { getContent } from "@/content";
+import { useLocale } from "@/lib/use-locale";
 
 type Img = CaseMeta["gallery"][number];
 
 /** Grade 3×3 com lightbox (<dialog> nativo: foco preso e Esc de graça). Setas navegam. */
 export function Gallery({ images, placeholders = 0 }: { images: Img[]; placeholders?: number }) {
+  const t = getContent(useLocale()).t;
   const dialog = useRef<HTMLDialogElement>(null);
   const [index, setIndex] = useState(0);
   const current = images[index];
@@ -27,9 +30,9 @@ export function Gallery({ images, placeholders = 0 }: { images: Img[]; placehold
             <button
               type="button"
               onClick={() => open(i)}
-              data-cursor="ampliar"
+              data-cursor={t.enlargeCursor}
               className="group bg-surface relative block aspect-[4/3] w-full overflow-hidden rounded-[20px]"
-              aria-label={`Ampliar imagem: ${img.alt}`}
+              aria-label={`${t.enlarge}: ${img.alt}`}
             >
               <Image
                 src={img.src}
@@ -46,14 +49,14 @@ export function Gallery({ images, placeholders = 0 }: { images: Img[]; placehold
             key={`ph-${i}`}
             className="border-line text-muted flex aspect-[4/3] items-center justify-center rounded-[20px] border-[1.5px] border-dashed font-mono text-[10px] tracking-[.12em] uppercase"
           >
-            TODO: print
+            {t.todoPrint}
           </li>
         ))}
       </ul>
 
       <dialog
         ref={dialog}
-        aria-label="Imagem ampliada"
+        aria-label={t.enlarged}
         className="backdrop:bg-ink/80 m-auto max-h-[92vh] w-[min(1100px,94vw)] overflow-visible bg-transparent p-0 backdrop:backdrop-blur-sm"
         onKeyDown={(e) => {
           if (images.length < 2) return;
@@ -79,7 +82,7 @@ export function Gallery({ images, placeholders = 0 }: { images: Img[]; placehold
               type="button"
               autoFocus
               onClick={() => dialog.current?.close()}
-              aria-label="Fechar"
+              aria-label={t.close}
               className="bg-fg text-bg absolute top-3 right-3 flex size-11 items-center justify-center rounded-full"
             >
               <Icon name="close" size={18} />
@@ -89,7 +92,7 @@ export function Gallery({ images, placeholders = 0 }: { images: Img[]; placehold
                 <button
                   type="button"
                   onClick={() => step(-1)}
-                  aria-label="Imagem anterior"
+                  aria-label={t.prev}
                   className="bg-fg text-bg flex size-11 rotate-180 items-center justify-center rounded-full"
                 >
                   <Icon name="arrowUpRight" size={18} className="rotate-45" />
@@ -97,7 +100,7 @@ export function Gallery({ images, placeholders = 0 }: { images: Img[]; placehold
                 <button
                   type="button"
                   onClick={() => step(1)}
-                  aria-label="Próxima imagem"
+                  aria-label={t.next}
                   className="bg-fg text-bg flex size-11 items-center justify-center rounded-full"
                 >
                   <Icon name="arrowUpRight" size={18} className="rotate-45" />

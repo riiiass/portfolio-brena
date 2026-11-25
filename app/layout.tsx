@@ -11,6 +11,7 @@ import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { IdleGuard } from "@/components/motion/IdleGuard";
 import { Footer } from "@/components/sections/Footer";
 import { LazyChrome } from "@/components/providers/LazyChrome";
+import { SkipLink } from "@/components/ui/SkipLink";
 import { PersonJsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
     "portfólio",
     "Ceará",
   ],
-  alternates: { canonical: "/" },
+  alternates: { canonical: "/", languages: { "pt-BR": "/", en: "/en", "x-default": "/" } },
   openGraph: { type: "website", locale: "pt_BR", siteName: site.name, url: site.url },
   twitter: { card: "summary_large_image" },
 };
@@ -49,9 +50,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <PersonJsonLd />
       </head>
       <body>
-        <a href="#conteudo" className="skip-link">
-          Pular para o conteúdo
-        </a>
+        <SkipLink />
         <PreferencesProvider>
           <Nav />
           {children}

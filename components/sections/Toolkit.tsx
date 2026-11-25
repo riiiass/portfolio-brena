@@ -1,5 +1,6 @@
-import { toolkit } from "@/content/pt/toolkit";
-import { certifications, type Cert } from "@/content/pt/certifications";
+import type { Cert } from "@/content/pt/certifications";
+import { getContent } from "@/content";
+import type { Locale } from "@/lib/i18n";
 import { Reveal, RevealLines } from "@/components/motion/Reveal";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
@@ -12,9 +13,9 @@ const tone: Record<Cert["tone"], string> = {
 };
 
 /** Selo circular com texto em volta (ref. A) */
-function Seal({ issuer }: { issuer: string }) {
+function Seal({ issuer, seal }: { issuer: string; seal: string }) {
   const id = `seal-${issuer.replace(/\W+/g, "")}`;
-  const text = `${issuer.toUpperCase()} ✦ CERTIFICADO ✦ `;
+  const text = `${issuer.toUpperCase()} ✦ ${seal} ✦ `;
   return (
     <svg viewBox="0 0 100 100" className="size-[72px] shrink-0" aria-hidden="true">
       <defs>
@@ -33,7 +34,8 @@ function Seal({ issuer }: { issuer: string }) {
   );
 }
 
-export function Toolkit() {
+export function Toolkit({ locale }: { locale: Locale }) {
+  const { toolkit, certifications, t } = getContent(locale);
   const featured = certifications.filter((c) => c.featured);
   const others = certifications.filter((c) => !c.featured);
 
@@ -46,18 +48,18 @@ export function Toolkit() {
     >
       <div className="mb-10">
         <Reveal as="p" className="label-mono mb-3 text-[11px]">
-          Toolkit
+          {t.toolkitLabel}
         </Reveal>
         <RevealLines
           id="toolkit-t"
           className="font-display text-step-4 leading-[.9] uppercase"
           lines={[
             <>
-              Minha{" "}
+              {t.toolkitTitleA}{" "}
               <span className="font-script text-accent text-[1.3em] leading-[.6] normal-case">
-                caixa
+                {t.toolkitScript}
               </span>{" "}
-              de ferramentas
+              {t.toolkitTitleB}
             </>,
           ]}
         />
@@ -86,7 +88,7 @@ export function Toolkit() {
         ))}
       </div>
 
-      <h3 className="text-step-3 mt-16 mb-6 font-serif leading-none">Certificações</h3>
+      <h3 className="text-step-3 mt-16 mb-6 font-serif leading-none">{t.certsTitle}</h3>
       <ul className="grid grid-cols-[minmax(0,1fr)] gap-4 md:grid-cols-3">
         {featured.map((c, i) => (
           <li key={c.title}>
@@ -98,7 +100,7 @@ export function Toolkit() {
                 )}
               >
                 <div className="flex items-start justify-between gap-3">
-                  <Seal issuer={c.issuer.split(" · ")[0]!} />
+                  <Seal issuer={c.issuer.split(" · ")[0]!} seal={t.certSeal} />
                   <span className="bg-paper rounded-full px-2.5 py-1 font-mono text-[10px] tracking-[.12em] uppercase">
                     {c.date}
                   </span>
@@ -113,8 +115,8 @@ export function Toolkit() {
                     data-cursor="verificar"
                     className="bg-ink text-paper mt-auto inline-flex min-h-11 w-fit items-center gap-2 rounded-full px-4 text-sm font-medium transition-transform active:scale-[.97]"
                   >
-                    Verificar credencial <Icon name="arrowUpRight" size={16} />
-                    <span className="sr-only">(abre em nova aba)</span>
+                    {t.verify} <Icon name="arrowUpRight" size={16} />
+                    <span className="sr-only">{t.newTab}</span>
                   </a>
                 ) : null}
               </article>

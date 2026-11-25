@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react";
-import { services, type ServiceId } from "@/content/pt/services";
+import type { ServiceId } from "@/content/pt/services";
+import { getContent } from "@/content";
+import type { Locale } from "@/lib/i18n";
 import { Reveal, RevealLines } from "@/components/motion/Reveal";
 import { Tilt } from "@/components/motion/Tilt";
 import { cn } from "@/lib/cn";
@@ -134,7 +136,8 @@ const tones = {
   lime: "on-light bg-folder-lime",
 };
 
-export function Services() {
+export function Services({ locale }: { locale: Locale }) {
+  const { services, t } = getContent(locale);
   return (
     <section
       data-bg="paper"
@@ -147,14 +150,14 @@ export function Services() {
           className="font-display text-step-4 leading-[.9] uppercase"
           lines={[
             <>
-              O que eu{" "}
+              {t.servicesTitle}{" "}
               <span className="font-script text-accent text-[1.3em] leading-[.6] normal-case">
-                faço
+                {t.servicesScript}
               </span>
             </>,
           ]}
         />
-        <p className="label-mono text-[11px]">Serviços · 06</p>
+        <p className="label-mono text-[11px]">{t.servicesLabel}</p>
       </div>
       <ul className="grid grid-cols-[minmax(0,1fr)] gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {services.map((s, i) => (

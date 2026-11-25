@@ -2,7 +2,8 @@
 
 import { AnimatePresence, m, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { testimonials } from "@/content/pt/testimonials";
+import { getContent } from "@/content";
+import { useLocale } from "@/lib/use-locale";
 import { usePrefs } from "@/components/providers/Preferences";
 import { RevealLines } from "@/components/motion/Reveal";
 import { scrollToId } from "@/lib/scroll";
@@ -39,6 +40,7 @@ function Typing({ side }: { side: Msg["side"] }) {
  * Sem depoimentos reais ainda, a conversa vira um convite — nenhuma citação é inventada.
  */
 export function Testimonials() {
+  const { testimonials, t } = getContent(useLocale());
   const { reducedMotion } = usePrefs();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "0px 0px -20% 0px" });
@@ -54,7 +56,7 @@ export function Testimonials() {
         {
           id: "a",
           side: "left",
-          body: <p>Este espaço é para depoimentos de verdade, de quem já trabalhou comigo.</p>,
+          body: <p>{t.depoInvite1}</p>,
           meta: "Brena",
         },
         {
@@ -62,7 +64,7 @@ export function Testimonials() {
           side: "right",
           body: (
             <p>
-              Trabalhou comigo num projeto?{" "}
+              {t.depoInvite2a}{" "}
               <a
                 href="#contato"
                 onClick={(e) => {
@@ -71,12 +73,12 @@ export function Testimonials() {
                 }}
                 className="font-bold underline underline-offset-4"
               >
-                Me conta como foi
+                {t.depoInvite2b}
               </a>{" "}
-              e o seu depoimento aparece aqui.
+              {t.depoInvite2c}
             </p>
           ),
-          meta: "convite",
+          meta: t.depoInviteMeta,
         },
       ];
 
@@ -113,16 +115,16 @@ export function Testimonials() {
     >
       <div className="mx-auto grid max-w-[1180px] grid-cols-[minmax(0,1fr)] items-center gap-12 md:grid-cols-2">
         <div>
-          <p className="label-mono mb-4 text-[11px]">Depoimentos</p>
+          <p className="label-mono mb-4 text-[11px]">{t.depoLabel}</p>
           <RevealLines
             id="depo-t"
             className="text-step-4 font-serif leading-none"
             lines={[
-              "Quem já",
+              t.depoTitle1,
               <>
-                trabalhou{" "}
+                {t.depoTitle2}{" "}
                 <span className="font-script text-accent-strong text-[1.3em] leading-[.6]">
-                  comigo
+                  {t.depoScript}
                 </span>
               </>,
             ]}

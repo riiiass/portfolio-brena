@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { Reveal, RevealLines } from "@/components/motion/Reveal";
 import { phases, type PhaseId } from "./phases";
+import { ui } from "@/content/ui";
+import type { Locale } from "@/lib/i18n";
 
 const slug = (s: string) =>
   s
@@ -14,7 +16,9 @@ export function CaseSection({
   phase,
   title,
   children,
+  locale = "pt",
 }: {
+  locale?: Locale;
   phase: PhaseId;
   title: string;
   children: ReactNode;
@@ -29,7 +33,7 @@ export function CaseSection({
     >
       <div>
         <Reveal as="p" className="label-mono text-muted mb-3 text-[11px]">
-          {String(idx + 1).padStart(2, "0")} · {phases[idx]?.label}
+          {String(idx + 1).padStart(2, "0")} · {ui[locale].phases[phase]}
         </Reveal>
         <RevealLines
           id={id}

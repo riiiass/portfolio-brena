@@ -2,7 +2,8 @@
 
 import { AnimatePresence, m } from "motion/react";
 import { useId, useState } from "react";
-import { faq } from "@/content/pt/faq";
+import { getContent } from "@/content";
+import { useLocale } from "@/lib/use-locale";
 import { usePrefs } from "@/components/providers/Preferences";
 import { RevealLines } from "@/components/motion/Reveal";
 import { Icon } from "@/components/ui/Icon";
@@ -10,6 +11,7 @@ import { cn } from "@/lib/cn";
 
 /** Acordeão acessível (button + aria-expanded + aria-controls); a altura anima, o + gira para × */
 export function Faq() {
+  const { faq, t } = getContent(useLocale());
   const [open, setOpen] = useState<number | null>(0);
   const { reducedMotion } = usePrefs();
   const base = useId();
@@ -26,9 +28,9 @@ export function Faq() {
         className="font-display text-step-4 mb-10 text-center leading-[.9] uppercase"
         lines={[
           <>
-            Perguntas{" "}
+            {t.faqTitle}{" "}
             <span className="font-script text-accent text-[1.3em] leading-[.6] normal-case">
-              frequentes
+              {t.faqScript}
             </span>
           </>,
         ]}

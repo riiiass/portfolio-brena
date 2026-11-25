@@ -5,18 +5,21 @@ import type { LangSlice } from "@/lib/github";
 import { chartOther, chartPalette } from "@/content/pt/devdata";
 import { Reveal } from "@/components/motion/Reveal";
 import { cn } from "@/lib/cn";
+import { useLocale } from "@/lib/use-locale";
+import { getContent } from "@/content";
 
 const R = 64;
 const C = 2 * Math.PI * R;
 
 /** Rosca de linguagens (linguagem principal de cada repositório público). 6+ itens viram "Outras". */
 export function Donut({ data }: { data: LangSlice[] }) {
+  const t = getContent(useLocale()).t;
   const [hover, setHover] = useState<number | null>(null);
   const top = data.slice(0, 5);
   const rest = data.slice(5).reduce((s, d) => s + d.repos, 0);
   const slices = [
     ...top.map((d, i) => ({ ...d, color: chartPalette[i]! })),
-    ...(rest ? [{ name: "Outras", repos: rest, color: chartOther }] : []),
+    ...(rest ? [{ name: t.others, repos: rest, color: chartOther }] : []),
   ];
   const total = slices.reduce((s, d) => s + d.repos, 0) || 1;
   const GAP = 2.5; // espaço da cor da superfície entre fatias
@@ -37,13 +40,7 @@ export function Donut({ data }: { data: LangSlice[] }) {
   return (
     <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-center lg:flex-col xl:flex-row">
       <Reveal variant="none" className="donut relative shrink-0">
-        <svg
-          width="172"
-          height="172"
-          viewBox="0 0 172 172"
-          role="img"
-          aria-label="Distribuição de linguagens nos repositórios públicos (valores na legenda)"
-        >
+        <svg width="172" height="172" viewBox="0 0 172 172" role="img" aria-label={t.donutAria}>
           <g transform="rotate(-90 86 86)">
             {arcs.map((a, i) => (
               <circle
@@ -73,11 +70,11 @@ export function Donut({ data }: { data: LangSlice[] }) {
             {hover === null ? total : arcs[hover]?.pct + "%"}
           </span>
           <span className="text-muted mt-1 max-w-[90px] text-[11px] leading-tight">
-            {hover === null ? "repositórios" : arcs[hover]?.name}
+            {hover === null ? t.donutCenter : arcs[hover]?.name}
           </span>
         </div>
       </Reveal>
-      <ul className="grid w-full gap-1.5" aria-label="Linguagens">
+      <ul className="grid w-full gap-1.5" aria-label={t.devLangTitle}>
         {arcs.map((a, i) => (
           <li key={a.name}>
             <button
@@ -98,7 +95,7 @@ export function Donut({ data }: { data: LangSlice[] }) {
               />
               <span className="flex-1">{a.name}</span>
               <span className="text-muted whitespace-nowrap tabular-nums">
-                {a.repos} {a.repos === 1 ? "repo" : "repos"} · {a.pct}%
+                {a.repos} {t.repo(a.repos)} · {a.pct}%
               </span>
             </button>
           </li>

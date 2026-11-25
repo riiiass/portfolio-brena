@@ -4,12 +4,15 @@ import { m } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { scrollToId } from "@/lib/scroll";
 import { phases } from "./phases";
+import { getContent } from "@/content";
+import { useLocale } from "@/lib/use-locale";
 
 /**
  * Pílulas do Double Diamond que se preenchem conforme a leitura avança (orientação: "onde estou no processo").
  * O preenchimento é ligado ao scroll (não é animação temporal), então continua útil com reduced motion.
  */
 export function ProcessBar() {
+  const t = getContent(useLocale()).t;
   const [fill, setFill] = useState<number[]>(phases.map(() => 0));
   const raf = useRef(0);
 
@@ -43,7 +46,7 @@ export function ProcessBar() {
   const current = fill.reduce((acc, f, i) => (f > 0 ? i : acc), 0);
 
   return (
-    <nav aria-label="Etapas do processo (Double Diamond)" className="sticky top-3 z-30 md:top-24">
+    <nav aria-label={t.processNav} className="sticky top-3 z-30 md:top-24">
       <ol className="border-line bg-surface/90 mx-auto flex w-fit max-w-full [scrollbar-width:none] gap-1.5 overflow-x-auto rounded-full border p-1.5 shadow-[0_10px_30px_-18px_var(--shadow)] backdrop-blur">
         {phases.map((p, i) => (
           <li key={p.id}>
@@ -64,7 +67,7 @@ export function ProcessBar() {
                 className="bg-fg absolute inset-0 origin-left"
                 style={{ scaleX: fill[i] ?? 0 }}
               />
-              <span className="relative text-white mix-blend-difference">{p.label}</span>
+              <span className="relative text-white mix-blend-difference">{t.phases[p.id]}</span>
             </button>
           </li>
         ))}

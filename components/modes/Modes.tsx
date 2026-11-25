@@ -6,6 +6,8 @@ import { usePrefs } from "@/components/providers/Preferences";
 import { emit } from "@/lib/events";
 import { contrast } from "@/lib/contrast";
 import { Icon } from "@/components/ui/Icon";
+import { getContent } from "@/content";
+import { useLocale } from "@/lib/use-locale";
 
 type Info = {
   rect: { x: number; y: number; w: number; h: number };
@@ -180,6 +182,7 @@ function Inspector() {
  * Tecla I alterna a inspeção; Esc sai de qualquer modo.
  */
 export function Modes() {
+  const t = getContent(useLocale()).t;
   const { wireframe, toggleWireframe, inspect, toggleInspect } = usePrefs();
 
   useEffect(() => {
@@ -187,10 +190,7 @@ export function Modes() {
       if (e.metaKey || e.ctrlKey || e.altKey || typing(e.target)) return;
       if (e.key.toLowerCase() === "i") {
         toggleInspect();
-        emit(
-          "toast",
-          inspect ? "Modo Inspeção desligado" : "Modo Inspeção: passe o mouse ou use Tab",
-        );
+        emit("toast", inspect ? t.palette.toastInspectOff : t.modes.hint);
       } else if (
         e.key === "Escape" &&
         (inspect || wireframe) &&
@@ -202,7 +202,7 @@ export function Modes() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [inspect, wireframe, toggleInspect, toggleWireframe]);
+  }, [inspect, wireframe, toggleInspect, toggleWireframe, t]);
 
   return (
     <>
@@ -217,15 +217,15 @@ export function Modes() {
           <m.div
             key="modebar"
             role="region"
-            aria-label="Modos ativos"
+            aria-label={t.modes.active}
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 40, opacity: 0 }}
             className="fixed bottom-28 left-4 z-[87] flex items-center gap-2 rounded-full border-[1.5px] border-dashed border-[#d98aa0] bg-[#fbeff2] p-1.5 pl-4 font-mono text-[11px] tracking-[.15em] text-[#8a3a52] uppercase shadow-lg md:bottom-6"
           >
-            {wireframe ? "Wireframe" : null}
+            {wireframe ? t.modes.wireframe : null}
             {wireframe && inspect ? " + " : null}
-            {inspect ? "Inspeção" : null}
+            {inspect ? t.modes.inspect : null}
             <button
               type="button"
               onClick={() => {
@@ -234,7 +234,7 @@ export function Modes() {
               }}
               className="flex min-h-9 items-center gap-1.5 rounded-full bg-[#8a3a52] px-3 text-[#fbeff2]"
             >
-              <Icon name="close" size={12} strokeWidth={2.5} /> sair{" "}
+              <Icon name="close" size={12} strokeWidth={2.5} /> {t.modes.exit}{" "}
               <kbd className="opacity-70">esc</kbd>
             </button>
           </m.div>
