@@ -14,7 +14,7 @@ const BG_VAR: Record<string, string> = { paper: "--bg", band: "--band", block: "
  * Tudo desligado com reduced motion; sem JS as seções mantêm seus fundos próprios.
  */
 export function ScrollFx() {
-  const { reducedMotion, theme } = usePrefs();
+  const { reducedMotion, theme, wireframe } = usePrefs();
 
   useEffect(() => {
     if (reducedMotion) return;
@@ -31,25 +31,38 @@ export function ScrollFx() {
         const sections = gsap.utils.toArray<HTMLElement>("[data-bg]");
         if (sections.length) {
           html.classList.add("bg-morph");
-          const first = sections[0]?.dataset.bg ?? "paper";
-          gsap.set(document.body, { backgroundColor: read(BG_VAR[first] ?? "--bg") });
+          // a cor vem da seção que está no meio da tela — independe da ordem dos gatilhos
+          let current = "";
+          const sync = (instant = false) => {
+            const mid = window.innerHeight * 0.55;
+            const sec = sections.find((el) => {
+              const r = el.getBoundingClientRect();
+              return r.top <= mid && r.bottom > mid;
+            });
+            const key = sec?.dataset.bg ?? "paper";
+            const color = read(BG_VAR[key] ?? "--bg");
+            if (key === current && !instant) return;
+            current = key;
+            if (instant) gsap.set(document.body, { backgroundColor: color });
+            else
+              gsap.to(document.body, {
+                backgroundColor: color,
+                duration: 0.7,
+                ease: "power2.inOut",
+                overwrite: true,
+              });
+          };
           sections.forEach((sec) => {
-            const color = () => read(BG_VAR[sec.dataset.bg ?? "paper"] ?? "--bg");
             ScrollTrigger.create({
               trigger: sec,
               start: "top 55%",
               end: "bottom 55%",
-              onToggle: (self) => {
-                if (self.isActive)
-                  gsap.to(document.body, {
-                    backgroundColor: color(),
-                    duration: 0.7,
-                    ease: "power2.inOut",
-                    overwrite: true,
-                  });
-              },
+              onToggle: () => sync(),
             });
           });
+          const onRefresh = () => sync(true);
+          ScrollTrigger.addEventListener("refresh", onRefresh);
+          sync(true);
         }
 
         // ---- saídas ----
@@ -96,8 +109,8 @@ export function ScrollFx() {
       document.documentElement.classList.remove("bg-morph");
       document.body.style.backgroundColor = "";
     };
-    // theme na dependência: as cores do morph são relidas ao trocar de tema
-  }, [reducedMotion, theme]);
+    // tema e wireframe na dependência: as cores do morph são relidas quando os tokens mudam
+  }, [reducedMotion, theme, wireframe]);
 
   return null;
 }

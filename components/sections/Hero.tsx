@@ -38,6 +38,7 @@ export function Hero() {
   return (
     <section
       id="inicio"
+      data-bg="paper"
       aria-labelledby="hero-title"
       className="mx-auto max-w-[1240px] px-4 pt-28 pb-16 md:px-8 md:pt-36 lg:pb-20"
     >

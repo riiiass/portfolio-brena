@@ -1,0 +1,161 @@
+/* =====================================================================
+   MODO WIREFRAME — o site vira o esqueleto rosa (ref. B).
+   Tudo via CSS sobre o DOM real: nenhum componente duplicado.
+   ===================================================================== */
+html[data-mode~="wireframe"] {
+  --wf-bg: #fbeff2;
+  --wf-ink: #8a3a52;
+  --wf-line: #d98aa0;
+  --wf-bar: #f2c6d0;
+  --bg: var(--wf-bg);
+  --fg: var(--wf-ink);
+  --surface: transparent;
+  --muted: var(--wf-ink);
+  --line: var(--wf-line);
+  --band: var(--wf-bg);
+  --block: transparent;
+  --block-2: transparent;
+  --on-block: var(--wf-ink);
+  --accent-text: var(--wf-ink);
+  --accent-strong: var(--wf-ink);
+  --shadow: transparent;
+  --heat-0: var(--wf-bar);
+  --heat-1: var(--wf-bar);
+  --heat-2: var(--wf-line);
+  --heat-3: var(--wf-line);
+  --heat-4: var(--wf-ink);
+  --chart-line: var(--wf-ink);
+  --chart-grid: var(--wf-bar);
+  color-scheme: light;
+}
+html[data-mode~="wireframe"] body {
+  background: var(--wf-bg) !important;
+  color: var(--wf-ink);
+}
+
+/* tipografia: tudo vira a serifa fina; mono continua mono */
+html[data-mode~="wireframe"]
+  body
+  :where(*:not(.label-mono):not([class*="font-mono"]):not(code):not(kbd)) {
+  font-family: var(--font-serif) !important;
+  letter-spacing: 0 !important;
+}
+html[data-mode~="wireframe"] :where(h1, h2, h3, h4) {
+  color: var(--wf-ink) !important;
+}
+html[data-mode~="wireframe"] .font-script {
+  font-family: var(--font-serif) !important;
+  font-size: 0.7em !important;
+}
+
+/* superfícies: sem preenchimento, só contorno */
+html[data-mode~="wireframe"] body :where([class*="bg-"]):not(html, body) {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+html[data-mode~="wireframe"]
+  body
+  :where([class*="rounded-["], .rounded-full, [class*="rounded-2xl"], [class*="rounded-xl"]) {
+  box-shadow: none !important;
+  border-color: var(--wf-line) !important;
+  outline: 1.5px solid var(--wf-line);
+  outline-offset: -1.5px;
+}
+html[data-mode~="wireframe"]
+  body
+  :where(.text-paper, .text-ink, .text-bg, .text-on-block, [class*="text-[#"]) {
+  color: var(--wf-ink) !important;
+}
+
+/* camadas fixas (nav, dock, palette) precisam de fundo para não deixar o conteúdo vazar.
+   Especificidade maior que a regra que zera os fundos acima. */
+html[data-mode~="wireframe"] body header nav,
+html[data-mode~="wireframe"] body nav[aria-label="Navegação rápida"],
+html[data-mode~="wireframe"] body [aria-label="Busca e comandos"] {
+  background-color: var(--wf-bg) !important;
+}
+/* enfeites puramente decorativos somem no esqueleto */
+html[data-mode~="wireframe"] :where(.hero-script, .drag-hint) {
+  display: none !important;
+}
+
+/* imagens viram blocos com o "X" clássico de wireframe */
+html[data-mode~="wireframe"] img {
+  opacity: 0 !important;
+}
+html[data-mode~="wireframe"] :has(> img) {
+  background:
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 0.75px),
+      var(--wf-line) 50%,
+      transparent calc(50% + 0.75px)
+    ),
+    linear-gradient(
+      to bottom right,
+      transparent calc(50% - 0.75px),
+      var(--wf-line) 50%,
+      transparent calc(50% + 0.75px)
+    ),
+    var(--wf-bar) !important;
+}
+html[data-mode~="wireframe"] svg :where(circle, path, rect)[fill]:not([fill="none"]) {
+  fill: var(--wf-bar);
+}
+
+/* texto corrido vira barras (uma por linha, via unidade lh) */
+html[data-mode~="wireframe"]
+  main
+  :where(p, li > span, dd, blockquote):not(.label-mono):not([class*="font-mono"]) {
+  color: transparent !important;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0 0.28lh,
+    var(--wf-bar) 0.28lh 0.78lh,
+    transparent 0.78lh 1lh
+  ) !important;
+  border-radius: 6px;
+}
+html[data-mode~="wireframe"] main :where(p, dd) * {
+  color: transparent !important;
+}
+
+/* animações idle e cursor ficam calmos no esqueleto */
+html[data-mode~="wireframe"] .idle {
+  animation-play-state: paused !important;
+}
+
+/* =====================================================================
+   Transição em onda (View Transitions API) para tema e wireframe
+   ===================================================================== */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  animation: wave-in 900ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+@keyframes wave-in {
+  from {
+    clip-path: circle(0% at var(--wave-x, 100%) var(--wave-y, 0%));
+  }
+  to {
+    clip-path: circle(150% at var(--wave-x, 100%) var(--wave-y, 0%));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* =====================================================================
+   MODO INSPEÇÃO — grid de 12 colunas + caixa de seleção
+   ===================================================================== */
+html[data-mode~="inspect"] .cursor-dot {
+  display: none;
+}
+html[data-mode~="inspect"] body {
+  cursor: crosshair;
+}

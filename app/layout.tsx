@@ -12,6 +12,8 @@ import { CommandPalette } from "@/components/ui/CommandPalette";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { IdleGuard } from "@/components/motion/IdleGuard";
 import { Footer } from "@/components/sections/Footer";
+import { Modes } from "@/components/modes/Modes";
+import { EasterEgg } from "@/components/modes/EasterEgg";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -44,6 +46,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <CommandPalette />
           <Toaster />
           <Cursor />
+          <Modes />
+          <EasterEgg />
           <SmoothScroll />
           <IdleGuard />
         </PreferencesProvider>

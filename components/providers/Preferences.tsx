@@ -34,6 +34,13 @@ function readHtml(attr: string) {
 /** Executa a troca dentro de uma View Transition quando o navegador suporta e o movimento está liberado */
 function withTransition(update: () => void, reduced: boolean) {
   const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
+  // orientação: a onda nasce do controle que disparou a troca
+  const el = document.activeElement as HTMLElement | null;
+  if (el && el !== document.body) {
+    const r = el.getBoundingClientRect();
+    document.documentElement.style.setProperty("--wave-x", `${r.left + r.width / 2}px`);
+    document.documentElement.style.setProperty("--wave-y", `${r.top + r.height / 2}px`);
+  }
   if (!reduced && typeof doc.startViewTransition === "function") {
     doc.startViewTransition(update);
   } else {

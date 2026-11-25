@@ -2,6 +2,7 @@
 @import "./tokens.css";
 @import "./hero.css";
 @import "./motion.css";
+@import "./modes.css";
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
