@@ -24,18 +24,22 @@ export function NotchCard({
   return (
     <div className={cn("relative", className)} data-component="NotchCard">
       <div className="relative flex" style={{ width: `min(${tabWidth}, 70%)` }}>
-        <div className={cn("flex h-11 w-full items-center rounded-t-[28px] pl-7", color)}>{tab}</div>
+        <div className={cn("flex h-11 w-full items-center rounded-t-[28px] pl-7", color)}>
+          {tab}
+        </div>
         {/* junção côncava entre aba e corpo */}
         <span
           aria-hidden="true"
-          className={cn("absolute bottom-0 -right-7 size-7", color)}
+          className={cn("absolute -right-7 bottom-0 size-7", color)}
           style={{
             WebkitMask: "radial-gradient(circle at 100% 0, transparent 27.5px, #000 28px)",
             mask: "radial-gradient(circle at 100% 0, transparent 27.5px, #000 28px)",
           }}
         />
       </div>
-      <div className={cn("rounded-[40px] rounded-tl-none p-8 md:p-12", color, bodyClassName)}>{children}</div>
+      <div className={cn("rounded-[40px] rounded-tl-none p-8 md:p-12", color, bodyClassName)}>
+        {children}
+      </div>
     </div>
   );
 }

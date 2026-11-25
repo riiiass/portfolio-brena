@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./tokens.css";
+@import "./hero.css";
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
@@ -12,6 +13,7 @@
   }
 
   body {
+    overflow-x: clip;
     font-family: var(--font-sans);
     font-size: var(--step-0);
     line-height: 1.6;
@@ -112,4 +114,21 @@ html.lenis body {
 }
 .lenis.lenis-stopped {
   overflow: hidden;
+}
+
+/* Idle life: pausa fora da viewport e com a aba oculta */
+html[data-tab="hidden"] .idle,
+[data-idle="off"] .idle {
+  animation-play-state: paused !important;
+}
+
+/* Cursor contextual: o nativo continua visível (acessibilidade); a bolinha é um reforço */
+@media (pointer: fine) {
+  .cursor-dot {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 90;
+    pointer-events: none;
+  }
 }

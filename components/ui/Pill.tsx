@@ -25,7 +25,11 @@ const sizes: Record<Size, string> = {
 
 type Common = { variant?: Variant; size?: Size; className?: string; children: ReactNode };
 
-export function pillClass({ variant = "outline", size = "md", className }: Omit<Common, "children">) {
+export function pillClass({
+  variant = "outline",
+  size = "md",
+  className,
+}: Omit<Common, "children">) {
   return cn(base, variants[variant], sizes[size], className);
 }
 
@@ -68,7 +72,7 @@ export function Tag({ children, className }: { children: ReactNode; className?: 
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full bg-paper px-2.5 py-1.5 font-mono text-[11px] tracking-[.15em] text-ink uppercase",
+        "bg-paper text-ink inline-flex items-center rounded-full px-2.5 py-1.5 font-mono text-[11px] tracking-[.15em] uppercase",
         className,
       )}
     >

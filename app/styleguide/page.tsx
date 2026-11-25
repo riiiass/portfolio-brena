@@ -51,8 +51,8 @@ const motionTokens = [
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
-    <section aria-labelledby={id} className="border-t border-line py-14">
-      <h2 id={id} className="label-mono mb-8 text-muted">
+    <section aria-labelledby={id} className="border-line border-t py-14">
+      <h2 id={id} className="label-mono text-muted mb-8">
         {title}
       </h2>
       {children}
@@ -65,9 +65,9 @@ export default function StyleguidePage() {
     <main id="conteudo" className="mx-auto max-w-6xl px-4 py-10 md:px-8">
       <header className="mb-10 flex flex-wrap items-end justify-between gap-6">
         <div>
-          <p className="label-mono mb-14 text-muted">Design system</p>
-          <h1 className="relative font-display text-step-5 leading-[.86] uppercase">
-            <span className="absolute -top-8 left-2 -rotate-6 font-script text-[0.55em] text-accent normal-case">
+          <p className="label-mono text-muted mb-14">Design system</p>
+          <h1 className="font-display text-step-5 relative leading-[.86] uppercase">
+            <span className="font-script text-accent absolute -top-8 left-2 -rotate-6 text-[0.55em] normal-case">
               Brena
             </span>
             Styleguide
@@ -79,18 +79,18 @@ export default function StyleguidePage() {
       <Section id="sg-cores" title="Cores">
         <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {palette.map((c) => (
-            <li key={c.name} className="overflow-hidden rounded-[24px] border border-line">
+            <li key={c.name} className="border-line overflow-hidden rounded-[24px] border">
               <div className="flex h-24 items-end p-3" style={{ background: c.hex, color: c.on }}>
                 <span className="font-mono text-xs">{c.hex}</span>
               </div>
               <div className="bg-surface p-3 text-sm">
                 <code className="font-mono text-xs">{c.name}</code>
-                {c.note ? <p className="text-xs text-muted">{c.note}</p> : null}
+                {c.note ? <p className="text-muted text-xs">{c.note}</p> : null}
               </div>
             </li>
           ))}
         </ul>
-        <h3 className="mt-10 mb-4 font-serif text-step-2">Contraste medido</h3>
+        <h3 className="text-step-2 mt-10 mb-4 font-serif">Contraste medido</h3>
         <ul className="grid gap-2 sm:grid-cols-2">
           {textPairs.map((p) => {
             const r = contrast(p.fg, p.bg);
@@ -115,26 +115,26 @@ export default function StyleguidePage() {
       <Section id="sg-tipo" title="Tipografia">
         <div className="grid gap-8">
           <div>
-            <p className="label-mono mb-2 text-muted">Display · Anton</p>
+            <p className="label-mono text-muted mb-2">Display · Anton</p>
             <p className="font-display text-step-5 leading-[.86] uppercase">Portfólio</p>
           </div>
           <div>
-            <p className="label-mono mb-2 text-muted">Script · Mrs Saint Delafield (decorativa)</p>
-            <p className="font-script text-[6rem] leading-none text-accent">Brena</p>
+            <p className="label-mono text-muted mb-2">Script · Mrs Saint Delafield (decorativa)</p>
+            <p className="font-script text-accent text-[6rem] leading-none">Brena</p>
           </div>
           <div>
-            <p className="label-mono mb-2 text-muted">Serifa · Italiana</p>
-            <p className="font-serif text-step-3 leading-tight">Dev que pensa como designer.</p>
+            <p className="label-mono text-muted mb-2">Serifa · Italiana</p>
+            <p className="text-step-3 font-serif leading-tight">Dev que pensa como designer.</p>
           </div>
           <div>
-            <p className="label-mono mb-2 text-muted">Sans · Manrope</p>
-            <p className="max-w-prose text-step-0">
+            <p className="label-mono text-muted mb-2">Sans · Manrope</p>
+            <p className="text-step-0 max-w-prose">
               Crio produtos web de ponta a ponta: da pesquisa e do protótipo ao banco de dados e ao
               deploy. Texto de leitura com 1.6 de entrelinha e medida de até 65 caracteres.
             </p>
           </div>
           <div>
-            <p className="label-mono mb-2 text-muted">Mono · JetBrains Mono</p>
+            <p className="label-mono text-muted mb-2">Mono · JetBrains Mono</p>
             <p className="label-mono">Collaboration</p>
           </div>
         </div>
@@ -152,7 +152,7 @@ export default function StyleguidePage() {
             Link grande <Icon name="arrowUpRight" size={18} />
           </PillLink>
           <Tag>Full Stack</Tag>
-          <span className="inline-flex items-center gap-2 rounded-full bg-block px-3 py-2 text-sm text-on-block">
+          <span className="bg-block text-on-block inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm">
             <span className="relative flex size-2">
               <span className="absolute inset-0 animate-ping rounded-full bg-[#4ade80] opacity-60" />
               <span className="relative size-2 rounded-full bg-[#4ade80]" />
@@ -167,15 +167,15 @@ export default function StyleguidePage() {
           <SelectionBox label="Button / CTA">
             <a
               href="#"
-              className="block bg-fg px-8 py-4 font-display text-[22px] tracking-[.06em] text-bg"
+              className="bg-fg font-display text-bg block px-8 py-4 text-[22px] tracking-[.06em]"
             >
               VAMOS CONVERSAR
             </a>
           </SelectionBox>
           <SelectionBox label="Heading / H2">
-            <span className="block font-display text-5xl uppercase">Título</span>
+            <span className="font-display block text-5xl uppercase">Título</span>
           </SelectionBox>
-          <p className="max-w-xs text-sm text-muted">
+          <p className="text-muted max-w-xs text-sm">
             Passe o mouse ou foque com Tab: as alças esticam. O mesmo azul é o anel de foco do site.
           </p>
         </div>
@@ -190,7 +190,11 @@ export default function StyleguidePage() {
             Aba com junção côncava feita por mask, sem imagem.
           </p>
         </NotchCard>
-        <NotchCard tone="surface" className="mt-8" tab={<span className="label-mono text-[11px]">Surface</span>}>
+        <NotchCard
+          tone="surface"
+          className="mt-8"
+          tab={<span className="label-mono text-[11px]">Surface</span>}
+        >
           <p className="text-muted">Variante clara.</p>
         </NotchCard>
       </Section>
@@ -198,8 +202,8 @@ export default function StyleguidePage() {
       <Section id="sg-window" title="Window e Folder">
         <div className="grid items-start gap-10 md:grid-cols-2">
           <WindowFrame title="sobre_04 / brena.png">
-            <div className="flex h-64 items-end justify-center bg-folder-orange">
-              <span className="on-light mb-6 rounded-full bg-paper px-3 py-1.5 font-mono text-[11px] tracking-[.2em]">
+            <div className="bg-folder-orange flex h-64 items-end justify-center">
+              <span className="on-light bg-paper mb-6 rounded-full px-3 py-1.5 font-mono text-[11px] tracking-[.2em]">
                 TODO: FOTO
               </span>
             </div>
@@ -217,7 +221,7 @@ export default function StyleguidePage() {
         <div className="overflow-x-auto">
           <table className="w-full min-w-[520px] text-left text-sm">
             <thead>
-              <tr className="border-b border-line">
+              <tr className="border-line border-b">
                 <th className="py-2 font-mono text-xs font-medium">token</th>
                 <th className="py-2 font-mono text-xs font-medium">valor</th>
                 <th className="py-2 font-mono text-xs font-medium">uso</th>
@@ -225,10 +229,10 @@ export default function StyleguidePage() {
             </thead>
             <tbody>
               {motionTokens.map(([t, v, u]) => (
-                <tr key={t} className="border-b border-line/60">
+                <tr key={t} className="border-line/60 border-b">
                   <td className="py-2 font-mono text-xs">{t}</td>
                   <td className="py-2 font-mono text-xs">{v}</td>
-                  <td className="py-2 text-muted">{u}</td>
+                  <td className="text-muted py-2">{u}</td>
                 </tr>
               ))}
             </tbody>

@@ -23,9 +23,11 @@ export function ThemeToggle({ className }: { className?: string }) {
     >
       {/* feedback: o botão desliza com mola para o lado do tema escolhido */}
       <motion.span
-        className="flex size-[30px] items-center justify-center rounded-full bg-paper text-ink"
+        className="bg-paper text-ink flex size-[30px] items-center justify-center rounded-full"
         animate={{ x: dark ? 28 : 0, rotate: dark ? -30 : 0 }}
-        transition={reducedMotion ? { duration: 0 } : { type: "spring", stiffness: 260, damping: 24 }}
+        transition={
+          reducedMotion ? { duration: 0 } : { type: "spring", stiffness: 260, damping: 24 }
+        }
       >
         <Icon name={dark ? "moon" : "sun"} size={16} strokeWidth={2} />
       </motion.span>

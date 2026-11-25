@@ -1,0 +1,183 @@
+/* ===== Intro ===== */
+html:not(.js) .intro,
+html[data-intro="skip"] .intro {
+  display: none;
+}
+
+@keyframes folder-drop {
+  0% {
+    transform: translateY(-120vh) rotate(var(--r0));
+  }
+  70% {
+    transform: translateY(8px) rotate(var(--r1));
+  }
+  100% {
+    transform: translateY(0) rotate(var(--r1));
+  }
+}
+.intro-folder {
+  animation: folder-drop 700ms var(--ease-out) both;
+  animation-delay: calc(var(--i) * 140ms);
+}
+@keyframes rise {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.intro-letter {
+  display: inline-block;
+  animation: rise 700ms var(--ease-out) both;
+  animation-delay: calc(300ms + var(--i) * var(--stagger));
+}
+
+/* ===== Hero: estados iniciais só com JS + movimento liberado + antes do "go" ===== */
+html.js[data-motion="full"]:not([data-hero="go"]) .hero-letter {
+  transform: translateY(110%);
+}
+html.js[data-motion="full"]:not([data-hero="go"]) .hero-script {
+  clip-path: inset(0 100% 0 0);
+}
+html.js[data-motion="full"]:not([data-hero="go"]) .hero-stamp,
+html.js[data-motion="full"]:not([data-hero="go"]) .hero-fade,
+html.js[data-motion="full"]:not([data-hero="go"]) .hero-folder {
+  opacity: 0;
+}
+
+/* hierarquia: o título entra letra a letra por máscara */
+html[data-motion="full"][data-hero="go"] .hero-letter {
+  animation: rise 900ms var(--ease-out) both;
+  animation-delay: calc(var(--i) * var(--stagger));
+}
+
+/* deleite: a palavra em script é "escrita" da esquerda para a direita */
+@keyframes write {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 -10% 0 0);
+  }
+}
+html[data-motion="full"][data-hero="go"] .hero-script {
+  animation: write 1100ms var(--ease-in-out) 450ms both;
+}
+
+/* hierarquia + deleite: o selo carimba por cima com um tranco */
+@keyframes stamp {
+  0% {
+    opacity: 0;
+    transform: rotate(-9deg) scale(1.4);
+  }
+  55% {
+    opacity: 1;
+    transform: rotate(-9deg) scale(0.96);
+  }
+  70% {
+    transform: rotate(-12deg) scale(1.02);
+  }
+  85% {
+    transform: rotate(-7deg) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(-9deg) scale(1);
+  }
+}
+html[data-motion="full"][data-hero="go"] .hero-stamp {
+  animation: stamp 650ms var(--ease-out) 1100ms both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+html[data-motion="full"][data-hero="go"] .hero-fade {
+  animation: fade-up 700ms var(--ease-out) both;
+  animation-delay: calc(600ms + var(--i, 0) * 90ms);
+}
+
+/* orientação: as pastas "saem" da pilha da intro e se espalham */
+@keyframes folder-in {
+  from {
+    opacity: 0;
+    transform: translate(var(--fx, 0), var(--fy, 0)) scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+}
+html[data-motion="full"][data-hero="go"] .hero-folder {
+  animation: folder-in 900ms var(--ease-out) both;
+  animation-delay: calc(200ms + var(--i, 0) * 90ms);
+}
+
+/* ===== Idle life ===== */
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+html[data-motion="full"] .bob {
+  animation: bob var(--bob-dur, 5s) var(--ease-in-out) infinite;
+  animation-delay: var(--bob-delay, 0s);
+}
+@keyframes sway {
+  0%,
+  100% {
+    rotate: 0deg;
+  }
+  50% {
+    rotate: 2deg;
+  }
+}
+html[data-motion="full"][data-hero="go"] .sway {
+  animation: sway 6s var(--ease-in-out) 2s infinite;
+}
+
+/* deleite: a mãozinha demonstra o gesto de arrastar */
+@keyframes drag-hint {
+  0%,
+  15% {
+    transform: translate(0, 0);
+  }
+  45%,
+  60% {
+    transform: translate(46px, -18px);
+  }
+  90%,
+  100% {
+    transform: translate(0, 0);
+  }
+}
+html[data-motion="full"] .drag-hint {
+  animation: drag-hint 2.4s var(--ease-in-out) infinite;
+}
+
+/* feedback: ícones sociais giram e trocam de cor */
+.social-btn {
+  transition:
+    transform var(--dur-ui) var(--ease-out),
+    background-color var(--dur-ui) var(--ease-out),
+    color var(--dur-ui) var(--ease-out);
+}
+.social-btn:hover,
+.social-btn:focus-visible {
+  transform: rotate(-14deg) scale(1.06);
+}
+.social-btn:active {
+  transform: scale(0.94);
+}

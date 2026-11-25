@@ -5,6 +5,12 @@ import { fontVariables } from "@/lib/fonts";
 import { prefsScript } from "@/lib/prefs-script";
 import { site } from "@/lib/site";
 import { PreferencesProvider } from "@/components/providers/Preferences";
+import { Nav } from "@/components/ui/Nav";
+import { Cursor } from "@/components/ui/Cursor";
+import { Toaster } from "@/components/ui/Toaster";
+import { CommandPalette } from "@/components/ui/CommandPalette";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { IdleGuard } from "@/components/motion/IdleGuard";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -30,7 +36,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <a href="#conteudo" className="skip-link">
           Pular para o conteúdo
         </a>
-        <PreferencesProvider>{children}</PreferencesProvider>
+        <PreferencesProvider>
+          <Nav />
+          {children}
+          <CommandPalette />
+          <Toaster />
+          <Cursor />
+          <SmoothScroll />
+          <IdleGuard />
+        </PreferencesProvider>
       </body>
     </html>
   );

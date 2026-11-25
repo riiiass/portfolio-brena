@@ -25,7 +25,10 @@ export function FolderShape({
 }) {
   return (
     <span className={cn("on-light block w-40", className)} data-component="Folder">
-      <span aria-hidden="true" className={cn("block h-[18px] w-16 rounded-t-[10px]", folderBg[color])} />
+      <span
+        aria-hidden="true"
+        className={cn("block h-[18px] w-16 rounded-t-[10px]", folderBg[color])}
+      />
       <span
         className={cn(
           "flex h-28 flex-col justify-end rounded-[0_16px_16px_16px] p-3.5 shadow-[0_16px_24px_-12px_rgb(0_0_0/.4)]",

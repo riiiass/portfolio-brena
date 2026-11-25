@@ -118,7 +118,16 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
       inspect,
       toggleInspect,
     }),
-    [theme, toggleTheme, reducedMotion, toggleReducedMotion, wireframe, toggleWireframe, inspect, toggleInspect],
+    [
+      theme,
+      toggleTheme,
+      reducedMotion,
+      toggleReducedMotion,
+      wireframe,
+      toggleWireframe,
+      inspect,
+      toggleInspect,
+    ],
   );
 
   return <PrefsContext.Provider value={value}>{children}</PrefsContext.Provider>;
