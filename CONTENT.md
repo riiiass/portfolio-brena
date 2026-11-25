@@ -35,7 +35,7 @@ Marque `[x]` conforme for resolvendo. Arquivo do código entre parênteses.
   - [ ] Paz no Lar
   - [ ] KADOSH (quando estiver no ar)
   - [ ] Banco de Talentos (quando estiver no ar)
-  - [ ] Este portfólio (eu meço na Fase 9)
+  - [ ] Este portfólio — medir no site publicado (local: ~81 na 1ª visita, com intro)
 
 ## 5. Textos que eu escrevi e você precisa revisar
 

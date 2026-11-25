@@ -2,7 +2,7 @@
 
 import {
   AnimatePresence,
-  motion,
+  m,
   motionValue,
   useMotionValue,
   useSpring,
@@ -95,7 +95,7 @@ function DraggableFolder({
         ["--fy" as string]: pos.fy,
       }}
     >
-      <motion.div style={reducedMotion ? undefined : { x: px, y: py }}>
+      <m.div style={reducedMotion ? undefined : { x: px, y: py }}>
         <div
           className="bob idle"
           style={{
@@ -103,7 +103,7 @@ function DraggableFolder({
             ["--bob-delay" as string]: `${-index * 1.3}s`,
           }}
         >
-          <motion.button
+          <m.button
             type="button"
             layoutId={`folder-${folder.id}`}
             id={`folder-btn-${folder.id}`}
@@ -135,9 +135,9 @@ function DraggableFolder({
             className="block cursor-grab touch-none rounded-[16px] text-left"
           >
             <FolderShape label={folder.label} color={folder.color} />
-          </motion.button>
+          </m.button>
         </div>
-      </motion.div>
+      </m.div>
     </div>
   );
 }
@@ -190,7 +190,7 @@ function FolderWindow({
   };
 
   return (
-    <motion.div
+    <m.div
       className="bg-ink/30 fixed inset-0 z-[70] flex items-center justify-center p-4 backdrop-blur-[2px]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -201,7 +201,7 @@ function FolderWindow({
       }}
     >
       {/* orientação: a pasta vira a janela (mesmo layoutId) — fica claro de onde ela veio */}
-      <motion.div
+      <m.div
         ref={dialogRef}
         layoutId={`${prefix}${folder.id}`}
         role="dialog"
@@ -233,7 +233,7 @@ function FolderWindow({
           <span aria-hidden="true" className="size-3 rounded-full bg-[#28c840]" />
           <span className="text-muted ml-3 font-mono text-xs">~/{folder.label}</span>
         </div>
-        <motion.div
+        <m.div
           className="p-7 md:p-9"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0, transition: { delay: reducedMotion ? 0 : 0.18 } }}
@@ -263,9 +263,9 @@ function FolderWindow({
           >
             Ir para {folder.title.toLowerCase()} <Icon name="arrowUpRight" size={18} />
           </button>
-        </motion.div>
-      </motion.div>
-    </motion.div>
+        </m.div>
+      </m.div>
+    </m.div>
   );
 }
 
@@ -349,7 +349,7 @@ export function FolderPlayground() {
         )}
         <AnimatePresence>
           {hintOn && !touched ? (
-            <motion.div
+            <m.div
               aria-hidden="true"
               className="pointer-events-none absolute bottom-[3%] left-[2%] z-10 flex items-center gap-2"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -362,7 +362,7 @@ export function FolderPlayground() {
               <span className="drag-hint text-ink">
                 <Icon name="hand" size={40} strokeWidth={1.4} fill="#fff" />
               </span>
-            </motion.div>
+            </m.div>
           ) : null}
         </AnimatePresence>
       </div>
@@ -380,7 +380,7 @@ export function FolderPlayground() {
                 <li key={f.id} className="w-40 shrink-0" />
               ) : (
                 <li key={f.id} className="shrink-0 snap-start">
-                  <motion.button
+                  <m.button
                     type="button"
                     layoutId={`folder-m-${f.id}`}
                     id={`folder-m-btn-${f.id}`}
@@ -390,7 +390,7 @@ export function FolderPlayground() {
                     className="block rounded-[16px] text-left"
                   >
                     <FolderShape label={f.label} color={f.color} />
-                  </motion.button>
+                  </m.button>
                 </li>
               ),
             )}

@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { useId, useState } from "react";
 import { faq } from "@/content/pt/faq";
 import { usePrefs } from "@/components/providers/Preferences";
@@ -64,7 +64,7 @@ export function Faq() {
               </h3>
               <AnimatePresence initial={false}>
                 {isOpen ? (
-                  <motion.div
+                  <m.div
                     id={panel}
                     key="panel"
                     // feedback: abre/fecha com a altura real do conteúdo
@@ -75,7 +75,7 @@ export function Faq() {
                     className="overflow-hidden"
                   >
                     <p className="text-muted px-4 pb-5 leading-relaxed">{item.a}</p>
-                  </motion.div>
+                  </m.div>
                 ) : null}
               </AnimatePresence>
             </li>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useMotionValueEvent, useScroll } from "motion/react";
+import { m, useMotionValueEvent, useScroll } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { navSections, type SectionId } from "@/content/pt/sections";
 import { usePrefs } from "@/components/providers/Preferences";
@@ -91,7 +91,7 @@ export function Nav() {
   return (
     <>
       {/* ---------- desktop / tablet ---------- */}
-      <motion.header
+      <m.header
         className="fixed inset-x-0 top-0 z-40 hidden justify-center px-6 pt-5 md:flex"
         animate={{ y: hidden ? -110 : 0 }}
         transition={reducedMotion ? { duration: 0 } : { duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
@@ -120,7 +120,7 @@ export function Nav() {
                   </Link>
                   {/* orientação: o indicador desliza até a seção atual */}
                   {isActive ? (
-                    <motion.span
+                    <m.span
                       layoutId="nav-active"
                       className="bg-blush absolute inset-0 rounded-full"
                       transition={
@@ -157,7 +157,7 @@ export function Nav() {
             <span className="sr-only lg:hidden">Modo Wireframe</span>
           </button>
         </nav>
-      </motion.header>
+      </m.header>
 
       {/* ---------- mobile: barra superior compacta ---------- */}
       <header className="absolute inset-x-0 top-0 z-40 flex items-center justify-between px-4 pt-4 md:hidden">
@@ -206,7 +206,7 @@ export function Nav() {
             >
               <Icon name={s.icon} size={22} />
               {active === s.id ? (
-                <motion.span
+                <m.span
                   layoutId="dock-active"
                   className="bg-blush absolute bottom-1 size-1.5 rounded-full"
                 />

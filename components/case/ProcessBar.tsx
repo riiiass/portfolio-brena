@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { scrollToId } from "@/lib/scroll";
 import { phases } from "./phases";
@@ -59,7 +59,7 @@ export function ProcessBar() {
               }}
               className="border-fg relative flex min-h-10 items-center overflow-hidden rounded-full border-[1.5px] px-2 font-mono text-[10px] tracking-[.04em] uppercase sm:px-4 sm:text-[11px] sm:tracking-[.15em]"
             >
-              <motion.span
+              <m.span
                 aria-hidden="true"
                 className="bg-fg absolute inset-0 origin-left"
                 style={{ scaleX: fill[i] ?? 0 }}

@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useMotionValue, useSpring } from "motion/react";
+import { AnimatePresence, m, useMotionValue, useSpring } from "motion/react";
 import { useEffect, useState } from "react";
 import { usePrefs } from "@/components/providers/Preferences";
 
@@ -64,13 +64,13 @@ export function Cursor() {
   if (!enabled) return null;
 
   return (
-    <motion.div
+    <m.div
       aria-hidden="true"
       className="cursor-dot"
       style={{ x, y, mixBlendMode: blend ? "difference" : "normal" }}
     >
       {/* feedback: cresce e mostra o que o clique vai fazer */}
-      <motion.div
+      <m.div
         className="flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full font-mono text-[10px] tracking-[.15em] uppercase"
         animate={{
           width: label ? 76 : blend ? 64 : 12,
@@ -82,7 +82,7 @@ export function Cursor() {
       >
         <AnimatePresence>
           {label ? (
-            <motion.span
+            <m.span
               key={label}
               initial={{ opacity: 0, scale: 0.6 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -91,10 +91,10 @@ export function Cursor() {
               className="text-white"
             >
               {label}
-            </motion.span>
+            </m.span>
           ) : null}
         </AnimatePresence>
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }

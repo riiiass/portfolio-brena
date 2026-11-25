@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useSpring } from "motion/react";
+import { m, useMotionValue, useSpring } from "motion/react";
 import { useRef, type ReactNode } from "react";
 import { usePrefs } from "@/components/providers/Preferences";
 
@@ -31,7 +31,7 @@ export function Magnetic({
   };
 
   return (
-    <motion.span
+    <m.span
       ref={ref}
       className={className ?? "inline-block"}
       style={{ x, y }}
@@ -39,6 +39,6 @@ export function Magnetic({
       onPointerLeave={reset}
     >
       {children}
-    </motion.span>
+    </m.span>
   );
 }

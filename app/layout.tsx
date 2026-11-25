@@ -6,20 +6,32 @@ import { prefsScript } from "@/lib/prefs-script";
 import { site } from "@/lib/site";
 import { PreferencesProvider } from "@/components/providers/Preferences";
 import { Nav } from "@/components/ui/Nav";
-import { Cursor } from "@/components/ui/Cursor";
 import { Toaster } from "@/components/ui/Toaster";
-import { CommandPalette } from "@/components/ui/CommandPalette";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { IdleGuard } from "@/components/motion/IdleGuard";
 import { Footer } from "@/components/sections/Footer";
-import { Modes } from "@/components/modes/Modes";
-import { EasterEgg } from "@/components/modes/EasterEgg";
+import { LazyChrome } from "@/components/providers/LazyChrome";
+import { PersonJsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: { default: `${site.name} — Full Stack × UX/UI`, template: `%s · ${site.name}` },
   description: site.description,
-  openGraph: { type: "website", locale: "pt_BR", siteName: site.name },
+  applicationName: site.name,
+  authors: [{ name: site.name, url: site.url }],
+  keywords: [
+    "Brena Angelo",
+    "desenvolvedora full stack",
+    "designer UX/UI",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "portfólio",
+    "Ceará",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: { type: "website", locale: "pt_BR", siteName: site.name, url: site.url },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {
@@ -34,6 +46,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="pt-BR" className={fontVariables} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: prefsScript }} />
+        <PersonJsonLd />
       </head>
       <body>
         <a href="#conteudo" className="skip-link">
@@ -43,11 +56,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Nav />
           {children}
           <Footer />
-          <CommandPalette />
           <Toaster />
-          <Cursor />
-          <Modes />
-          <EasterEgg />
+          <LazyChrome />
           <SmoothScroll />
           <IdleGuard />
         </PreferencesProvider>

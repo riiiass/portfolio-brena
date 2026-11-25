@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useInView } from "motion/react";
+import { AnimatePresence, m, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { testimonials } from "@/content/pt/testimonials";
 import { usePrefs } from "@/components/providers/Preferences";
@@ -12,7 +12,7 @@ type Msg = { id: string; side: "left" | "right"; body: React.ReactNode; meta?: s
 
 function Typing({ side }: { side: Msg["side"] }) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.9 }}
@@ -23,14 +23,14 @@ function Typing({ side }: { side: Msg["side"] }) {
       aria-hidden="true"
     >
       {[0, 1, 2].map((i) => (
-        <motion.span
+        <m.span
           key={i}
           className="bg-fg size-2 rounded-full"
           animate={{ y: [0, -4, 0], opacity: [0.4, 1, 0.4] }}
           transition={{ duration: 0.9, repeat: Infinity, delay: i * 0.15 }}
         />
       ))}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -130,25 +130,25 @@ export function Testimonials() {
         </div>
         <div ref={ref} className="flex min-h-[260px] flex-col gap-4" aria-live="polite">
           {/* sem JS / reduced motion: tudo visível de uma vez */}
-          {messages.slice(0, visible).map((m, i) => (
-            <motion.figure
-              key={m.id}
+          {messages.slice(0, visible).map((msg, i) => (
+            <m.figure
+              key={msg.id}
               initial={!mounted || reducedMotion ? false : { opacity: 0, y: 24, scale: 0.92 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ type: "spring", stiffness: 260, damping: 22 }}
               className={cn(
                 "max-w-[440px] rounded-[26px] px-5 py-4 shadow-[8px_10px_0_-2px_var(--shadow)]",
-                m.side === "left"
+                msg.side === "left"
                   ? "bg-bg self-start rounded-bl-[6px]"
                   : "bg-ink text-paper self-end rounded-br-[6px] md:-translate-x-8",
                 i > 0 && "-mt-1",
               )}
             >
-              <blockquote className="text-[0.9375rem] leading-relaxed">{m.body}</blockquote>
-              {m.meta ? (
-                <figcaption className="mt-2 text-xs font-bold opacity-80">{m.meta}</figcaption>
+              <blockquote className="text-[0.9375rem] leading-relaxed">{msg.body}</blockquote>
+              {msg.meta ? (
+                <figcaption className="mt-2 text-xs font-bold opacity-80">{msg.meta}</figcaption>
               ) : null}
-            </motion.figure>
+            </m.figure>
           ))}
           <AnimatePresence>
             {typing ? <Typing key={`typing-${shown}`} side={nextSide} /> : null}

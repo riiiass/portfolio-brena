@@ -54,7 +54,13 @@ export function Heatmap({ days }: { days: Contribution[] }) {
 
   return (
     <div className="relative">
-      <div ref={wrap} className="[scrollbar-width:thin] overflow-x-auto pb-2">
+      <div
+        ref={wrap}
+        tabIndex={0}
+        role="region"
+        aria-label="Calendário de contribuições (role para os lados)"
+        className="[scrollbar-width:thin] overflow-x-auto pb-2"
+      >
         <Reveal variant="none" className="heatmap">
           <svg
             width={width}

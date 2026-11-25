@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { usePrefs } from "@/components/providers/Preferences";
 import { cn } from "@/lib/cn";
 import { Icon } from "./Icon";
@@ -22,7 +22,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       )}
     >
       {/* feedback: o botão desliza com mola para o lado do tema escolhido */}
-      <motion.span
+      <m.span
         className="bg-paper text-ink flex size-[30px] items-center justify-center rounded-full"
         animate={{ x: dark ? 28 : 0, rotate: dark ? -30 : 0 }}
         transition={
@@ -30,7 +30,7 @@ export function ThemeToggle({ className }: { className?: string }) {
         }
       >
         <Icon name={dark ? "moon" : "sun"} size={16} strokeWidth={2} />
-      </motion.span>
+      </m.span>
     </button>
   );
 }

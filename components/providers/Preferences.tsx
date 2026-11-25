@@ -1,5 +1,6 @@
 "use client";
 
+import { LazyMotion } from "motion/react";
 import {
   createContext,
   useCallback,
@@ -25,6 +26,7 @@ type Prefs = {
 };
 
 const PrefsContext = createContext<Prefs | null>(null);
+const loadFeatures = () => import("@/lib/motion-features").then((r) => r.default);
 
 function readHtml(attr: string) {
   if (typeof document === "undefined") return undefined;
@@ -137,7 +139,14 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
     ],
   );
 
-  return <PrefsContext.Provider value={value}>{children}</PrefsContext.Provider>;
+  return (
+    <PrefsContext.Provider value={value}>
+      {/* features do Motion chegam sob demanda: menos JS no caminho crítico */}
+      <LazyMotion features={loadFeatures} strict>
+        {children}
+      </LazyMotion>
+    </PrefsContext.Provider>
+  );
 }
 
 export function usePrefs() {

@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { usePrefs } from "@/components/providers/Preferences";
 import { emit } from "@/lib/events";
@@ -127,7 +127,7 @@ function Inspector() {
   return (
     <div aria-hidden="true" data-inspector className="pointer-events-none fixed inset-0 z-[86]">
       {/* feedback: a caixa de seleção azul acompanha o elemento */}
-      <motion.div
+      <m.div
         className="border-select absolute border-[1.5px]"
         initial={false}
         animate={{ left: x - 3, top: y - 3, width: w + 6, height: h + 6 }}
@@ -137,10 +137,10 @@ function Inspector() {
         <span className={`${handle} -top-[5px] -right-[5px]`} />
         <span className={`${handle} -bottom-[5px] -left-[5px]`} />
         <span className={`${handle} -right-[5px] -bottom-[5px]`} />
-        <span className="bg-select absolute -bottom-6 left-1/2 -translate-x-1/2 px-1.5 py-0.5 font-mono text-[10px] whitespace-nowrap text-white">
+        <span className="bg-select-strong absolute -bottom-6 left-1/2 -translate-x-1/2 px-1.5 py-0.5 font-mono text-[10px] whitespace-nowrap text-white">
           {Math.round(w)} × {Math.round(h)}
         </span>
-      </motion.div>
+      </m.div>
       <div
         className="bg-ink text-paper absolute w-[260px] rounded-xl p-3 font-mono text-[11px] leading-[1.7] shadow-xl"
         style={{
@@ -214,7 +214,7 @@ export function Modes() {
       ) : null}
       <AnimatePresence>
         {wireframe || inspect ? (
-          <motion.div
+          <m.div
             key="modebar"
             role="region"
             aria-label="Modos ativos"
@@ -237,7 +237,7 @@ export function Modes() {
               <Icon name="close" size={12} strokeWidth={2.5} /> sair{" "}
               <kbd className="opacity-70">esc</kbd>
             </button>
-          </motion.div>
+          </m.div>
         ) : null}
       </AnimatePresence>
     </>

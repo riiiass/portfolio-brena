@@ -304,6 +304,14 @@ html.js[data-motion="full"] .lh-bars:not([data-shown]) .lh-fill {
 .tl-viewport.tl-pinned {
   overflow: visible;
 }
+.tl-pinned .tl-track {
+  display: flex;
+  width: max-content;
+}
+.tl-pinned .tl-item {
+  width: 300px;
+  flex-shrink: 0;
+}
 .tl-pinned .tl-item {
   transition:
     opacity 400ms var(--ease-out),
@@ -325,4 +333,12 @@ html.js[data-motion="full"] .lh-bars:not([data-shown]) .lh-fill {
 .tl-pinned .tl-item[data-active] .tl-num {
   background: var(--ink);
   color: var(--paper);
+}
+
+/* deleite + feedback: pílulas do toolkit "pulam" com uma curva elástica (CSS puro) */
+.tool-pill {
+  transition: transform 450ms cubic-bezier(0.34, 1.8, 0.64, 1);
+}
+.tool-pill:hover {
+  transform: translateY(-6px) rotate(-2deg);
 }

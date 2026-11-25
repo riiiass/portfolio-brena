@@ -33,19 +33,10 @@ html[data-intro="skip"] .intro {
   animation-delay: calc(300ms + var(--i) * var(--stagger));
 }
 
-/* ===== Hero: estados iniciais só com JS + movimento liberado + antes do "go" ===== */
-html.js[data-motion="full"]:not([data-hero="go"]) .hero-letter {
-  transform: translateY(110%);
-}
-html.js[data-motion="full"]:not([data-hero="go"]) .hero-script {
-  clip-path: inset(0 100% 0 0);
-}
-html.js[data-motion="full"]:not([data-hero="go"]) .hero-stamp,
-html.js[data-motion="full"]:not([data-hero="go"]) .hero-fade,
-html.js[data-motion="full"]:not([data-hero="go"]) .hero-folder {
-  opacity: 0;
-}
-
+/* ===== Hero =====
+   Sem estado escondido antes do "go": o hero é pintado no primeiro frame (por baixo da intro),
+   o que mantém o LCP baixo. As animações usam fill "both", então o estado inicial só é
+   aplicado quando elas começam (com a cortina da intro subindo). */
 /* hierarquia: o título entra letra a letra por máscara */
 html[data-motion="full"][data-hero="go"] .hero-letter {
   animation: rise 900ms var(--ease-out) both;

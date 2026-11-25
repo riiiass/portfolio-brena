@@ -115,12 +115,15 @@ export function Timeline() {
           />
         </div>
 
-        <div ref={viewport} className="tl-viewport md:overflow-x-auto md:pb-2">
-          <ol ref={track} className="flex flex-col gap-3.5 md:w-max md:flex-row">
+        <div ref={viewport} className="tl-viewport md:pb-2">
+          <ol
+            ref={track}
+            className="tl-track grid grid-cols-[minmax(0,1fr)] gap-3.5 md:grid-cols-3"
+          >
             {timeline.map((t, i) => (
               <li
                 key={t.title}
-                className="tl-item bg-block-2 flex flex-col gap-3 rounded-[22px] p-5 md:w-[300px] md:shrink-0"
+                className="tl-item bg-block-2 flex flex-col gap-3 rounded-[22px] p-5"
               >
                 <span className="tl-num bg-blush font-display text-ink flex size-11 items-center justify-center rounded-full text-lg">
                   {i + 1}

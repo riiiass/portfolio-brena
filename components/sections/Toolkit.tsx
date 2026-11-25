@@ -1,9 +1,5 @@
-"use client";
-
-import { motion } from "motion/react";
 import { toolkit } from "@/content/pt/toolkit";
 import { certifications, type Cert } from "@/content/pt/certifications";
-import { usePrefs } from "@/components/providers/Preferences";
 import { Reveal, RevealLines } from "@/components/motion/Reveal";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
@@ -38,7 +34,6 @@ function Seal({ issuer }: { issuer: string }) {
 }
 
 export function Toolkit() {
-  const { reducedMotion } = usePrefs();
   const featured = certifications.filter((c) => c.featured);
   const others = certifications.filter((c) => !c.featured);
 
@@ -79,15 +74,12 @@ export function Toolkit() {
             <h3 className="label-mono text-muted mb-4 text-[11px]">{g.group}</h3>
             <ul className="flex flex-wrap gap-2">
               {g.items.map((t) => (
-                <motion.li
+                <li
                   key={t}
-                  // deleite + feedback: a pílula "pula" com mola ao passar o mouse
-                  whileHover={reducedMotion ? undefined : { y: -6, rotate: -2 }}
-                  transition={{ type: "spring", stiffness: 420, damping: 14 }}
-                  className="bg-surface rounded-full px-3.5 py-2 text-sm shadow-[4px_5px_0_-1px_var(--shadow)]"
+                  className="tool-pill bg-surface rounded-full px-3.5 py-2 text-sm shadow-[4px_5px_0_-1px_var(--shadow)]"
                 >
                   {t}
-                </motion.li>
+                </li>
               ))}
             </ul>
           </Reveal>

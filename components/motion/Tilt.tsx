@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { m, useMotionValue, useSpring, useTransform } from "motion/react";
 import type { ReactNode } from "react";
 import { usePrefs } from "@/components/providers/Preferences";
 
@@ -21,7 +21,7 @@ export function Tilt({
   const ry = useSpring(useTransform(px, [-0.5, 0.5], [-max, max]), { stiffness: 200, damping: 20 });
 
   return (
-    <motion.div
+    <m.div
       className={className}
       style={reducedMotion ? undefined : { rotateX: rx, rotateY: ry, transformPerspective: 900 }}
       onPointerMove={(e) => {
@@ -36,6 +36,6 @@ export function Tilt({
       }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

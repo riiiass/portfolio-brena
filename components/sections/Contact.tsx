@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { useId, useRef, useState } from "react";
 import { site } from "@/lib/site";
 import { copyEmail, emit } from "@/lib/events";
@@ -140,7 +140,7 @@ export function Contact() {
             <div className="relative">
               <AnimatePresence mode="wait" initial={false}>
                 {status === "sent" ? (
-                  <motion.div
+                  <m.div
                     key="ok"
                     role="status"
                     initial={reducedMotion ? false : { opacity: 0, scale: 0.9 }}
@@ -149,21 +149,21 @@ export function Contact() {
                   >
                     {/* deleite: a mensagem vira um papel que entra na pasta e a pasta fecha */}
                     <div className="relative h-40 w-44">
-                      <motion.span
+                      <m.span
                         aria-hidden="true"
                         className="bg-paper absolute top-0 left-1/2 z-0 h-24 w-28 -translate-x-1/2 rounded-lg shadow"
                         initial={reducedMotion ? false : { y: -70, rotate: -8 }}
                         animate={{ y: 30, rotate: 0 }}
                         transition={{ duration: 0.8, ease: [0.65, 0, 0.35, 1], delay: 0.1 }}
                       />
-                      <motion.div
+                      <m.div
                         className="absolute inset-x-0 bottom-0 z-10"
                         initial={reducedMotion ? false : { y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ type: "spring", stiffness: 260, damping: 20 }}
                       >
                         <FolderShape label="mensagens_05" color="lime" className="w-44" />
-                      </motion.div>
+                      </m.div>
                     </div>
                     <div>
                       <p className="font-display text-3xl uppercase">Mensagem guardada!</p>
@@ -184,9 +184,9 @@ export function Contact() {
                     >
                       Enviar outra mensagem
                     </button>
-                  </motion.div>
+                  </m.div>
                 ) : (
-                  <motion.form
+                  <m.form
                     key="form"
                     ref={formRef}
                     name="contato"
@@ -324,7 +324,7 @@ export function Contact() {
                         </p>
                       ) : null}
                     </div>
-                  </motion.form>
+                  </m.form>
                 )}
               </AnimatePresence>
             </div>
@@ -359,14 +359,9 @@ export function Contact() {
                       <span className="sr-only">(abre em nova aba)</span>
                     </a>
                   ) : t.onClick ? (
-                    <button
-                      type="button"
-                      onClick={t.onClick}
-                      className={cls}
-                      data-cursor="copiar"
-                      aria-label={`Copiar e-mail ${site.email}`}
-                    >
+                    <button type="button" onClick={t.onClick} className={cls} data-cursor="copiar">
                       {inner}
+                      <span className="sr-only">: {site.email}</span>
                     </button>
                   ) : (
                     <div className={cls}>{inner}</div>

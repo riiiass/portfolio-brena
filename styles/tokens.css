@@ -102,6 +102,7 @@
   --color-folder-blue: var(--folder-blue);
   --color-folder-lime: var(--folder-lime);
   --color-select: var(--select);
+  --color-select-strong: var(--select-text);
   --color-ok: var(--ok);
 
   --color-bg: var(--bg);

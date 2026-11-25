@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { useEffect, useState } from "react";
 
 /** feedback: confirmações curtas (copiar e-mail, modos). aria-live para leitores de tela. */
@@ -27,7 +27,7 @@ export function Toaster() {
     >
       <AnimatePresence>
         {msg ? (
-          <motion.p
+          <m.p
             key={msg.id}
             initial={{ y: 24, opacity: 0, scale: 0.96 }}
             animate={{ y: 0, opacity: 1, scale: 1 }}
@@ -36,7 +36,7 @@ export function Toaster() {
             className="bg-fg text-bg rounded-full px-5 py-3 text-sm font-medium shadow-lg"
           >
             {msg.text}
-          </motion.p>
+          </m.p>
         ) : null}
       </AnimatePresence>
     </div>

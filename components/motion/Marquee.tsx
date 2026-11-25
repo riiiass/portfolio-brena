@@ -77,16 +77,20 @@ export function Marquee({
   return (
     <div
       ref={wrap}
-      className={`overflow-hidden ${reducedMotion ? "overflow-x-auto" : ""} ${className ?? ""}`}
+      className={`overflow-hidden ${className ?? ""}`}
       role="region"
       aria-label={label}
     >
-      <div ref={track} className="marquee-track">
-        <div className="flex shrink-0 items-center">{children}</div>
-        <div className="flex shrink-0 items-center" aria-hidden="true">
-          {children}
+      {reducedMotion ? (
+        <div className="flex flex-wrap items-center justify-center gap-y-2">{children}</div>
+      ) : (
+        <div ref={track} className="marquee-track">
+          <div className="flex shrink-0 items-center">{children}</div>
+          <div className="flex shrink-0 items-center" aria-hidden="true">
+            {children}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

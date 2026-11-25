@@ -81,7 +81,9 @@ export default function StyleguidePage() {
           {palette.map((c) => (
             <li key={c.name} className="border-line overflow-hidden rounded-[24px] border">
               <div className="flex h-24 items-end p-3" style={{ background: c.hex, color: c.on }}>
-                <span className="font-mono text-xs">{c.hex}</span>
+                <span className="bg-paper text-ink rounded-md px-1.5 py-0.5 font-mono text-xs">
+                  {c.hex}
+                </span>
               </div>
               <div className="bg-surface p-3 text-sm">
                 <code className="font-mono text-xs">{c.name}</code>
@@ -100,9 +102,18 @@ export default function StyleguidePage() {
               <li
                 key={p.label}
                 className="flex items-center justify-between gap-3 rounded-2xl px-4 py-3"
-                style={{ background: p.bg, color: p.fg }}
+                style={{ background: p.bg, color: isUi ? "#0e0e0e" : p.fg }}
               >
-                <span className="text-sm font-medium">{p.label}</span>
+                <span className="flex items-center gap-2 text-sm font-medium">
+                  {isUi ? (
+                    <span
+                      aria-hidden="true"
+                      className="size-4 rounded border-2"
+                      style={{ borderColor: p.fg }}
+                    />
+                  ) : null}
+                  {p.label}
+                </span>
                 <span className="font-mono text-xs">
                   {r.toFixed(1)}:1 {pass ? "AA ✓" : "✗"}
                 </span>
@@ -218,7 +229,12 @@ export default function StyleguidePage() {
       </Section>
 
       <Section id="sg-motion" title="Motion tokens">
-        <div className="overflow-x-auto">
+        <div
+          className="overflow-x-auto"
+          tabIndex={0}
+          role="region"
+          aria-label="Tabela de motion tokens"
+        >
           <table className="w-full min-w-[520px] text-left text-sm">
             <thead>
               <tr className="border-line border-b">

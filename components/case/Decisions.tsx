@@ -10,7 +10,7 @@ export function Decisions({ items }: { items: Decision[] }) {
         <li key={d.title}>
           <Reveal variant="pop" delay={i} className="h-full">
             <article className="bg-surface flex h-full flex-col gap-2 rounded-[24px] p-5 shadow-[6px_8px_0_-2px_var(--shadow)]">
-              <span className="bg-select w-fit rounded-full px-2.5 py-1 font-mono text-[10px] tracking-[.12em] text-white uppercase">
+              <span className="bg-select-strong w-fit rounded-full px-2.5 py-1 font-mono text-[10px] tracking-[.12em] text-white uppercase">
                 {d.principle}
               </span>
               <h3 className="text-lg leading-snug font-bold">{d.title}</h3>

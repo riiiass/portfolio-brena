@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { navSections } from "@/content/pt/sections";
@@ -31,8 +31,8 @@ const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCa
  * ⌘K / Ctrl+K: busca seções, projetos e tecnologias, e executa ações.
  * Padrão combobox + listbox (WAI-ARIA), totalmente operável por teclado.
  */
-export function CommandPalette() {
-  const [open, setOpen] = useState(false);
+export function CommandPalette({ initialOpen = false }: { initialOpen?: boolean }) {
+  const [open, setOpen] = useState(initialOpen);
   const [query, setQuery] = useState("");
   const [index, setIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -236,7 +236,7 @@ export function CommandPalette() {
   return (
     <AnimatePresence>
       {open ? (
-        <motion.div
+        <m.div
           className="bg-ink/40 fixed inset-0 z-[80] flex items-start justify-center px-4 pt-[12vh] backdrop-blur-[2px]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -246,7 +246,7 @@ export function CommandPalette() {
             if (e.target === e.currentTarget) close();
           }}
         >
-          <motion.div
+          <m.div
             role="dialog"
             aria-modal="true"
             aria-label="Busca e comandos"
@@ -353,8 +353,8 @@ export function CommandPalette() {
               <span>↵ abrir</span>
               <span className="ml-auto">⌘K / Ctrl+K</span>
             </div>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       ) : null}
     </AnimatePresence>
   );

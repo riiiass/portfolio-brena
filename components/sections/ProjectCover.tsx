@@ -38,7 +38,7 @@ export function ProjectCover({
   // TODO: Brena — enviar print do projeto para trocar a ilustração
   return (
     <div
-      className="relative flex h-full items-center justify-center overflow-hidden rounded-[18px] bg-white/35"
+      className="relative flex h-full items-center justify-center overflow-hidden rounded-[18px] bg-[#fbe3ec]"
       aria-hidden="true"
     >
       <div className="flex w-[80%] flex-col gap-2 transition-transform duration-700 group-hover:scale-105">
@@ -46,13 +46,13 @@ export function ProjectCover({
           <div key={i} className="flex items-center gap-3">
             <span className="bg-ink/70 size-3.5 shrink-0 rounded-full" />
             <span className="bg-ink/25 h-2 rounded-full" style={{ width: `${w}%` }} />
-            <span className="text-ink/60 ml-auto shrink-0 font-mono text-[10px] whitespace-nowrap">
+            <span className="text-ink/85 ml-auto shrink-0 font-mono text-[10px] whitespace-nowrap">
               R$ —
             </span>
           </div>
         ))}
       </div>
-      <span className="text-ink/70 absolute right-3 bottom-2 font-mono text-[10px] tracking-[.15em] uppercase">
+      <span className="text-ink/85 absolute right-3 bottom-2 font-mono text-[10px] tracking-[.15em] uppercase">
         print em breve
       </span>
     </div>

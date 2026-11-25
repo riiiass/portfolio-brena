@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, LayoutGroup, motion } from "motion/react";
+import { AnimatePresence, LayoutGroup, m } from "motion/react";
 import Link from "next/link";
 import { useState } from "react";
 import { projects, type Project, type ProjectCategory } from "@/content/pt/projects";
@@ -38,9 +38,8 @@ function ProjectCard({ p, priority }: { p: Project; priority: boolean }) {
       href={`/projetos/${p.slug}`}
       data-cursor="ver case"
       className="group relative block h-full rounded-[32px] focus-visible:outline-offset-[6px]"
-      aria-label={`${p.title}: ver case`}
     >
-      <article
+      <div
         className={cn(
           "flex h-full gap-4 overflow-hidden rounded-[32px] p-5 md:p-6",
           wide
@@ -106,7 +105,7 @@ function ProjectCard({ p, priority }: { p: Project; priority: boolean }) {
             </div>
           </SharedCover>
         ) : null}
-      </article>
+      </div>
       <span
         aria-hidden="true"
         className="bg-fg text-bg absolute right-[2px] bottom-[2px] flex size-12 items-center justify-center rounded-full transition-transform duration-300 group-hover:-rotate-45 group-focus-visible:-rotate-45"
@@ -171,7 +170,7 @@ export function Projects() {
                 >
                   {/* feedback: a pílula preenchida desliza até o filtro escolhido */}
                   {on ? (
-                    <motion.span
+                    <m.span
                       layoutId="filter-pill"
                       className="bg-fg absolute inset-0 -z-0 rounded-full"
                       transition={spring}
@@ -189,13 +188,13 @@ export function Projects() {
         {list.length} {list.length === 1 ? "projeto" : "projetos"} em {filter}
       </p>
 
-      <motion.ul
+      <m.ul
         layout
         className="grid grid-flow-dense auto-rows-[minmax(420px,auto)] grid-cols-[minmax(0,1fr)] gap-3.5 sm:auto-rows-[260px] sm:grid-cols-2 lg:grid-cols-4"
       >
         <AnimatePresence mode="popLayout" initial={false}>
           {list.map((p) => (
-            <motion.li
+            <m.li
               key={p.slug}
               layout
               className={layoutCls[p.layout]}
@@ -205,10 +204,10 @@ export function Projects() {
               transition={spring}
             >
               <ProjectCard p={p} priority={false} />
-            </motion.li>
+            </m.li>
           ))}
         </AnimatePresence>
-      </motion.ul>
+      </m.ul>
     </section>
   );
 }

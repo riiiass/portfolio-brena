@@ -29,7 +29,7 @@ export function SelectionBox({
       {label ? (
         <span
           aria-hidden="true"
-          className="bg-select absolute -top-6 -left-0.5 px-1.5 py-0.5 font-mono text-[10px] leading-none whitespace-nowrap text-white"
+          className="bg-select-strong absolute -top-6 -left-0.5 px-1.5 py-0.5 font-mono text-[10px] leading-none whitespace-nowrap text-white"
         >
           {label}
         </span>

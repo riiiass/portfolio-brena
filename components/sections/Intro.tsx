@@ -18,7 +18,7 @@ const FOLDERS = [
  * para não piscar o hero antes.
  */
 export function Intro() {
-  const [count, setCount] = useState(0);
+  const countRef = useRef<HTMLParagraphElement>(null);
   const [leaving, setLeaving] = useState(false);
   const [gone, setGone] = useState(false);
   const done = useRef(false);
@@ -36,7 +36,11 @@ export function Intro() {
     const tick = (now: number) => {
       const p = Math.min((now - start) / DURATION, 1);
       // easeOutCubic: o contador desacelera perto do 100 (orientação: "quase pronto")
-      setCount(Math.round((1 - (1 - p) ** 3) * 100));
+      if (countRef.current)
+        countRef.current.textContent = String(Math.round((1 - (1 - p) ** 3) * 100)).padStart(
+          3,
+          "0",
+        );
       if (p < 1) raf = requestAnimationFrame(tick);
       else finish();
     };
@@ -57,7 +61,7 @@ export function Intro() {
     try {
       sessionStorage.setItem("intro-seen", "1");
     } catch {}
-    setCount(100);
+    if (countRef.current) countRef.current.textContent = "100";
     setLeaving(true);
     // hierarquia: o hero começa a entrar enquanto a cortina sobe
     document.documentElement.dataset.hero = "go";
@@ -130,10 +134,11 @@ export function Intro() {
           ))}
         </p>
         <p
+          ref={countRef}
           className="font-mono text-[clamp(2rem,6vw,4.5rem)] leading-none tabular-nums"
           aria-hidden="true"
         >
-          {String(count).padStart(3, "0")}
+          000
         </p>
       </div>
     </div>
