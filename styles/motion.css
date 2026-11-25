@@ -262,3 +262,67 @@ html.js[data-motion="full"] .arch .arch-line path {
     animation: none !important;
   }
 }
+
+/* ===== Dados de dev: gráficos se desenham ao entrar ===== */
+html.js[data-motion="full"] .heatmap:not([data-shown]) .hm-cell {
+  opacity: 0;
+}
+html.js[data-motion="full"] .heatmap .hm-cell {
+  transition: opacity 400ms var(--ease-out);
+  transition-delay: calc(var(--c, 0) * 14ms);
+}
+html.js[data-motion="full"] .donut:not([data-shown]) .donut-arc {
+  stroke-dasharray: 0 999 !important;
+}
+html.js[data-motion="full"] .donut .donut-arc {
+  transition:
+    stroke-dasharray 900ms var(--ease-out),
+    stroke-width 300ms var(--ease-out),
+    opacity 300ms;
+  transition-delay: calc(var(--k, 0) * 120ms), 0ms, 0ms;
+}
+.line-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+html.js[data-motion="full"] .linechart:not([data-shown]) .line-path {
+  stroke-dashoffset: 1;
+}
+html.js[data-motion="full"] .linechart .line-path {
+  transition: stroke-dashoffset 1400ms var(--ease-in-out) 200ms;
+}
+html.js[data-motion="full"] .lh-bars:not([data-shown]) .lh-fill {
+  transform: scaleX(0);
+}
+.lh-fill {
+  transform-origin: left;
+  transition: transform 900ms var(--ease-out);
+  transition-delay: calc(var(--k, 0) * 120ms);
+}
+
+/* ===== Timeline pinada ===== */
+.tl-viewport.tl-pinned {
+  overflow: visible;
+}
+.tl-pinned .tl-item {
+  transition:
+    opacity 400ms var(--ease-out),
+    background-color 400ms var(--ease-out),
+    color 400ms var(--ease-out),
+    transform 400ms var(--ease-out);
+  opacity: 0.5;
+}
+/* hierarquia: a etapa atual acende e sobe */
+.tl-pinned .tl-item[data-active] {
+  opacity: 1;
+  background: var(--paper);
+  color: var(--ink);
+  transform: translateY(-6px);
+}
+.tl-pinned .tl-item[data-active] p {
+  color: #3a3a3a;
+}
+.tl-pinned .tl-item[data-active] .tl-num {
+  background: var(--ink);
+  color: var(--paper);
+}

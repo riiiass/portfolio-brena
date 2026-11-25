@@ -84,7 +84,10 @@ export function ScrollFx() {
       });
 
       // recalcula quando as fontes terminam de carregar (alturas mudam)
-      void document.fonts?.ready.then(() => ScrollTrigger.refresh());
+      void document.fonts?.ready.then(() => {
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh();
+      });
     });
 
     return () => {

@@ -136,3 +136,24 @@
   --ease-out: var(--ease-out);
   --ease-in-out: var(--ease-in-out);
 }
+
+/* Rampa sequencial (1 matiz, claro → escuro) para o mapa de contribuições */
+:root,
+[data-theme="light"] {
+  --heat-0: #e7e2d9;
+  --heat-1: #c4d8f4;
+  --heat-2: #86aee8;
+  --heat-3: #4a82d6;
+  --heat-4: #1f55a8;
+  --chart-line: #2f6fd0;
+  --chart-grid: #d8d2c8;
+}
+[data-theme="dark"] {
+  --heat-0: #262626;
+  --heat-1: #1d3558;
+  --heat-2: #2b5596;
+  --heat-3: #4a82d6;
+  --heat-4: #9cc2f5;
+  --chart-line: #6f9fe6;
+  --chart-grid: #3a3a3a;
+}
