@@ -5,7 +5,7 @@ export const site = {
   description:
     "Portfólio de Brena Angelo: desenvolvedora full stack que pensa como designer e designer UX/UI que entrega código.",
   email: "brena.angelo.silva1511@gmail.com",
-  location: "Ceará, Brasil",
+  location: "Maracanaú, Ceará, Brasil",
   available: true,
   social: {
     linkedin: "https://www.linkedin.com/in/brena-angelo-aa60a4228/",

@@ -41,7 +41,7 @@ Marque `[x]` conforme for resolvendo. Arquivo do código entre parênteses.
   - [ ] Paz no Lar
   - [ ] KADOSH (quando estiver no ar)
   - [ ] Banco de Talentos (quando estiver no ar)
-  - [ ] Este portfólio — medir no site publicado (local: ~81 na 1ª visita, com intro)
+  - [ ] Este portfólio — medir no site publicado (local: 88 na 1ª visita com intro, 97 em /en)
 
 ## 5. Textos que eu escrevi e você precisa revisar
 
@@ -55,7 +55,7 @@ Marque `[x]` conforme for resolvendo. Arquivo do código entre parênteses.
 
 - [x] Projetos de cliente e Paz no Lar: 2026, 2 a 3 meses cada (Banco de Talentos: 3 semanas); manutenção contínua na KADOSH e no Paz no Lar
 - [x] Anos: ensino médio técnico 2025; Engenharia de Software e Licenciatura em Matemática desde 2026 (em andamento)
-- [ ] Nome da **escola técnica** (se quiser mostrar)
+- [x] Nome da **escola técnica** (EEEP Raimundo Celio Rodrigues, no CV)
 
 ## 7. Depoimentos
 

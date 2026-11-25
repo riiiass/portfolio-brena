@@ -26,7 +26,7 @@ Full Stack Developer · UX/UI Designer | Next.js, React, TypeScript, Node.js, Po
 
 No mesmo formulário:
 
-- **Localização:** sua cidade, Ceará, Brasil (o site mostra só "Ceará, Brasil").
+- **Localização:** Maracanaú, Ceará, Brasil.
 - **Site:** <https://portfolio-brena-angelo.netlify.app/>, com o texto do link "Portfólio".
   O LinkedIn mostra esse link logo abaixo do título.
 
