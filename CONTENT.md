@@ -44,7 +44,8 @@ Marque `[x]` conforme for resolvendo. Arquivo do código entre parênteses.
 
 ## 6. Trajetória
 
-- [ ] **Anos** de cada etapa: técnico, Engenharia de Software, Licenciatura em Matemática, projetos de cliente, Paz no Lar (`content/pt/timeline.ts`)
+- [x] Projetos de cliente e Paz no Lar: 2026, 2 a 3 meses cada (Banco de Talentos: menos de 2 meses); manutenção contínua na KADOSH e no Paz no Lar
+- [ ] **Anos** do técnico, da Engenharia de Software e da Licenciatura em Matemática (`content/pt/timeline.ts`)
 - [ ] Nome da **escola técnica** (se quiser mostrar)
 
 ## 7. Depoimentos

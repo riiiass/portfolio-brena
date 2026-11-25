@@ -90,9 +90,17 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
               <dd>{meta.role}</dd>
             </div>
             <div>
-              <dt className="label-mono text-muted mb-1 text-[10px]">Ano</dt>
-              <dd>{meta.year === "TODO" ? <span className="text-muted">TODO</span> : meta.year}</dd>
+              <dt className="label-mono text-muted mb-1 text-[10px]">Ano · duração</dt>
+              <dd>
+                {meta.year} · {meta.duration}
+              </dd>
             </div>
+            {meta.maintenance ? (
+              <div>
+                <dt className="label-mono text-muted mb-1 text-[10px]">Status</dt>
+                <dd>Manutenção contínua</dd>
+              </div>
+            ) : null}
             <div className="col-span-2 md:col-span-1">
               <dt className="label-mono text-muted mb-1 text-[10px]">Stack</dt>
               <dd>

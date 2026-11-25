@@ -10,8 +10,8 @@ export type Project = {
   publicImages: boolean;
   tone: "ink" | "pink" | "blue" | "lime";
   layout: "big" | "tall" | "wide" | "default";
-  /** Projeto ainda em desenvolvimento */
-  status?: "dev";
+  /** "dev" = em desenvolvimento · "maintenance" = no ar e com manutenção contínua */
+  status?: "dev" | "maintenance";
   /** Print real da interface (em /public/projects) */
   cover?: { src: string; width: number; height: number; alt: string };
 };
@@ -28,6 +28,7 @@ export const projects: Project[] = [
     publicImages: true,
     tone: "ink",
     layout: "big",
+    status: "maintenance",
     cover: {
       src: "/projects/kadosh.webp",
       width: 1904,
@@ -56,6 +57,7 @@ export const projects: Project[] = [
     publicImages: true,
     tone: "blue",
     layout: "tall",
+    status: "maintenance",
     cover: {
       src: "/projects/paz-no-lar.webp",
       width: 1903,

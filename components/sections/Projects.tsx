@@ -60,6 +60,12 @@ function ProjectCard({ p, priority }: { p: Project; priority: boolean }) {
                 {c}
               </span>
             ))}
+            {p.status === "maintenance" ? (
+              <span className="flex items-center gap-1.5 rounded-full border border-current px-2.5 py-1.5 font-mono text-[10px] tracking-[.12em] uppercase">
+                <span className="bg-ok size-1.5 rounded-full" aria-hidden="true" />
+                em manutenção
+              </span>
+            ) : null}
             {p.status === "dev" ? (
               <span className="bg-ink text-paper flex items-center gap-1.5 rounded-full px-2.5 py-1.5 font-mono text-[10px] tracking-[.12em] uppercase">
                 <span

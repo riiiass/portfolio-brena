@@ -1,4 +1,4 @@
-// TODO: Brena revisar e incluir os anos de cada etapa
+// TODO: Brena — anos do técnico, da Engenharia de Software e da Licenciatura
 export const timeline = [
   {
     title: "Técnico no ensino médio",
@@ -11,15 +11,19 @@ export const timeline = [
     text: "Uninassau. Lógica, didática e jeito de explicar o complexo.",
     year: "",
   },
-  { title: "Projetos de cliente", text: "E-commerce, studio de beleza e sistemas web.", year: "" },
+  {
+    title: "Projetos de cliente",
+    text: "KADOSH, MODO e Banco de Talentos, de 2 a 3 meses cada. Sigo dando manutenção na KADOSH.",
+    year: "2026",
+  },
   {
     title: "Paz no Lar",
-    text: "Voluntária no desenvolvimento e no design do sistema do instituto.",
-    year: "",
+    text: "Voluntária no desenvolvimento e no design do site e do sistema do instituto, com manutenção contínua.",
+    year: "2026",
   },
   {
     title: "Hoje",
-    text: "Freelancer full stack × UX/UI e aberta a novas oportunidades.",
-    year: "",
+    text: "Freelancer full stack × UX/UI e aberta a vagas CLT.",
+    year: "2026",
   },
 ];

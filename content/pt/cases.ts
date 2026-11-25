@@ -4,6 +4,10 @@ export type CaseMeta = {
   script: string;
   role: string;
   year: string;
+  /** quanto tempo levou */
+  duration: string;
+  /** a Brena segue dando manutenção */
+  maintenance?: boolean;
   /** link do projeto no ar (opcional) */
   url?: string;
   /** frase de abertura */
@@ -18,6 +22,8 @@ export const cases: CaseMeta[] = [
     script: "fé",
     role: "Full stack · design e desenvolvimento",
     year: "2026",
+    duration: "2 a 3 meses",
+    maintenance: true,
     lede: "Uma loja completa para uma marca de moda cristã, de varejo e atacado: vitrine dinâmica, frete calculado na compra, pagamento por Pix ou cartão e um painel para cuidar de produtos, estoque e pedidos. O cliente faz tudo sozinho, sem precisar falar com a loja.",
     gallery: [],
   },
@@ -26,6 +32,7 @@ export const cases: CaseMeta[] = [
     script: "unhas",
     role: "Front-end · design e desenvolvimento",
     year: "2026",
+    duration: "2 a 3 meses",
     lede: "Site do studio de nails com tabela de valores e agendamento direto pelo WhatsApp. Projeto em desenvolvimento.",
     gallery: [],
   },
@@ -34,6 +41,8 @@ export const cases: CaseMeta[] = [
     script: "cuidado",
     role: "Voluntária · desenvolvimento e design",
     year: "2026",
+    duration: "2 a 3 meses",
+    maintenance: true,
     lede: "Site e sistema do Instituto Paz no Lar, que acolhe e ajuda mulheres que passaram por situações de violência. Por fora, um site que aproxima as pessoas do instituto; por dentro, uma área restrita onde a equipe cadastra e organiza as informações de quem faz parte do projeto. Atuo como voluntária no desenvolvimento e no design.",
     url: "https://instituto-paz-no-lar.netlify.app/",
     gallery: [],
@@ -43,6 +52,7 @@ export const cases: CaseMeta[] = [
     script: "talento",
     role: "Design e front-end",
     year: "2026",
+    duration: "menos de 2 meses",
     lede: "Vitrine das acolhidas do instituto: quem visita encontra confeiteiras, manicures, artesãs e empreendedoras e vê, de perto, o trabalho de cada uma.",
     gallery: [],
   },
