@@ -32,12 +32,12 @@ const html = `<!doctype html><html lang="${lang === "pt" ? "pt-BR" : "en"}"><hea
 <style>
   @page { size: A4; margin: 11mm 14mm; }
   * { box-sizing: border-box; }
-  body { font-family: Inter, Arial, sans-serif; font-size: 9.4pt; line-height: 1.36; color: #111; margin: 0; }
+  body { font-family: Inter, Arial, sans-serif; font-size: 9.4pt; line-height: 1.33; color: #111; margin: 0; }
   a { color: #111; text-decoration: none; }
   h1 { font-size: 21pt; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
   .headline { font-size: 11pt; font-weight: 500; color: #333; margin: 2px 0 6px; }
-  .contact { font-size: 9pt; color: #333; display: flex; flex-wrap: wrap; gap: 0 10px; }
-  .contact span + span::before { content: "|"; margin-right: 10px; color: #999; }
+  .contact { font-size: 8.8pt; color: #333; display: flex; flex-wrap: wrap; gap: 0 7px; }
+  .contact span + span::before { content: "|"; margin-right: 7px; color: #999; }
   h2 { font-size: 10pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin: 10px 0 4px; padding-bottom: 2px; border-bottom: 1px solid #111; }
   p { margin: 0; }
   .item { margin-bottom: 5px; break-inside: avoid; }
@@ -54,7 +54,7 @@ const html = `<!doctype html><html lang="${lang === "pt" ? "pt-BR" : "en"}"><hea
 <header>
   <h1>${esc(cv.name)}</h1>
   <p class="headline">${esc(cv.headline)}</p>
-  <p class="contact">${cv.contact.map((c) => `<span>${link(c)}</span>`).join("")}</p>
+  ${[cv.contact.slice(0, 3), cv.contact.slice(3)].map((line) => `<p class="contact">${line.map((c) => `<span>${link(c)}</span>`).join("")}</p>`).join("")}
 </header>
 <h2>${t.summary}</h2>
 <p>${esc(cv.summary)}</p>
@@ -73,6 +73,7 @@ ${cv.experience
 ${cv.education.map((e) => `<div class="item row"><p><span class="role">${esc(e.title)}</span> · <span class="muted">${esc(e.org)}</span></p><p class="period">${esc(e.period)}</p></div>`).join("")}
 <h2>${t.cert}</h2>
 ${cv.certifications.map((c) => `<div class="item row"><p><span class="role">${c.href ? `<a href="${c.href}">${esc(c.title)}</a>` : esc(c.title)}</span> · <span class="muted">${esc(c.org)}</span></p><p class="period">${esc(c.period)}</p></div>`).join("")}
+${cv.languages ? `<h2>${t.langs}</h2><p>${esc(cv.languages)}</p>` : ""}
 ${cv.extra?.length ? `<h2>${t.extra}</h2>${cv.extra.map((x) => `<p>${esc(x)}</p>`).join("")}` : ""}
 </body></html>`;
 

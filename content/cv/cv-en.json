@@ -1,0 +1,125 @@
+{
+  "name": "Brena Angelo da Silva",
+  "headline": "Full Stack Developer · UX/UI Designer",
+  "contact": [
+    {
+      "label": "Ceará, Brazil"
+    },
+    {
+      "label": "portfolio-brena-angelo.netlify.app",
+      "href": "https://portfolio-brena-angelo.netlify.app/"
+    },
+    {
+      "label": "brena.angelo.silva1511@gmail.com",
+      "href": "mailto:brena.angelo.silva1511@gmail.com"
+    },
+    {
+      "label": "linkedin.com/in/brena-angelo-aa60a4228",
+      "href": "https://www.linkedin.com/in/brena-angelo-aa60a4228/"
+    },
+    {
+      "label": "github.com/riiiass",
+      "href": "https://github.com/riiiass"
+    }
+  ],
+  "summary": "Full stack developer and UX/UI designer. I build web products end to end — from user research and prototyping to APIs, databases, testing and deployment — with Next.js, React, TypeScript, Node.js and PostgreSQL. Google UX Design certified and Software Engineering undergraduate. Looking for roles where design, code and user impact go together.",
+  "experience": [
+    {
+      "role": "Full Stack Developer",
+      "org": "Freelance",
+      "where": "Remote",
+      "period": "2026 – present",
+      "bullets": [
+        "Built KADOSH's e-commerce end to end (faith-inspired fashion brand, retail and wholesale) with Next.js 15 (App Router), React 19 and TypeScript, including a full self-service checkout that requires no human support.",
+        "Integrated payments via PagBank (Pix and credit card, confirmed through webhooks), shipping quotes via SuperFrete (Correios, Jadlog, Loggi) and address autofill from postal code (ViaCEP).",
+        "Designed the PostgreSQL (Neon) data model with Prisma — products, variants, inventory, orders and payments — with stock reservations released automatically by a Netlify scheduled function.",
+        "Implemented an admin panel with custom authentication (scrypt password hashing and HMAC-signed session in a secure cookie) and Zod validation on every API input.",
+        "Wrote automated tests with Vitest (wholesale rules, CPF validation, webhook signatures, shipping and session) running in CI on GitHub Actions on every push; currently maintaining the project.",
+        "Designed and built Banco de Talentos in 3 weeks: a showcase with search by trade, name or product, in vanilla HTML, CSS and JavaScript."
+      ]
+    },
+    {
+      "role": "Developer & UX/UI Designer (volunteer)",
+      "org": "Instituto Paz no Lar",
+      "where": "Remote",
+      "period": "2026 – present",
+      "bullets": [
+        "Design and develop the website and internal system of a nonprofit that supports women who have experienced violence, using Next.js, React, Prisma and PostgreSQL (Neon, São Paulo region).",
+        "Built a restricted area where staff register and manage the people in the program — women supported, employees, board members and volunteers — with print and PDF export.",
+        "Treated privacy of sensitive data as a core requirement: access limited to authenticated staff and no internal information exposed on the public site.",
+        "Maintain the system in production, with code on GitHub and continuous deployment on Netlify."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "title": "B.Sc. in Software Engineering",
+      "org": "UNIASSELVI",
+      "period": "2026 – in progress"
+    },
+    {
+      "title": "Teaching Degree in Mathematics",
+      "org": "Uninassau",
+      "period": "2026 – in progress"
+    },
+    {
+      "title": "Technical High School",
+      "org": "EEEP Raimundo Celio Rodrigues",
+      "period": "Completed 2025"
+    }
+  ],
+  "certifications": [
+    {
+      "title": "Google UX Design Professional Certificate",
+      "org": "Google · Coursera",
+      "period": "2025",
+      "href": "https://www.credly.com/go/oYS1f7pU"
+    },
+    {
+      "title": "Google IT Support Professional Certificate",
+      "org": "Google · Coursera",
+      "period": "2025",
+      "href": "https://www.credly.com/go/ADbzF1lf"
+    },
+    {
+      "title": "Foundations of Cybersecurity",
+      "org": "Google · Coursera",
+      "period": "2026",
+      "href": "https://coursera.org/verify/QNCGMGUC4W7B"
+    },
+    {
+      "title": "Career Readiness (4 modules)",
+      "org": "IBM SkillsBuild",
+      "period": "2026"
+    }
+  ],
+  "skills": [
+    {
+      "group": "Front-end",
+      "items": "React, Next.js (App Router), TypeScript, JavaScript, HTML, CSS, Tailwind CSS, Framer Motion"
+    },
+    {
+      "group": "Back-end & data",
+      "items": "Node.js, REST APIs, Route Handlers & Server Actions, webhooks, PostgreSQL, Prisma, Zod"
+    },
+    {
+      "group": "Quality & DevOps",
+      "items": "Vitest, GitHub Actions (CI), Git, Netlify, scheduled functions"
+    },
+    {
+      "group": "UX/UI",
+      "items": "User research, information architecture, prototyping, design systems, accessibility (WCAG)"
+    },
+    {
+      "group": "Languages",
+      "items": "TypeScript, JavaScript, Python, Java"
+    },
+    {
+      "group": "Spoken languages",
+      "items": "Portuguese (native) · English (intermediate, CLM certificate) · Spanish (basic) · Brazilian Sign Language – Libras (basic)"
+    }
+  ],
+  "extra": [
+    "University extension (UNIASSELVI, 2026): 360 hours across 5 community projects, including human rights."
+  ]
+}

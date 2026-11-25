@@ -38,6 +38,12 @@ export const certifications: Cert[] = [
     tone: "lime",
   },
   {
+    title: "Inglês intermediário (curso de 3 anos)",
+    issuer: "CLM – Centro de Línguas de Maracanaú",
+    date: "2024",
+    tone: "orange",
+  },
+  {
     title: "Preparação profissional (4 módulos)",
     issuer: "IBM SkillsBuild",
     date: "abr 2026",

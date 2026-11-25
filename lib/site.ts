@@ -1,7 +1,7 @@
 export const site = {
   name: "Brena Angelo",
   role: "Desenvolvedora Full Stack & Designer UX/UI",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://brenaangelo.netlify.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://portfolio-brena-angelo.netlify.app",
   description:
     "Portfólio de Brena Angelo: desenvolvedora full stack que pensa como designer e designer UX/UI que entrega código.",
   email: "brena.angelo.silva1511@gmail.com",
@@ -14,5 +14,6 @@ export const site = {
   },
   githubUser: "riiiass",
   instagramHandle: "@wsbrena",
-  cvUrl: "/cv-brena-angelo.pdf", // TODO: adicionar PDF em /public
+  cvUrl: "/cv-brena-angelo.pdf",
+  cvUrlEn: "/cv-brena-angelo-en.pdf",
 } as const;

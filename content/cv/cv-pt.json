@@ -6,6 +6,10 @@
       "label": "Ceará, Brasil"
     },
     {
+      "label": "portfolio-brena-angelo.netlify.app",
+      "href": "https://portfolio-brena-angelo.netlify.app/"
+    },
+    {
       "label": "brena.angelo.silva1511@gmail.com",
       "href": "mailto:brena.angelo.silva1511@gmail.com"
     },
@@ -59,8 +63,8 @@
       "period": "2026 – em andamento"
     },
     {
-      "title": "Ensino Médio com formação técnica",
-      "org": "Python, Java e primeiro projeto com cliente real",
+      "title": "Ensino Médio Técnico",
+      "org": "EEEP Raimundo Celio Rodrigues",
       "period": "Concluído em 2025"
     }
   ],
@@ -109,9 +113,13 @@
     {
       "group": "Linguagens",
       "items": "TypeScript, JavaScript, Python, Java"
+    },
+    {
+      "group": "Idiomas",
+      "items": "Português (nativo) · Inglês (intermediário, certificado CLM) · Espanhol (básico) · Libras (básico)"
     }
   ],
   "extra": [
-    "Extensão universitária (UNIASSELVI, 2026): 360 horas em 5 projetos sociais, incluindo direitos humanos e ações de apoio a municípios em situação de emergência."
+    "Extensão universitária (UNIASSELVI, 2026): 360 horas em 5 projetos sociais, incluindo direitos humanos."
   ]
 }

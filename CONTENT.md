@@ -8,10 +8,10 @@ Marque `[x]` conforme for resolvendo. Arquivo do código entre parênteses.
 - [ ] **Sua foto recortada** (PNG sem fundo) para o hero — hoje é uma silhueta azul (`components/sections/FolderPlayground.tsx`)
 - [ ] **Sua foto** para a janela do Sobre — hoje é uma silhueta laranja (`components/sections/About.tsx`)
 - [x] **CV em PDF** — gerado a partir de `content/cv/cv-pt.json` com `npm run cv` → `public/cv-brena-angelo.pdf`
-  - [ ] Nível de **inglês** (big techs costumam pedir; também posso gerar a versão em inglês do CV)
+  - [x] Versão em **inglês**: `content/cv/cv-en.json` → `public/cv-brena-angelo-en.pdf`
+  - [x] Idiomas, escola (EEEP Raimundo Celio Rodrigues) e link do portfólio
   - [ ] **Telefone/WhatsApp** (opcional no CV)
-  - [ ] Nome da **escola** do ensino médio técnico e o curso técnico
-  - [ ] Link do **portfólio** no CV quando o site estiver no ar
+  - [ ] Nome do **curso técnico** do ensino médio (ex.: Informática)
 - [ ] **Print do MODO** — hoje mostra "print em breve" (`content/pt/projects.ts`)
 - [ ] **Mais prints para as galerias** dos cases (checkout e painel da KADOSH, versão mobile etc.) (`content/pt/cases.ts`)
 

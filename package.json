@@ -10,7 +10,7 @@
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
     "test:e2e": "playwright test --trace off",
-    "cv": "node scripts/build-cv.mjs pt"
+    "cv": "node scripts/build-cv.mjs pt && node scripts/build-cv.mjs en"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",

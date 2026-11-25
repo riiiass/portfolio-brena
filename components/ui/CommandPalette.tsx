@@ -14,7 +14,7 @@ import { Icon, type IconName } from "./Icon";
 
 type Action =
   | { kind: "section" | "route"; target: string }
-  | { kind: "email" | "cv" | "theme" | "wireframe" | "inspect" | "motion" };
+  | { kind: "email" | "cv" | "cvEn" | "theme" | "wireframe" | "inspect" | "motion" };
 type Item = {
   id: string;
   group: string;
@@ -114,7 +114,16 @@ export function CommandPalette() {
         group: "Ações",
         label: "Baixar CV (PDF)",
         icon: "download",
+        keywords: "curriculo resume",
         action: { kind: "cv" },
+      },
+      {
+        id: "a-cv-en",
+        group: "Ações",
+        label: "Download CV (English)",
+        icon: "download",
+        keywords: "curriculo resume ingles english",
+        action: { kind: "cvEn" },
       },
       {
         id: "a-theme",
@@ -165,6 +174,9 @@ export function CommandPalette() {
         break;
       case "cv":
         window.open(site.cvUrl, "_blank");
+        break;
+      case "cvEn":
+        window.open(site.cvUrlEn, "_blank");
         break;
       case "theme":
         prefs.toggleTheme();
