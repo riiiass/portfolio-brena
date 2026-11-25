@@ -3,10 +3,12 @@ import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
 import { Services } from "@/components/sections/Services";
 import { Projects } from "@/components/sections/Projects";
-import { Placeholder } from "@/components/sections/Placeholder";
 import { Timeline } from "@/components/sections/Timeline";
 import { DevData } from "@/components/sections/DevData";
 import { Testimonials } from "@/components/sections/Testimonials";
+import { Toolkit } from "@/components/sections/Toolkit";
+import { Faq } from "@/components/sections/Faq";
+import { Contact } from "@/components/sections/Contact";
 import { ScrollFx } from "@/components/motion/ScrollFx";
 
 export default function Home() {
@@ -21,12 +23,9 @@ export default function Home() {
         <Timeline />
         <DevData />
         <Testimonials />
-        <Placeholder
-          id="contato"
-          title="Vamos criar juntas?"
-          phase="Fase 7 · Contato"
-          tone="band"
-        />
+        <Toolkit />
+        <Faq />
+        <Contact />
       </main>
       <ScrollFx />
     </>

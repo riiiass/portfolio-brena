@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>Formulários (detecção do Netlify Forms)</title>
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <!-- O Netlify lê este HTML estático no deploy para registrar o formulário "contato". -->
+    <form name="contato" data-netlify="true" netlify-honeypot="empresa-site" hidden>
+      <input type="hidden" name="form-name" value="contato" />
+      <input name="empresa-site" />
+      <input name="nome" />
+      <input name="email" type="email" />
+      <input name="tipo" />
+      <textarea name="mensagem"></textarea>
+    </form>
+  </body>
+</html>
